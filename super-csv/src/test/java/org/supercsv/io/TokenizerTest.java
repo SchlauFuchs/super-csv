@@ -167,13 +167,13 @@ public class TokenizerTest {
 	}
 
 	/**
-	 * Tests that the readColumns() method does not skip over lines with only commas by default
+	 * Tests that the readColumns() method does skip over lines with only commas by default, when the preferences are
+	 * set accordingly
 	 */
 	@Test
 	public void testEmptyFieldsOnlyLinesBehaviourSkipping() throws Exception {
 		final String input = "a,b,c,d\r\n,,,,\r\ne,f,g,h\r\n";;
 		final List<String> expectedColumnsRow1 = Arrays.asList("a","b","c", "d");
-		final List<String> expectedColumnsRow2 = Arrays.asList(null, null, null, null, null);
 		final List<String> expectedColumnsRow3 = Arrays.asList("e","f","g", "h");
 		CsvPreference preference = new CsvPreference.Builder(EXCEL_PREFERENCE).ignoreEmptyFieldLines(true).build();
 		tokenizer = createTokenizer(input, preference);
