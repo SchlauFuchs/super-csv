@@ -105,6 +105,7 @@ import org.supercsv.quote.QuoteMode;
  * @author Kasper B. Graversen
  * @author James Bassett
  * @author Pietro Aragona
+ * @author Kai Hackemesser
  */
 public final class CsvPreference {
 	
@@ -143,7 +144,9 @@ public final class CsvPreference {
 	private final QuoteMode quoteMode;
 	
 	private final CommentMatcher commentMatcher;
-	
+
+	private final EmptyFieldStrategy emptyFieldStrategy;
+
 	private int maxLinesPerRow = 0;
 	
 	private final EmptyColumnParsing emptyColumnParsing;
@@ -165,6 +168,7 @@ public final class CsvPreference {
 		this.maxLinesPerRow = builder.maxLinesPerRow;
 		this.emptyColumnParsing = builder.emptyColumnParsing;
 		this.quoteEscapeChar = builder.quoteEscapeChar;
+		this.emptyFieldStrategy = builder.emptyFieldStrategy;
 	}
 	
 	/**
@@ -269,6 +273,15 @@ public final class CsvPreference {
 	}
 
 	/**
+	 * @return the strategy to handle rows with all empty fields, i.e. only delimiters.
+	 * By default, such rows will be processed. To change this behavior, use the
+	 * {@link Builder#ignoreEmptyFieldLines(boolean)} method.
+	 */
+	public EmptyFieldStrategy getEmptyFieldStrategy() {
+		return emptyFieldStrategy;
+	}
+
+	/**
 	 * Builds immutable <tt>CsvPreference</tt> instances. The builder pattern allows for additional preferences to be
 	 * added in the future.
 	 */
@@ -295,7 +308,9 @@ public final class CsvPreference {
 		private EmptyColumnParsing emptyColumnParsing;
 
 		private char quoteEscapeChar;
-		
+
+		private EmptyFieldStrategy emptyFieldStrategy = EmptyFieldStrategy.PASS;
+
 		/**
 		 * Constructs a Builder with all of the values from an existing <tt>CsvPreference</tt> instance. Useful if you
 		 * want to base your preferences off one of the existing CsvPreference constants.
@@ -514,8 +529,10 @@ public final class CsvPreference {
 			return new CsvPreference(this);
 		}
 
-		public Builder ignoreEmptyFieldLines(boolean b) {
-			throw new UnsupportedOperationException("in development");
+
+		public Builder ignoreEmptyFieldLines(boolean ignore) {
+			this.emptyFieldStrategy = ignore?EmptyFieldStrategy.FILTER :EmptyFieldStrategy.PASS;
+			return this;
 		}
 	}
 	
