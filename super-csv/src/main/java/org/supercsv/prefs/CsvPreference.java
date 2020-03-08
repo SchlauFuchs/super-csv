@@ -513,7 +513,10 @@ public final class CsvPreference {
 			
 			return new CsvPreference(this);
 		}
-		
+
+		public Builder ignoreEmptyFieldLines(boolean b) {
+			throw new UnsupportedOperationException("in development");
+		}
 	}
 	
 }
