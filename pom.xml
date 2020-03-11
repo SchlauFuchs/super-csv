@@ -18,7 +18,7 @@
 
 	<groupId>net.sf.supercsv</groupId>
 	<artifactId>super-csv-parent</artifactId>
-	<version>2.4.1-SNAPSHOT</version>
+	<version>3.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<url>https://github.com/super-csv/super-csv</url>
 	<name>Super CSV</name>
@@ -43,13 +43,13 @@
 
 		<!-- properties ensure reporting plugin versions are same as managed versions -->
 		<coveralls.plugin.version>4.3.0</coveralls.plugin.version>
-		<jacoco.plugin.version>0.7.9</jacoco.plugin.version>
-		<findbugs-plugin.version>3.0.0</findbugs-plugin.version>
-		<javadoc.plugin.version>2.10.1</javadoc.plugin.version>
+		<jacoco.plugin.version>0.8.5</jacoco.plugin.version>
+		<findbugs-plugin.version>3.0.5</findbugs-plugin.version>
+		<javadoc.plugin.version>3.1.1</javadoc.plugin.version>
 		<jxr.plugin.version>2.5</jxr.plugin.version>
-		<pmd.plugin.version>3.3</pmd.plugin.version>
-		<project.info.reports.plugin.version>2.7</project.info.reports.plugin.version>
-		<surefire.plugin.version>2.18</surefire.plugin.version>
+		<pmd.plugin.version>3.13.0</pmd.plugin.version>
+		<project.info.reports.plugin.version>3.0.0</project.info.reports.plugin.version>
+		<surefire.plugin.version>2.22.2</surefire.plugin.version>
 	</properties>
 
 	<prerequisites>
@@ -59,11 +59,6 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>animal-sniffer-maven-plugin</artifactId>
-					<version>1.18</version>
-				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
@@ -163,8 +158,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>11</source>
+					<target>11</target>
 				</configuration>
 			</plugin>
 
@@ -253,6 +248,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<javadocExecutable>${javadocExecutable}</javadocExecutable>
+					<additionalOptions>-html5</additionalOptions>
+				</configuration>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -274,29 +273,6 @@
 					<tagNameFormat>v@{project.version}</tagNameFormat>
 				</configuration>
 			</plugin>
-
-			<!-- Ensures Java 1.5 compatibility -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>animal-sniffer-maven-plugin</artifactId>
-				<configuration>
-					<signature>
-						<groupId>org.codehaus.mojo.signature</groupId>
-						<artifactId>java15</artifactId>
-						<version>1.0</version>
-					</signature>
-				</configuration>
-				<executions>
-					<execution>
-						<id>check-java15-compatibility</id>
-						<phase>test</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
 		</plugins>
 	</build>
 
@@ -320,6 +296,15 @@
 			<id>englishLocale</id>
 			<properties>
 				<argLine>-Duser.country=GB -Duser.language=en</argLine>
+			</properties>
+		</profile>
+		<profile>
+			<id>jdk-7-config</id>
+			<activation>
+				<jdk>[7,15)</jdk>
+			</activation>
+			<properties>
+				<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
 			</properties>
 		</profile>
 	</profiles>
@@ -487,9 +472,11 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>${javadoc.plugin.version}</version>
 				<configuration>
+					<javadocExecutable>${javadocExecutable}</javadocExecutable>
+					<additionalOptions>-html5</additionalOptions>
 					<aggregate>true</aggregate>
 					<links>
-						<link>http://docs.oracle.com/javase/8/docs/api</link>
+						<link>http://docs.oracle.com/javase/11/docs/api</link>
 						<link>http://dozer.sourceforge.net/apidocs</link>
 						<link>http://www.joda.org/joda-time/apidocs</link>
 					</links>

@@ -37,7 +37,9 @@ public enum EmptyFieldStrategy {
     PASS ;
 
     /**
-     *  analyzes the row.
+     * analyzes the row.
+     * @param line the csv row to be analyzed
+     * @param delimiter the field delimiter used in the given CSV file
      * @return true if the Tokenizer should skip this row during processing.
      */
     public boolean toBeSkipped(String line, char delimiter) {

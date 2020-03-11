@@ -76,8 +76,8 @@ public class TokenTest {
 	@Test
 	public void testTokenNotFound() {
 		// expecting 'foo', not 2
-		assertEquals(TOKEN2, processor.execute(TOKEN2, ANONYMOUS_CSVCONTEXT));
-		assertEquals(TOKEN2, processorChain.execute(TOKEN2, ANONYMOUS_CSVCONTEXT));
+		assertEquals(TOKEN2, (int) processor.execute(TOKEN2, ANONYMOUS_CSVCONTEXT));
+		assertEquals(TOKEN2, (int) processorChain.execute(TOKEN2, ANONYMOUS_CSVCONTEXT));
 		
 		// expecting 2, not 'foo'
 		assertEquals(TOKEN, processor2.execute(TOKEN, ANONYMOUS_CSVCONTEXT));

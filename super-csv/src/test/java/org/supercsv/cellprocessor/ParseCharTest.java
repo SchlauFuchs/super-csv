@@ -52,8 +52,8 @@ public class ParseCharTest {
 	 */
 	@Test
 	public void testValidChar() {
-		assertEquals(CHAR, processor.execute(CHAR, ANONYMOUS_CSVCONTEXT));
-		assertEquals(CHAR, processorChain.execute(CHAR, ANONYMOUS_CSVCONTEXT));
+		assertEquals(CHAR, (char) processor.execute(CHAR, ANONYMOUS_CSVCONTEXT));
+		assertEquals(CHAR, (char) processorChain.execute(CHAR, ANONYMOUS_CSVCONTEXT));
 	}
 	
 	/**
@@ -61,8 +61,8 @@ public class ParseCharTest {
 	 */
 	@Test
 	public void testStringWithSingleChar() {
-		assertEquals(CHAR, processor.execute(STRING, ANONYMOUS_CSVCONTEXT));
-		assertEquals(CHAR, processorChain.execute(STRING, ANONYMOUS_CSVCONTEXT));
+		assertEquals(CHAR, (char) processor.execute(STRING, ANONYMOUS_CSVCONTEXT));
+		assertEquals(CHAR, (char) processorChain.execute(STRING, ANONYMOUS_CSVCONTEXT));
 	}
 	
 	/**
