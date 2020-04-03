@@ -15,8 +15,7 @@
  */
 package org.supercsv.cellprocessor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.supercsv.SuperCsvTestUtils.ANONYMOUS_CSVCONTEXT;
 
 import java.util.ArrayList;
@@ -43,17 +42,16 @@ public class CollectorTest {
 	private List<Object> list;
 	private Set<Object> set;
 	private List<Object> chainedList;
-	private List<Object> input = Arrays.asList(new Object[] { "one", null, 2, 3.0, 2, null, true, new Date() });
-	private final int duplicates = 2;
-	
+	private final List<Object> input = Arrays.asList(new Object[] { "one", null, 2, 3.0, 2, null, true, new Date() });
+
 	/**
 	 * Sets up the Collectors.
 	 */
 	@Before
 	public void setUp() {
-		list = new ArrayList<Object>();
-		set = new HashSet<Object>();
-		chainedList = new ArrayList<Object>();
+		list = new ArrayList<>();
+		set = new HashSet<>();
+		chainedList = new ArrayList<>();
 		listCollector = new Collector(list);
 		setCollector = new Collector(set);
 		chainedCollector = new Collector(chainedList, new IdentityTransform());
@@ -68,8 +66,8 @@ public class CollectorTest {
 		for( Object o : input ) {
 			listCollector.execute(o, ANONYMOUS_CSVCONTEXT);
 		}
-		
-		assertTrue(listCollector.getCollection() == list);
+
+		assertSame(listCollector.getCollection(), list);
 		assertEquals(input.size(), list.size());
 		for( int i = 0; i < input.size(); i++ ) {
 			assertEquals(input.get(i), list.get(i));
@@ -86,8 +84,9 @@ public class CollectorTest {
 		for( Object o : input ) {
 			setCollector.execute(o, ANONYMOUS_CSVCONTEXT);
 		}
-		
-		assertTrue(setCollector.getCollection() == set);
+
+		assertSame(setCollector.getCollection(), set);
+		int duplicates = 2;
 		assertEquals(input.size() - duplicates, set.size());
 		for( Object o : input ) {
 			assertTrue(set.contains(o));
@@ -104,8 +103,8 @@ public class CollectorTest {
 		for( Object o : input ) {
 			chainedCollector.execute(o, ANONYMOUS_CSVCONTEXT);
 		}
-		
-		assertTrue(chainedCollector.getCollection() == chainedList);
+
+		assertSame(chainedCollector.getCollection(), chainedList);
 		assertEquals(input.size(), chainedList.size());
 		for( int i = 0; i < input.size(); i++ ) {
 			assertEquals(input.get(i), chainedList.get(i));

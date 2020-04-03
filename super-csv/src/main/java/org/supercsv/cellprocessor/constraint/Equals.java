@@ -22,8 +22,10 @@ import org.supercsv.cellprocessor.ift.DateCellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.util.CsvContext;
+
+import java.util.Objects;
 
 /**
  * This constraint ensures that all input data is equal (to each other, or to a supplied constant value).
@@ -38,7 +40,7 @@ public class Equals extends CellProcessorAdaptor implements BoolCellProcessor, D
 	private static final Object UNKNOWN = new Object();
 	
 	private Object constantValue;
-	private boolean constantSupplied;
+	private final boolean constantSupplied;
 	
 	/**
 	 * Constructs a new <code>Equals</code> processor, which ensures all input data is equal.
@@ -127,7 +129,7 @@ public class Equals extends CellProcessorAdaptor implements BoolCellProcessor, D
 	 * @return true if both objects are null or equal, otherwise false
 	 */
 	private static boolean equals(Object o1, Object o2) {
-		return (o1 == null) ? (o2 == null) : o1.equals(o2);
+		return Objects.equals(o1, o2);
 	}
 	
 }

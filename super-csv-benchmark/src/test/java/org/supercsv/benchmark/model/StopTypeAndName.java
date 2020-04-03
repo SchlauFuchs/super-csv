@@ -22,6 +22,6 @@ package org.supercsv.benchmark.model;
  */
 public enum StopTypeAndName {
 
-	AIRPORT_STOP, BUS_COACH_STOP, FERRY, METRO_TRAM, RAIL, TAXI_RANK;
+	AIRPORT_STOP, BUS_COACH_STOP, FERRY, METRO_TRAM, RAIL, TAXI_RANK
 
 }

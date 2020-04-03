@@ -29,7 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.joda.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the ParseLocalTime cell processor.
@@ -39,20 +39,16 @@ public class ParseLocalTimeTest {
 	private static final String LOCAL_TIME_STRING = "01:02:03";
 	private static final LocalTime LOCAL_TIME = new LocalTime(1, 2, 3, 0);
 
-	private ParseLocalTime processor1;
-	private ParseLocalTime processor2;
-	private ParseLocalTime processorChain1;
-	private ParseLocalTime processorChain2;
 	private List<ParseLocalTime> processors;
 	private DateTimeFormatter formatter;
 
 	@Before
 	public void setUp() {
 		formatter = ISODateTimeFormat.localTimeParser();
-		processor1 = new ParseLocalTime();
-		processor2 = new ParseLocalTime(formatter);
-		processorChain1 = new ParseLocalTime(new IdentityTransform());
-		processorChain2 = new ParseLocalTime(formatter, new IdentityTransform());
+		ParseLocalTime processor1 = new ParseLocalTime();
+		ParseLocalTime processor2 = new ParseLocalTime(formatter);
+		ParseLocalTime processorChain1 = new ParseLocalTime(new IdentityTransform());
+		ParseLocalTime processorChain2 = new ParseLocalTime(formatter, new IdentityTransform());
 		processors = Arrays.asList(processor1, processor2, processorChain1,
 				processorChain2);
 	}
@@ -118,7 +114,7 @@ public class ParseLocalTimeTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testConstructor4WithNullFormatter() {
-		new ParseLocalTime((DateTimeFormatter) null, new IdentityTransform());
+		new ParseLocalTime(null, new IdentityTransform());
 	}
 
 	@Test(expected = NullPointerException.class)

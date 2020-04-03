@@ -16,10 +16,12 @@
 package org.supercsv.util;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
-import org.supercsv.exception.SuperCsvReflectionException;
+import org.supercsv.SuperCsvReflectionException;
 
 /**
  * Provides useful utility methods for reflection.
@@ -37,7 +39,7 @@ public final class ReflectionUtils {
 	/**
 	 * A map of primitives and their associated wrapper classes, to cater for autoboxing.
 	 */
-	private static final Map<Class<?>, Class<?>> AUTOBOXING_CONVERTER = new HashMap<Class<?>, Class<?>>();
+	private static final Map<Class<?>, Class<?>> AUTOBOXING_CONVERTER = new HashMap<>();
 	static {
 		AUTOBOXING_CONVERTER.put(long.class, Long.class);
 		AUTOBOXING_CONVERTER.put(Long.class, long.class);
@@ -75,12 +77,9 @@ public final class ReflectionUtils {
 	 *             if the getter doesn't exist or is not visible
 	 */
 	public static Method findGetter(final Object object, final String fieldName) {
-		if( object == null ) {
-			throw new NullPointerException("object should not be null");
-		} else if( fieldName == null ) {
-			throw new NullPointerException("fieldName should not be null");
-		}
-		
+		Objects.requireNonNull(object,"object should not be null");
+		Objects.requireNonNull(fieldName,"fieldName should not be null");
+
 		final Class<?> clazz = object.getClass();
 		
 		// find a standard getter
@@ -161,17 +160,15 @@ public final class ReflectionUtils {
 	 *             if the setter doesn't exist or is not visible
 	 */
 	public static Method findSetter(final Object object, final String fieldName, final Class<?> argumentType) {
-		if( object == null ) {
-			throw new NullPointerException("object should not be null");
-		} else if( fieldName == null ) {
-			throw new NullPointerException("fieldName should not be null");
-		} else if( argumentType == null ) {
-			throw new NullPointerException("argumentType should not be null");
-		}
+		Objects.requireNonNull(object,"object should not be null");
+		Objects.requireNonNull(fieldName,"fieldName should not be null");
+		Objects.requireNonNull(argumentType,"argumentType should not be null");
 		
 		final String setterName = getMethodNameForField(SET_PREFIX, fieldName);
-		final Class<?> clazz = object.getClass();
-		
+		Class<?> clazz = object.getClass();
+		if(Proxy.isProxyClass(clazz)){
+			clazz = clazz.getInterfaces()[0];
+		}
 		// find a setter compatible with the supplied argument type
 		Method setter = findSetterWithCompatibleParamType(clazz, setterName, argumentType);
 		

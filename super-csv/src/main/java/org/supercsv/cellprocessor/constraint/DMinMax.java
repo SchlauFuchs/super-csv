@@ -18,8 +18,8 @@ package org.supercsv.cellprocessor.constraint;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -133,7 +133,7 @@ public class DMinMax extends CellProcessorAdaptor implements StringCellProcessor
 	public Object execute(final Object value, final CsvContext context) {
 		validateInputNotNull(value, context);
 		
-		final Double result;
+		final double result;
 		if( value instanceof Double ) {
 			result = (Double) value;
 		} else {

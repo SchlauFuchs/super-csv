@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.supercsv.mock.dozer;
+package org.supercsv.io.dozer;
 
 import java.util.List;
 
@@ -40,7 +40,8 @@ public class SurveyResponse {
 	public int getAge() {
 		return age;
 	}
-	
+
+	@SuppressWarnings("unused")
 	public void setAge(int age) {
 		this.age = age;
 	}
@@ -48,7 +49,8 @@ public class SurveyResponse {
 	public Boolean getConsentGiven() {
 		return consentGiven;
 	}
-	
+
+	@SuppressWarnings("unused")
 	public void setConsentGiven(Boolean consentGiven) {
 		this.consentGiven = consentGiven;
 	}
@@ -56,7 +58,8 @@ public class SurveyResponse {
 	public List<Answer> getAnswers() {
 		return answers;
 	}
-	
+
+	@SuppressWarnings("unused")
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}

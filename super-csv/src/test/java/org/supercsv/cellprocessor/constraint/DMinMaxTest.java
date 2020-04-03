@@ -22,8 +22,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.StrReplace;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.mock.IdentityTransform;
 
 /**
@@ -54,8 +54,8 @@ public class DMinMaxTest {
 	 */
 	@Test
 	public void testValidDouble() {
-		assertEquals(IN_RANGE, processor.execute(IN_RANGE, ANONYMOUS_CSVCONTEXT), 0.0);
-		assertEquals(IN_RANGE, processorChain.execute(IN_RANGE, ANONYMOUS_CSVCONTEXT), 0.0);
+		assertEquals(IN_RANGE, (Double) processor.execute(IN_RANGE, ANONYMOUS_CSVCONTEXT), 0.0);
+		assertEquals(IN_RANGE, (Double) processorChain.execute(IN_RANGE, ANONYMOUS_CSVCONTEXT), 0.0);
 	}
 	
 	/**
@@ -63,8 +63,8 @@ public class DMinMaxTest {
 	 */
 	@Test
 	public void testValidString() {
-		assertEquals(IN_RANGE, processor.execute(String.valueOf(IN_RANGE), ANONYMOUS_CSVCONTEXT), 0.0);
-		assertEquals(IN_RANGE, processorChain.execute(String.valueOf(IN_RANGE), ANONYMOUS_CSVCONTEXT), 0.0);
+		assertEquals(IN_RANGE, (Double) processor.execute(String.valueOf(IN_RANGE), ANONYMOUS_CSVCONTEXT), 0.0);
+		assertEquals(IN_RANGE, (Double) processorChain.execute(String.valueOf(IN_RANGE), ANONYMOUS_CSVCONTEXT), 0.0);
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class DMinMaxTest {
 	@Test
 	public void testChainedAfterStringCellProcessor() {
 		final CellProcessor chain = new StrReplace("zero", "0", new DMinMax(MIN, MAX));
-		assertEquals(0.0, chain.execute("zero", ANONYMOUS_CSVCONTEXT), 0.0);
+		assertEquals(0.0, (Double) chain.execute("zero", ANONYMOUS_CSVCONTEXT), 0.0);
 	}
 	
 	/**

@@ -61,26 +61,21 @@ public class AbstractCsvWritingBenchmark extends AbstractBenchmark {
 	 *            the data to write
 	 * @param rows
 	 *            the expected number of rows
-	 * @throws Exception
 	 */
 	public void timeCsvListWriter(final Writer writer,
 			final CsvPreference preference, final String[] header,
 			final List<List<Object>> data, final int rows) throws Exception {
 
-		ICsvListWriter listWriter = null;
-		try {
-			listWriter = new CsvListWriter(writer, preference);
-			listWriter.writeHeader(header);
+        try (ICsvListWriter listWriter = new CsvListWriter(writer, preference)) {
+            listWriter.writeHeader(header);
 
-			for (List<?> row : data) {
-				listWriter.write(row);
-			}
+            for (List<?> row : data) {
+                listWriter.write(row);
+            }
 
-			assertEquals(rows + 1, listWriter.getRowNumber());
+            assertEquals(rows + 1, listWriter.getRowNumber());
 
-		} finally {
-			listWriter.close();
-		}
+        }
 
 	}
 
@@ -99,27 +94,22 @@ public class AbstractCsvWritingBenchmark extends AbstractBenchmark {
 	 *            the cell processors
 	 * @param rows
 	 *            the expected number of rows
-	 * @throws Exception
 	 */
 	public void timeCsvListWriterUsingProcessors(final Writer writer,
 			final CsvPreference preference, final String[] header,
 			final List<List<Object>> data, final CellProcessor[] processors,
 			final int rows) throws Exception {
 
-		ICsvListWriter listWriter = null;
-		try {
-			listWriter = new CsvListWriter(writer, preference);
-			listWriter.writeHeader(header);
+        try (ICsvListWriter listWriter = new CsvListWriter(writer, preference)) {
+            listWriter.writeHeader(header);
 
-			for (List<?> row : data) {
-				listWriter.write(row, processors);
-			}
+            for (List<?> row : data) {
+                listWriter.write(row, processors);
+            }
 
-			assertEquals(rows + 1, listWriter.getRowNumber());
+            assertEquals(rows + 1, listWriter.getRowNumber());
 
-		} finally {
-			listWriter.close();
-		}
+        }
 
 	}
 
@@ -136,27 +126,22 @@ public class AbstractCsvWritingBenchmark extends AbstractBenchmark {
 	 *            the data to write
 	 * @param rows
 	 *            the expected number of rows
-	 * @throws Exception
 	 */
 	public void timeCsvMapWriter(final Writer writer,
 			final CsvPreference preference, final String[] header,
 			final List<Map<String, Object>> data, final int rows)
 			throws Exception {
 
-		ICsvMapWriter mapWriter = null;
-		try {
-			mapWriter = new CsvMapWriter(writer, preference);
-			mapWriter.writeHeader(header);
+        try (ICsvMapWriter mapWriter = new CsvMapWriter(writer, preference)) {
+            mapWriter.writeHeader(header);
 
-			for (Map<String, ?> map : data) {
-				mapWriter.write(map, header);
-			}
+            for (Map<String, ?> map : data) {
+                mapWriter.write(map, header);
+            }
 
-			assertEquals(rows + 1, mapWriter.getRowNumber());
+            assertEquals(rows + 1, mapWriter.getRowNumber());
 
-		} finally {
-			mapWriter.close();
-		}
+        }
 	}
 
 	/**
@@ -174,27 +159,22 @@ public class AbstractCsvWritingBenchmark extends AbstractBenchmark {
 	 *            the cell processors
 	 * @param rows
 	 *            the expected number of rows
-	 * @throws Exception
 	 */
 	public void timeCsvMapWriterUsingProcessors(final Writer writer,
 			final CsvPreference preference, final String[] header,
 			final List<Map<String, Object>> data,
 			final CellProcessor[] processors, final int rows) throws Exception {
 
-		ICsvMapWriter mapWriter = null;
-		try {
-			mapWriter = new CsvMapWriter(writer, preference);
-			mapWriter.writeHeader(header);
+        try (ICsvMapWriter mapWriter = new CsvMapWriter(writer, preference)) {
+            mapWriter.writeHeader(header);
 
-			for (Map<String, ?> map : data) {
-				mapWriter.write(map, header, processors);
-			}
+            for (Map<String, ?> map : data) {
+                mapWriter.write(map, header, processors);
+            }
 
-			assertEquals(rows + 1, mapWriter.getRowNumber());
+            assertEquals(rows + 1, mapWriter.getRowNumber());
 
-		} finally {
-			mapWriter.close();
-		}
+        }
 	}
 
 	/**
@@ -210,25 +190,20 @@ public class AbstractCsvWritingBenchmark extends AbstractBenchmark {
 	 *            the data to write
 	 * @param rows
 	 *            the expected number of rows
-	 * @throws Exception
 	 */
 	public void timeCsvBeanWriter(final Writer writer,
 			final CsvPreference preference, final String[] header,
 			final List<?> data, final int rows) throws Exception {
-		ICsvBeanWriter beanWriter = null;
-		try {
-			beanWriter = new CsvBeanWriter(writer, preference);
-			beanWriter.writeHeader(header);
+        try (ICsvBeanWriter beanWriter = new CsvBeanWriter(writer, preference)) {
+            beanWriter.writeHeader(header);
 
-			for (Object o : data) {
-				beanWriter.write(o, header);
-			}
+            for (Object o : data) {
+                beanWriter.write(o, header);
+            }
 
-			assertEquals(rows + 1, beanWriter.getRowNumber());
+            assertEquals(rows + 1, beanWriter.getRowNumber());
 
-		} finally {
-			beanWriter.close();
-		}
+        }
 	}
 
 	/**
@@ -246,27 +221,22 @@ public class AbstractCsvWritingBenchmark extends AbstractBenchmark {
 	 *            the cell processors
 	 * @param rows
 	 *            the expected number of rows
-	 * @throws Exception
 	 */
 	public void timeCsvBeanWriterUsingProcessors(final Writer writer,
 			final CsvPreference preference, final String[] header,
 			final List<?> data, final CellProcessor[] processors, final int rows)
 			throws Exception {
 
-		ICsvBeanWriter beanWriter = null;
-		try {
-			beanWriter = new CsvBeanWriter(writer, preference);
-			beanWriter.writeHeader(header);
+        try (ICsvBeanWriter beanWriter = new CsvBeanWriter(writer, preference)) {
+            beanWriter.writeHeader(header);
 
-			for (Object o : data) {
-				beanWriter.write(o, header, processors);
-			}
+            for (Object o : data) {
+                beanWriter.write(o, header, processors);
+            }
 
-			assertEquals(rows + 1, beanWriter.getRowNumber());
+            assertEquals(rows + 1, beanWriter.getRowNumber());
 
-		} finally {
-			beanWriter.close();
-		}
+        }
 	}
 
 	/**
@@ -284,28 +254,23 @@ public class AbstractCsvWritingBenchmark extends AbstractBenchmark {
 	 *            the data to write
 	 * @param rows
 	 *            the expected number of rows
-	 * @throws Exception
 	 */
 	public void timeCsvDozerBeanWriter(final Writer writer,
 			final CsvPreference preference, final String[] header,
 			final Class<?> beanClass, final List<?> data, final int rows)
 			throws Exception {
 
-		ICsvDozerBeanWriter dozerBeanWriter = null;
-		try {
-			dozerBeanWriter = new CsvDozerBeanWriter(writer, preference);
-			dozerBeanWriter.writeHeader(header);
-			dozerBeanWriter.configureBeanMapping(beanClass, header);
+        try (ICsvDozerBeanWriter dozerBeanWriter = new CsvDozerBeanWriter(writer, preference)) {
+            dozerBeanWriter.writeHeader(header);
+            dozerBeanWriter.configureBeanMapping(beanClass, header);
 
-			for (Object o : data) {
-				dozerBeanWriter.write(o);
-			}
+            for (Object o : data) {
+                dozerBeanWriter.write(o);
+            }
 
-			assertEquals(rows + 1, dozerBeanWriter.getRowNumber());
+            assertEquals(rows + 1, dozerBeanWriter.getRowNumber());
 
-		} finally {
-			dozerBeanWriter.close();
-		}
+        }
 	}
 
 	/**
@@ -325,27 +290,22 @@ public class AbstractCsvWritingBenchmark extends AbstractBenchmark {
 	 *            the cell processors
 	 * @param rows
 	 *            the expected number of rows
-	 * @throws Exception
 	 */
 	public void timeCsvDozerBeanWriterUsingProcessors(final Writer writer,
 			final CsvPreference preference, final String[] header,
 			final Class<?> beanClass, final List<?> data,
 			final CellProcessor[] processors, final int rows) throws Exception {
-		ICsvDozerBeanWriter dozerBeanWriter = null;
-		try {
-			dozerBeanWriter = new CsvDozerBeanWriter(writer, preference);
-			dozerBeanWriter.writeHeader(header);
-			dozerBeanWriter.configureBeanMapping(beanClass, header);
+        try (ICsvDozerBeanWriter dozerBeanWriter = new CsvDozerBeanWriter(writer, preference)) {
+            dozerBeanWriter.writeHeader(header);
+            dozerBeanWriter.configureBeanMapping(beanClass, header);
 
-			for (Object o : data) {
-				dozerBeanWriter.write(o, processors);
-			}
+            for (Object o : data) {
+                dozerBeanWriter.write(o, processors);
+            }
 
-			assertEquals(rows + 1, dozerBeanWriter.getRowNumber());
+            assertEquals(rows + 1, dozerBeanWriter.getRowNumber());
 
-		} finally {
-			dozerBeanWriter.close();
-		}
+        }
 	}
 
 }

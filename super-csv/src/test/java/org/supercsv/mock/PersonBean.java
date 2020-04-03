@@ -51,14 +51,6 @@ public class PersonBean {
 	
 	/**
 	 * Constructs a PersonBean.
-	 * 
-	 * @param firstName
-	 * @param lastName
-	 * @param birthDate
-	 * @param married
-	 * @param numberOfKids
-	 * @param favouriteQuote
-	 * @param email
 	 */
 	public PersonBean(final String firstName, final String lastName, final Date birthDate, final Time birthTime,
 		final Boolean married, final Integer numberOfKids, final String favouriteQuote, final String email) {
@@ -269,13 +261,8 @@ public class PersonBean {
 			return false;
 		}
 		if( numberOfKids == null ) {
-			if( other.numberOfKids != null ) {
-				return false;
-			}
-		} else if( !numberOfKids.equals(other.numberOfKids) ) {
-			return false;
-		}
-		return true;
+			return other.numberOfKids == null;
+		} else return numberOfKids.equals(other.numberOfKids);
 	}
 	
 	@Override

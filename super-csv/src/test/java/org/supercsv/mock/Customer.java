@@ -22,16 +22,16 @@ package org.supercsv.mock;
  */
 public interface Customer {
 	
-	public String getCustomerNo();
+	String getCustomerNo();
 	
-	public void setCustomerNo(String customerNo);
+	void setCustomerNo(String customerNo);
 	
-	public long getLoyaltyPoints();
+	long getLoyaltyPoints();
 	
-	public void setLoyaltyPoints(long loyaltyPoints);
+	void setLoyaltyPoints(long loyaltyPoints);
 	
-	public String getMailingAddress();
+	String getMailingAddress();
 	
-	public void setMailingAddress(String mailingAddress);
+	void setMailingAddress(String mailingAddress);
 	
 }

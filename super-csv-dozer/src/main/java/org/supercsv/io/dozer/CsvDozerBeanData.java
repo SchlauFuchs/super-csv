@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class CsvDozerBeanData {
 	
-	private List<Object> columns = new ArrayList<Object>();
+	private List<Object> columns = new ArrayList<>();
 	
 	/**
 	 * Gets the List of columns

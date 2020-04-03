@@ -19,6 +19,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
+import java.util.Objects;
 
 import org.supercsv.encoder.CsvEncoder;
 import org.supercsv.prefs.CsvPreference;
@@ -44,10 +45,7 @@ public abstract class AbstractCsvWriter implements ICsvWriter {
 	
 	// the row being written / just written
 	private int rowNumber = 0;
-	
-	// the column being written / just written
-	private int columnNumber = 0;
-	
+
 	/**
 	 * Constructs a new <code>AbstractCsvWriter</code> with the supplied writer and preferences.
 	 * 
@@ -76,11 +74,8 @@ public abstract class AbstractCsvWriter implements ICsvWriter {
 	 *             if writer or preference is null
 	 */
 	public AbstractCsvWriter(final Writer writer, final CsvPreference preference, boolean bufferizeWriter) {
-		if( writer == null ) {
-			throw new NullPointerException("writer should not be null");
-		} else if( preference == null ) {
-			throw new NullPointerException("preference should not be null");
-		}
+		Objects.requireNonNull(writer,"writer should not be null");
+		Objects.requireNonNull(preference,"preference should not be null");
 		
 		this.writer = bufferizeWriter ? new BufferedWriter(writer) : writer;
 		this.preference = preference;
@@ -173,18 +168,18 @@ public abstract class AbstractCsvWriter implements ICsvWriter {
 	 */
 	protected void writeRow(final String... columns) throws IOException {
 		
-		if( columns == null ) {
-			throw new NullPointerException(String.format("columns to write should not be null on line %d", lineNumber));
-		} else if( columns.length == 0 ) {
+		Objects.requireNonNull(columns,String.format("columns to write should not be null on line %d", lineNumber));
+		if( columns.length == 0 ) {
 			throw new IllegalArgumentException(String.format("columns to write should not be empty on line %d",
 				lineNumber));
 		}
 		
 		StringBuilder builder = new StringBuilder();
 		for( int i = 0; i < columns.length; i++ ) {
-			
-			columnNumber = i + 1; // column no used by CsvEncoder
-			
+
+			// the column being written / just written
+			int columnNumber = i + 1; // column no used by CsvEncoder
+
 			if( i > 0 ) {
 				builder.append((char) preference.getDelimiterChar()); // delimiter
 			}
@@ -210,9 +205,7 @@ public abstract class AbstractCsvWriter implements ICsvWriter {
 		
 		lineNumber++; // we're not catering for embedded newlines (must be a single-line comment)
 		
-		if( comment == null ) {
-			throw new NullPointerException(String.format("comment to write should not be null on line %d", lineNumber));
-		}
+		Objects.requireNonNull(comment,String.format("comment to write should not be null on line %d", lineNumber));
 		
 		writer.write(comment + preference.getEndOfLineSymbols());
 		

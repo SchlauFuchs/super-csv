@@ -29,7 +29,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.mock.IdentityTransform;
 
 /**
@@ -42,7 +42,7 @@ public class HashMapperTest {
 	
 	private static final String DEFAULT_VALUE = "Default";
 	
-	private static final Map<Object, Object> VALUE_MAP = new HashMap<Object, Object>();
+	private static final Map<Object, Object> VALUE_MAP = new HashMap<>();
 	static {
 		VALUE_MAP.put(1, "1");
 		VALUE_MAP.put(2, "2");
@@ -100,7 +100,7 @@ public class HashMapperTest {
 	@Test
 	public void testChainedToLongCellProcessor() {
 		final String input = "one million";
-		final Map<Object, Object> map = new HashMap<Object, Object>();
+		final Map<Object, Object> map = new HashMap<>();
 		map.put(input, 1000000);
 		final DecimalFormat format = (DecimalFormat) NumberFormat.getNumberInstance(Locale.UK);
 		format.applyPattern("###,###,###");
@@ -138,7 +138,7 @@ public class HashMapperTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructionWithEmptyMap() {
-		new HashMapper(new HashMap<Object, Object>(), DEFAULT_VALUE);
+		new HashMapper(new HashMap<>(), DEFAULT_VALUE);
 	}
 	
 	/**
@@ -146,7 +146,7 @@ public class HashMapperTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testChainedConstructionWithEmptyMap() {
-		new HashMapper(new HashMap<Object, Object>(), DEFAULT_VALUE, new IdentityTransform());
+		new HashMapper(new HashMap<>(), DEFAULT_VALUE, new IdentityTransform());
 	}
 	
 }

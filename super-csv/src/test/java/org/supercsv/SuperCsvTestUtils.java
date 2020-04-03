@@ -18,10 +18,11 @@ package org.supercsv;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.Time;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneId;
+import java.util.*;
 
 import org.supercsv.cellprocessor.FmtBool;
 import org.supercsv.cellprocessor.FmtDate;
@@ -144,10 +145,10 @@ public class SuperCsvTestUtils {
 	/**
 	 * The CSV file to use for testing.
 	 */
-	public static final String CSV_FILE = new StringBuilder(HEADER_CSV).append("\r\n").append(JOHN_CSV).append("\r\n")
-		.append(BOB_CSV).append("\r\n").append(ALICE_CSV).append("\r\n").append(BILL_CSV).append("\r\n")
-		.append(MIRANDA_CSV).append("\r\n").append(STEVE_CSV).append("\r\n").append(ADA_CSV).append("\r\n")
-		.append(SERGEI_CSV).append("\r\n").append(LARRY_CSV).append("\r\n").append(GRACE_CSV).append("\r\n").toString();
+	public static final String CSV_FILE = HEADER_CSV + "\r\n" + JOHN_CSV + "\r\n" +
+			BOB_CSV + "\r\n" + ALICE_CSV + "\r\n" + BILL_CSV + "\r\n" +
+			MIRANDA_CSV + "\r\n" + STEVE_CSV + "\r\n" + ADA_CSV + "\r\n" +
+			SERGEI_CSV + "\r\n" + LARRY_CSV + "\r\n" + GRACE_CSV + "\r\n";
 		
 	/** List of populated customer beans to use for testing */
 	public static final List<CustomerBean> CUSTOMERS = Arrays.asList(JOHN, BOB, ALICE, BILL, MIRANDA, STEVE, ADA,
@@ -169,11 +170,8 @@ public class SuperCsvTestUtils {
 	 * @return a Date object with time set to midnight, ie. hour = 00, minutes = 00, seconds = 00 and milliseconds = 000
 	 */
 	public static Date date(final int year, final int month, final int dayOfMonth) {
-		final Calendar cal = Calendar.getInstance();
-		cal.setLenient(false);
-		cal.set(year, month - 1, dayOfMonth, 0, 0, 0);
-		cal.set(Calendar.MILLISECOND, 0);
-		return cal.getTime();
+		return Date.from(LocalDate.of(year, Month.values()[ month-1], dayOfMonth)
+				.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 	}
 	
 	/**
@@ -195,11 +193,8 @@ public class SuperCsvTestUtils {
 	 */
 	public static Date date(final int year, final int month, final int dayOfMonth, final int hour, final int minute,
 		final int second) {
-		final Calendar cal = Calendar.getInstance();
-		cal.setLenient(false);
-		cal.set(year, month - 1, dayOfMonth, hour, minute, second);
-		cal.set(Calendar.MILLISECOND, 0);
-		return cal.getTime();
+		return Date.from(LocalDateTime.of(year, Month.values()[ month-1], dayOfMonth,  hour, minute, second)
+				.atZone(ZoneId.systemDefault()).toInstant());
 	}
 	
 	/**
@@ -246,15 +241,11 @@ public class SuperCsvTestUtils {
 	 * @param s2
 	 *            the second String, may be {@code null}
 	 * @return {@code true} if the Strings are equal (case-sensitive), or both {@code null}
+	 * @deprecated use {@link java.util.Objects#equals(Object, Object)}
 	 */
+	@Deprecated
 	public static boolean equals(final String s1, final String s2) {
-		if( s1 == s2 ) {
-			return true;
-		}
-		if( s1 == null || s2 == null ) {
-			return false;
-		}
-		return s1.equals(s2);
+		return Objects.equals(s1, s2);
 	}
 	
 }

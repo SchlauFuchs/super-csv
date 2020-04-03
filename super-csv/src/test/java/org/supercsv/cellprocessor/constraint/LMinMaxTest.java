@@ -24,8 +24,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.StrReplace;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.mock.IdentityTransform;
 
 /**
@@ -65,8 +65,8 @@ public class LMinMaxTest {
 	public void testValidLongString() {
 		String input = "123";
 		Long expected = 123L;
-		assertEquals(expected, (Long) processor.execute(input, ANONYMOUS_CSVCONTEXT));
-		assertEquals(expected, (Long) processorChain.execute(input, ANONYMOUS_CSVCONTEXT));
+		assertEquals(expected, processor.execute(input, ANONYMOUS_CSVCONTEXT));
+		assertEquals(expected, processorChain.execute(input, ANONYMOUS_CSVCONTEXT));
 	}
 	
 	/**

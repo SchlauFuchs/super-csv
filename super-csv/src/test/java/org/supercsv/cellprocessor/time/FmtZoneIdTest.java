@@ -30,7 +30,7 @@ import org.junit.experimental.theories.Theory;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.supercsv.cellprocessor.time.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the FmtZoneId cell processor.
@@ -46,7 +46,7 @@ public class FmtZoneIdTest {
 
 	@DataPoints public static final TextStyle[] textStyles = { TextStyle.FULL, TextStyle.SHORT };
 
-	@Rule public ExpectedException exception = ExpectedException.none();
+	@Rule public final ExpectedException exception = ExpectedException.none();
 
 	@Theory
 	public void testValidZoneIdString(final FmtZoneId p, final ZoneId zoneId) {

@@ -18,8 +18,8 @@ package org.supercsv.cellprocessor.constraint;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.util.CsvContext;
 
 /**

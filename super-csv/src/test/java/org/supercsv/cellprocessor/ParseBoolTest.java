@@ -25,7 +25,7 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.mock.IdentityTransform;
 
 /**
@@ -142,12 +142,12 @@ public class ParseBoolTest {
 				assertTrue((Boolean) processor.execute(TRUE_VALUE.toUpperCase(), ANONYMOUS_CSVCONTEXT));
 				fail("expecting SuperCsvCellProcessorException");
 			}
-			catch(SuperCsvCellProcessorException e) {}
+			catch(SuperCsvCellProcessorException ignored) {}
 			try {
 				assertFalse((Boolean) processor.execute(FALSE_VALUE.toUpperCase(), ANONYMOUS_CSVCONTEXT));
 				fail("expecting SuperCsvCellProcessorException");
 			}
-			catch(SuperCsvCellProcessorException e) {}
+			catch(SuperCsvCellProcessorException ignored) {}
 		}
 		
 	}
@@ -189,7 +189,7 @@ public class ParseBoolTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testConstructionWithNullTrueString() {
-		new ParseBool((String) null, FALSE_VALUE);
+		new ParseBool(null, FALSE_VALUE);
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class ParseBoolTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testConstructionWithNullFalseString() {
-		new ParseBool(TRUE_VALUE, (String) null);
+		new ParseBool(TRUE_VALUE, null);
 	}
 	
 	/**
@@ -205,7 +205,7 @@ public class ParseBoolTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testConstructionWithNullTrueArray() {
-		new ParseBool((String[]) null, new String[] { FALSE_VALUE });
+		new ParseBool(null, new String[] { FALSE_VALUE });
 	}
 	
 	/**
@@ -213,7 +213,7 @@ public class ParseBoolTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testConstructionWithNullFalseArray() {
-		new ParseBool(new String[] { TRUE_VALUE }, (String[]) null);
+		new ParseBool(new String[] { TRUE_VALUE }, null);
 	}
 	
 	/**

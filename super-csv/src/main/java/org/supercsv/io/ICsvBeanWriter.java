@@ -18,9 +18,9 @@ package org.supercsv.io;
 import java.io.IOException;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
-import org.supercsv.exception.SuperCsvException;
-import org.supercsv.exception.SuperCsvReflectionException;
+import org.supercsv.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvException;
+import org.supercsv.SuperCsvReflectionException;
 
 /**
  * Interface for all CSV writers writing to beans.

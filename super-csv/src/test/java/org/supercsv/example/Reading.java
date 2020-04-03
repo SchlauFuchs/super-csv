@@ -19,6 +19,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.FileInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -77,8 +78,8 @@ public class Reading {
 		
 		final String emailRegex = "[a-z0-9\\._]+@[a-z0-9\\.]+"; // just an example, not very robust!
 		StrRegEx.registerMessage(emailRegex, "must be a valid email address");
-		
-		final CellProcessor[] processors = new CellProcessor[] { new UniqueHashCode(), // customerNo (must be unique)
+
+		return new CellProcessor[] { new UniqueHashCode(), // customerNo (must be unique)
 			new NotNull(), // firstName
 			new NotNull(), // lastName
 			new ParseDate("dd/MM/yyyy"), // birthDate
@@ -90,34 +91,25 @@ public class Reading {
 			new StrRegEx(emailRegex), // email
 			new LMinMax(0L, LMinMax.MAX_LONG) // loyaltyPoints
 		};
-		
-		return processors;
 	}
 	
 	/**
 	 * An example of reading using CsvBeanReader.
 	 */
 	private static void readWithCsvBeanReader() throws Exception {
-		
-		ICsvBeanReader beanReader = null;
-		try {
-			beanReader = new CsvBeanReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvBeanReader beanReader = new CsvBeanReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE)) {
+
 			// the header elements are used to map the values to the bean (names must match)
 			final String[] header = beanReader.getHeader(true);
 			final CellProcessor[] processors = getProcessors();
-			
+
 			CustomerBean customer;
-			while( (customer = beanReader.read(CustomerBean.class, header, processors)) != null ) {
+			while ((customer = beanReader.read(CustomerBean.class, header, processors)) != null) {
 				System.out.println(String.format("lineNo=%s, rowNo=%s, customer=%s", beanReader.getLineNumber(),
-					beanReader.getRowNumber(), customer));
+						beanReader.getRowNumber(), customer));
 			}
-			
-		}
-		finally {
-			if( beanReader != null ) {
-				beanReader.close();
-			}
+
 		}
 	}
 	
@@ -125,25 +117,18 @@ public class Reading {
 	 * An example of reading using CsvListReader.
 	 */
 	private static void readWithCsvListReader() throws Exception {
-		
-		ICsvListReader listReader = null;
-		try {
-			listReader = new CsvListReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvListReader listReader = new CsvListReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE)) {
+
 			listReader.getHeader(true); // skip the header (can't be used with CsvListReader)
 			final CellProcessor[] processors = getProcessors();
-			
+
 			List<Object> customerList;
-			while( (customerList = listReader.read(processors)) != null ) {
+			while ((customerList = listReader.read(processors)) != null) {
 				System.out.println(String.format("lineNo=%s, rowNo=%s, customerList=%s", listReader.getLineNumber(),
-					listReader.getRowNumber(), customerList));
+						listReader.getRowNumber(), customerList));
 			}
-			
-		}
-		finally {
-			if( listReader != null ) {
-				listReader.close();
-			}
+
 		}
 	}
 	
@@ -163,33 +148,26 @@ public class Reading {
 		final CellProcessor[] noBirthDateProcessors = new CellProcessor[] { allProcessors[0], // customerNo
 			allProcessors[1], // firstName
 			allProcessors[2] }; // lastName
-		
-		ICsvListReader listReader = null;
-		try {
-			listReader = new CsvListReader(new FileReader(VARIABLE_CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvListReader listReader = new CsvListReader(new FileReader(VARIABLE_CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE)) {
+
 			listReader.getHeader(true); // skip the header (can't be used with CsvListReader)
-			
-			while( (listReader.read()) != null ) {
-				
+
+			while ((listReader.read()) != null) {
+
 				// use different processors depending on the number of columns
 				final CellProcessor[] processors;
-				if( listReader.length() == noBirthDateProcessors.length ) {
+				if (listReader.length() == noBirthDateProcessors.length) {
 					processors = noBirthDateProcessors;
 				} else {
 					processors = allProcessors;
 				}
-				
+
 				final List<Object> customerList = listReader.executeProcessors(processors);
 				System.out.println(String.format("lineNo=%s, rowNo=%s, columns=%s, customerList=%s",
-					listReader.getLineNumber(), listReader.getRowNumber(), customerList.size(), customerList));
+						listReader.getLineNumber(), listReader.getRowNumber(), customerList.size(), customerList));
 			}
-			
-		}
-		finally {
-			if( listReader != null ) {
-				listReader.close();
-			}
+
 		}
 	}
 	
@@ -197,26 +175,19 @@ public class Reading {
 	 * An example of reading using CsvMapReader.
 	 */
 	private static void readWithCsvMapReader() throws Exception {
-		
-		ICsvMapReader mapReader = null;
-		try {
-			mapReader = new CsvMapReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvMapReader mapReader = new CsvMapReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE)) {
+
 			// the header columns are used as the keys to the Map
 			final String[] header = mapReader.getHeader(true);
 			final CellProcessor[] processors = getProcessors();
-			
+
 			Map<String, Object> customerMap;
-			while( (customerMap = mapReader.read(header, processors)) != null ) {
+			while ((customerMap = mapReader.read(header, processors)) != null) {
 				System.out.println(String.format("lineNo=%s, rowNo=%s, customerMap=%s", mapReader.getLineNumber(),
-					mapReader.getRowNumber(), customerMap));
+						mapReader.getRowNumber(), customerMap));
 			}
-			
-		}
-		finally {
-			if( mapReader != null ) {
-				mapReader.close();
-			}
+
 		}
 	}
 	
@@ -224,32 +195,25 @@ public class Reading {
 	 * An example of partial reading using CsvBeanReader.
 	 */
 	private static void partialReadWithCsvBeanReader() throws Exception {
-		
-		ICsvBeanReader beanReader = null;
-		try {
-			beanReader = new CsvBeanReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvBeanReader beanReader = new CsvBeanReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE)) {
+
 			beanReader.getHeader(true); // skip past the header (we're defining our own)
-			
+
 			// only map the first 3 columns - setting header elements to null means those columns are ignored
-			final String[] header = new String[] { "customerNo", "firstName", "lastName", null, null, null, null, null,
-				null, null, null };
-			
+			final String[] header = new String[]{"customerNo", "firstName", "lastName", null, null, null, null, null,
+					null, null, null};
+
 			// no processing required for ignored columns
-			final CellProcessor[] processors = new CellProcessor[] { new UniqueHashCode(), new NotNull(),
-				new NotNull(), null, null, null, null, null, null, null, null };
-			
+			final CellProcessor[] processors = new CellProcessor[]{new UniqueHashCode(), new NotNull(),
+					new NotNull(), null, null, null, null, null, null, null, null};
+
 			CustomerBean customer;
-			while( (customer = beanReader.read(CustomerBean.class, header, processors)) != null ) {
+			while ((customer = beanReader.read(CustomerBean.class, header, processors)) != null) {
 				System.out.println(String.format("lineNo=%s, rowNo=%s, customer=%s", beanReader.getLineNumber(),
-					beanReader.getRowNumber(), customer));
+						beanReader.getRowNumber(), customer));
 			}
-			
-		}
-		finally {
-			if( beanReader != null ) {
-				beanReader.close();
-			}
+
 		}
 	}
 	
@@ -257,33 +221,26 @@ public class Reading {
 	 * An example of partial reading using CsvMapReader.
 	 */
 	private static void partialReadWithCsvMapReader() throws Exception {
-		
-		ICsvMapReader mapReader = null;
-		try {
-			mapReader = new CsvMapReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvMapReader mapReader = new CsvMapReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE)) {
+
 			mapReader.getHeader(true); // skip past the header (we're defining our own)
-			
+
 			// only map the first 3 columns - setting header elements to null means those columns are ignored
-			final String[] header = new String[] { "customerNo", "firstName", "lastName", null, null, null, null, null,
-				null, null, null };
-			
+			final String[] header = new String[]{"customerNo", "firstName", "lastName", null, null, null, null, null,
+					null, null, null};
+
 			// apply some constraints to ignored columns (just because we can)
-			final CellProcessor[] processors = new CellProcessor[] { new UniqueHashCode(), new NotNull(),
-				new NotNull(), new NotNull(), new NotNull(), new NotNull(), new Optional(), new Optional(), new NotNull(),
-				new NotNull(), new LMinMax(0L, LMinMax.MAX_LONG) };
-			
+			final CellProcessor[] processors = new CellProcessor[]{new UniqueHashCode(), new NotNull(),
+					new NotNull(), new NotNull(), new NotNull(), new NotNull(), new Optional(), new Optional(), new NotNull(),
+					new NotNull(), new LMinMax(0L, LMinMax.MAX_LONG)};
+
 			Map<String, Object> customerMap;
-			while( (customerMap = mapReader.read(header, processors)) != null ) {
+			while ((customerMap = mapReader.read(header, processors)) != null) {
 				System.out.println(String.format("lineNo=%s, rowNo=%s, customerMap=%s", mapReader.getLineNumber(),
-					mapReader.getRowNumber(), customerMap));
+						mapReader.getRowNumber(), customerMap));
 			}
-			
-		}
-		finally {
-			if( mapReader != null ) {
-				mapReader.close();
-			}
+
 		}
 	}
 	
@@ -291,22 +248,15 @@ public class Reading {
 	 * An example of reading UTF8 file with CsvBeanReader.
 	 */
 	public static void readUTF8FileWithCsvBeanReader() throws Exception {
-		ICsvBeanReader beanReader = null;
-		try {
-			beanReader = new CsvBeanReader(new BufferedReader(
-					new InputStreamReader(new FileInputStream(UTF8_FILENAME), "UTF-8")
-			), CsvPreference.STANDARD_PREFERENCE);
+		try (ICsvBeanReader beanReader = new CsvBeanReader(new BufferedReader(
+				new InputStreamReader(new FileInputStream(UTF8_FILENAME), StandardCharsets.UTF_8)
+		), CsvPreference.STANDARD_PREFERENCE)) {
 			final String[] header = beanReader.getHeader(true);
 			final CellProcessor[] processors = getProcessors();
 			CustomerBean customer;
-			while( (customer = beanReader.read(CustomerBean.class, header, processors)) != null ) {
+			while ((customer = beanReader.read(CustomerBean.class, header, processors)) != null) {
 				System.out.println(String.format("lineNo=%s, rowNo=%s, customer=%s", beanReader.getLineNumber(),
 						beanReader.getRowNumber(), customer));
-			}
-		}
-		finally {
-			if( beanReader != null ){
-				beanReader.close();
 			}
 		}
 	}
@@ -315,22 +265,15 @@ public class Reading {
 	 * An example of reading UTF16 file with CsvListReader.
 	 */
 	public static void readUTF16FileWithCsvListReader() throws Exception {
-		ICsvListReader listReader = null;
-		try {
-			listReader = new CsvListReader(new BufferedReader(
-					new InputStreamReader(new FileInputStream(UTF16_FILENAME), "UTF-16")
-			), CsvPreference.STANDARD_PREFERENCE);
+		try (ICsvListReader listReader = new CsvListReader(new BufferedReader(
+				new InputStreamReader(new FileInputStream(UTF16_FILENAME), StandardCharsets.UTF_16)
+		), CsvPreference.STANDARD_PREFERENCE)) {
 			listReader.getHeader(true);
 			final CellProcessor[] processors = getProcessors();
 			List<Object> customerList;
-			while( (customerList = listReader.read(processors)) != null ) {
+			while ((customerList = listReader.read(processors)) != null) {
 				System.out.println(String.format("lineNo=%s, rowNo=%s, customerList=%s", listReader.getLineNumber(),
 						listReader.getRowNumber(), customerList));
-			}
-		}
-		finally {
-			if( listReader != null ) {
-				listReader.close();
 			}
 		}
 	}

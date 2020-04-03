@@ -91,8 +91,7 @@ public class ParseSqlTime extends ParseDateTimeAbstract {
 	@Override
 	protected Object parseValue(Object value) throws ParseException {
 		final Date date = formatter.parse((String) value);
-		final Time result = new Time(date.getTime());
-		return result;
+		return new Time(date.getTime());
 	}
 	
 }

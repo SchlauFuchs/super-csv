@@ -29,7 +29,7 @@ import org.junit.experimental.theories.Theory;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.supercsv.cellprocessor.time.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the FmtDuration cell processor.
@@ -44,7 +44,7 @@ public class FmtDurationTest {
 	@DataPoints public static FmtDuration[] processors = { new FmtDuration(),
 		new FmtDuration(new IdentityTransform()) };
 
-	@Rule public ExpectedException exception = ExpectedException.none();
+	@Rule public final ExpectedException exception = ExpectedException.none();
 
 	@Theory
 	public void testValidDurationString(final FmtDuration p, final ZonedDateTime start, final ZonedDateTime end) {

@@ -20,7 +20,7 @@ import java.util.Locale;
 import org.joda.time.format.DateTimeFormatter;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -160,7 +160,7 @@ public abstract class AbstractJodaFormattingProcessor<T> extends
 	 */
 	public AbstractJodaFormattingProcessor(final Class<T> jodaClass,
 			final String pattern, final CellProcessor next) {
-		this(jodaClass, pattern, (Locale) null, next);
+		this(jodaClass, pattern, null, next);
 	}
 
 	/**

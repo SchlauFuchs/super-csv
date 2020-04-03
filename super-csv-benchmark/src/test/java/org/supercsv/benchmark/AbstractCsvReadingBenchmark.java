@@ -58,29 +58,23 @@ public abstract class AbstractCsvReadingBenchmark extends AbstractBenchmark {
 	 *            the preferences
 	 * @param rows
 	 *            the number of rows to read
-	 * @throws Exception
 	 */
 	public void timeCsvListReader(final Reader reader,
 			final CsvPreference preference, final int rows) throws Exception {
 
-		ICsvListReader listReader = null;
-		try {
-			listReader = new CsvListReader(reader, preference);
+        try (ICsvListReader listReader = new CsvListReader(reader, preference)) {
 
-			final String[] header = listReader.getHeader(true);
-			assertNotNull(header);
+            final String[] header = listReader.getHeader(true);
+            assertNotNull(header);
 
-			for (int j = 0; j < rows; j++) {
-				final List<String> row = listReader.read();
-				assertNotNull(row);
-			}
+            for (int j = 0; j < rows; j++) {
+                final List<String> row = listReader.read();
+                assertNotNull(row);
+            }
 
-			assertEquals(rows + 1, listReader.getRowNumber());
+            assertEquals(rows + 1, listReader.getRowNumber());
 
-		} finally {
-			listReader.close();
-
-		}
+        }
 
 	}
 
@@ -95,29 +89,24 @@ public abstract class AbstractCsvReadingBenchmark extends AbstractBenchmark {
 	 *            the cell processors
 	 * @param rows
 	 *            the number of rows to read
-	 * @throws Exception
 	 */
 	public void timeCsvListReaderUsingProcessors(final Reader reader,
 			final CsvPreference preference, final CellProcessor[] processors,
 			final int rows) throws Exception {
 
-		ICsvListReader listReader = null;
-		try {
-			listReader = new CsvListReader(reader, preference);
+        try (ICsvListReader listReader = new CsvListReader(reader, preference)) {
 
-			final String[] header = listReader.getHeader(true);
-			assertNotNull(header);
+            final String[] header = listReader.getHeader(true);
+            assertNotNull(header);
 
-			for (int j = 0; j < rows; j++) {
-				final List<Object> row = listReader.read(processors);
-				assertNotNull(row);
-			}
+            for (int j = 0; j < rows; j++) {
+                final List<Object> row = listReader.read(processors);
+                assertNotNull(row);
+            }
 
-			assertEquals(rows + 1, listReader.getRowNumber());
+            assertEquals(rows + 1, listReader.getRowNumber());
 
-		} finally {
-			listReader.close();
-		}
+        }
 	}
 
 	/**
@@ -129,28 +118,23 @@ public abstract class AbstractCsvReadingBenchmark extends AbstractBenchmark {
 	 *            the preferences
 	 * @param rows
 	 *            the number of rows to read
-	 * @throws Exception
 	 */
 	public void timeCsvMapReader(final Reader reader,
 			final CsvPreference preference, final int rows) throws Exception {
 
-		ICsvMapReader mapReader = null;
-		try {
-			mapReader = new CsvMapReader(reader, preference);
+        try (ICsvMapReader mapReader = new CsvMapReader(reader, preference)) {
 
-			final String[] header = mapReader.getHeader(true);
-			assertNotNull(header);
+            final String[] header = mapReader.getHeader(true);
+            assertNotNull(header);
 
-			for (int j = 0; j < rows; j++) {
-				final Map<String, String> row = mapReader.read(header);
-				assertNotNull(row);
-			}
+            for (int j = 0; j < rows; j++) {
+                final Map<String, String> row = mapReader.read(header);
+                assertNotNull(row);
+            }
 
-			assertEquals(rows + 1, mapReader.getRowNumber());
+            assertEquals(rows + 1, mapReader.getRowNumber());
 
-		} finally {
-			mapReader.close();
-		}
+        }
 	}
 
 	/**
@@ -164,30 +148,25 @@ public abstract class AbstractCsvReadingBenchmark extends AbstractBenchmark {
 	 *            the cell processors
 	 * @param rows
 	 *            the number of rows to read
-	 * @throws Exception
 	 */
 	public void timeCsvMapReaderUsingProcessors(final Reader reader,
 			final CsvPreference preference, final CellProcessor[] processors,
 			final int rows) throws Exception {
 
-		ICsvMapReader mapReader = null;
-		try {
-			mapReader = new CsvMapReader(reader, preference);
+        try (ICsvMapReader mapReader = new CsvMapReader(reader, preference)) {
 
-			final String[] header = mapReader.getHeader(true);
-			assertNotNull(header);
+            final String[] header = mapReader.getHeader(true);
+            assertNotNull(header);
 
-			for (int j = 0; j < rows; j++) {
-				final Map<String, Object> row = mapReader.read(header,
-						processors);
-				assertNotNull(row);
-			}
+            for (int j = 0; j < rows; j++) {
+                final Map<String, Object> row = mapReader.read(header,
+                        processors);
+                assertNotNull(row);
+            }
 
-			assertEquals(rows + 1, mapReader.getRowNumber());
+            assertEquals(rows + 1, mapReader.getRowNumber());
 
-		} finally {
-			mapReader.close();
-		}
+        }
 	}
 
 	/**
@@ -201,29 +180,24 @@ public abstract class AbstractCsvReadingBenchmark extends AbstractBenchmark {
 	 *            the type of the bean class
 	 * @param rows
 	 *            the number of rows to read
-	 * @throws Exception
 	 */
 	public void timeCsvBeanReader(final Reader reader,
 			final CsvPreference preference, final Class<?> beanClass,
 			final int rows) throws Exception {
 
-		ICsvBeanReader beanReader = null;
-		try {
-			beanReader = new CsvBeanReader(reader, preference);
+        try (ICsvBeanReader beanReader = new CsvBeanReader(reader, preference)) {
 
-			final String[] header = beanReader.getHeader(true);
-			assertNotNull(header);
+            final String[] header = beanReader.getHeader(true);
+            assertNotNull(header);
 
-			for (int j = 0; j < rows; j++) {
-				final Object bean = beanReader.read(beanClass, header);
-				assertNotNull(bean);
-			}
+            for (int j = 0; j < rows; j++) {
+                final Object bean = beanReader.read(beanClass, header);
+                assertNotNull(bean);
+            }
 
-			assertEquals(rows + 1, beanReader.getRowNumber());
+            assertEquals(rows + 1, beanReader.getRowNumber());
 
-		} finally {
-			beanReader.close();
-		}
+        }
 	}
 
 	/**
@@ -239,30 +213,25 @@ public abstract class AbstractCsvReadingBenchmark extends AbstractBenchmark {
 	 *            the cell processors
 	 * @param rows
 	 *            the number of rows to read
-	 * @throws Exception
 	 */
 	public void timeCsvBeanReaderUsingProcessors(final Reader reader,
 			final CsvPreference preference, final Class<?> beanClass,
 			final CellProcessor[] processors, final int rows) throws Exception {
 
-		ICsvBeanReader beanReader = null;
-		try {
-			beanReader = new CsvBeanReader(reader, preference);
+        try (ICsvBeanReader beanReader = new CsvBeanReader(reader, preference)) {
 
-			String[] header = beanReader.getHeader(true);
-			assertNotNull(header);
+            String[] header = beanReader.getHeader(true);
+            assertNotNull(header);
 
-			for (int j = 0; j < rows; j++) {
-				final Object bean = beanReader.read(beanClass, header,
-						processors);
-				assertNotNull(bean);
-			}
+            for (int j = 0; j < rows; j++) {
+                final Object bean = beanReader.read(beanClass, header,
+                        processors);
+                assertNotNull(bean);
+            }
 
-			assertEquals(rows + 1, beanReader.getRowNumber());
+            assertEquals(rows + 1, beanReader.getRowNumber());
 
-		} finally {
-			beanReader.close();
-		}
+        }
 	}
 
 	/**
@@ -276,31 +245,26 @@ public abstract class AbstractCsvReadingBenchmark extends AbstractBenchmark {
 	 *            the type of the bean class
 	 * @param rows
 	 *            the number of rows to read
-	 * @throws Exception
 	 */
 	public void timeCsvDozerBeanReader(final Reader reader,
 			final CsvPreference preference, final Class<?> beanClass,
 			final int rows) throws Exception {
 
-		ICsvDozerBeanReader dozerBeanReader = null;
-		try {
-			dozerBeanReader = new CsvDozerBeanReader(reader, preference);
+        try (ICsvDozerBeanReader dozerBeanReader = new CsvDozerBeanReader(reader, preference)) {
 
-			final String[] header = dozerBeanReader.getHeader(true);
-			assertNotNull(header);
+            final String[] header = dozerBeanReader.getHeader(true);
+            assertNotNull(header);
 
-			dozerBeanReader.configureBeanMapping(beanClass, header);
+            dozerBeanReader.configureBeanMapping(beanClass, header);
 
-			for (int j = 0; j < rows; j++) {
-				final Object bean = dozerBeanReader.read(beanClass);
-				assertNotNull(bean);
-			}
+            for (int j = 0; j < rows; j++) {
+                final Object bean = dozerBeanReader.read(beanClass);
+                assertNotNull(bean);
+            }
 
-			assertEquals(rows + 1, dozerBeanReader.getRowNumber());
+            assertEquals(rows + 1, dozerBeanReader.getRowNumber());
 
-		} finally {
-			dozerBeanReader.close();
-		}
+        }
 	}
 
 	/**
@@ -316,31 +280,26 @@ public abstract class AbstractCsvReadingBenchmark extends AbstractBenchmark {
 	 *            the cell processors
 	 * @param rows
 	 *            the number of rows to read
-	 * @throws Exception
 	 */
 	public void timeCsvDozerBeanReaderUsingProcessors(final Reader reader,
 			final CsvPreference preference, final Class<?> beanClass,
 			final CellProcessor[] processors, final int rows) throws Exception {
 
-		ICsvDozerBeanReader dozerBeanReader = null;
-		try {
-			dozerBeanReader = new CsvDozerBeanReader(reader, preference);
+        try (ICsvDozerBeanReader dozerBeanReader = new CsvDozerBeanReader(reader, preference)) {
 
-			final String[] header = dozerBeanReader.getHeader(true);
-			assertNotNull(header);
+            final String[] header = dozerBeanReader.getHeader(true);
+            assertNotNull(header);
 
-			dozerBeanReader.configureBeanMapping(beanClass, header);
+            dozerBeanReader.configureBeanMapping(beanClass, header);
 
-			for (int j = 0; j < rows; j++) {
-				final Object bean = dozerBeanReader.read(beanClass, processors);
-				assertNotNull(bean);
-			}
+            for (int j = 0; j < rows; j++) {
+                final Object bean = dozerBeanReader.read(beanClass, processors);
+                assertNotNull(bean);
+            }
 
-			assertEquals(rows + 1, dozerBeanReader.getRowNumber());
+            assertEquals(rows + 1, dozerBeanReader.getRowNumber());
 
-		} finally {
-			dozerBeanReader.close();
-		}
+        }
 	}
 
 }

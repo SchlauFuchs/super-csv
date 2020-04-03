@@ -50,7 +50,7 @@ public class AbstractCsvWriterTest {
 	 */
 	static class MockCsvWriter extends AbstractCsvWriter {
 		
-		private CsvPreference preference;
+		private final CsvPreference preference;
 		
 		public MockCsvWriter(Writer writer, CsvPreference preference) {
 			super(writer, preference);
@@ -133,9 +133,6 @@ public class AbstractCsvWriterTest {
 	 * 
 	 * @param csvWriter
 	 *            the CSV writer
-	 * @param prefs
-	 *            the preferences
-	 * @throws IOException
 	 */
 	private void writeHeaderWithEmbeddedEndOfLineSymbols(final MockCsvWriter csvWriter) throws IOException {
 		
@@ -225,7 +222,7 @@ public class AbstractCsvWriterTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void writeHeaderWithEmptyArray() throws IOException {
-		abstractWriter.writeHeader(new String[] {});
+		abstractWriter.writeHeader();
 	}
 	
 	/**

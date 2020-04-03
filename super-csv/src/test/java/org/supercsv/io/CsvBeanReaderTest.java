@@ -53,7 +53,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvReflectionException;
+import org.supercsv.SuperCsvReflectionException;
 import org.supercsv.mock.Customer;
 import org.supercsv.mock.CustomerBean;
 import org.supercsv.mock.CustomerStringBean;
@@ -322,7 +322,7 @@ public class CsvBeanReaderTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testReadWithInvalidSizeNameMapping() throws IOException {
 		beanReader.getHeader(true);
-		beanReader.read(PersonBean.class, new String[] { null, "firstName" });
+		beanReader.read(PersonBean.class, null, "firstName");
 	}
 	
 	/**
@@ -331,7 +331,7 @@ public class CsvBeanReaderTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testReadIntoBeanWithInvalidSizeNameMapping() throws IOException {
 		beanReader.getHeader(true);
-		beanReader.read(new PersonBean(), new String[] { null, "firstName" });
+		beanReader.read(new PersonBean(), null, "firstName");
 	}
 	
 	/**
@@ -355,7 +355,7 @@ public class CsvBeanReaderTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testReadProcessorsWithNullNameMapping() throws IOException {
-		beanReader.read(PersonBean.class, (String[]) null, READ_PROCESSORS);
+		beanReader.read(PersonBean.class, null, READ_PROCESSORS);
 	}
 	
 	/**
@@ -363,7 +363,7 @@ public class CsvBeanReaderTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testReadIntoBeanUsingProcessorsWithNullNameMapping() throws IOException {
-		beanReader.read(new PersonBean(), (String[]) null, READ_PROCESSORS);
+		beanReader.read(new PersonBean(), null, READ_PROCESSORS);
 	}
 	
 	/**

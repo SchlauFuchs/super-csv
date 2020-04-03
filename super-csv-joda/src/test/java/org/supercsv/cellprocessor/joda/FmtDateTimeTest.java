@@ -31,7 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.joda.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the FmtDateTime cell processor.
@@ -43,29 +43,21 @@ public class FmtDateTimeTest {
 	private static final DateTime DATE_TIME = new DateTime(2013, 10, 25, 1, 2,
 			3, 0, DateTimeZone.forOffsetHours(10));
 
-	private FmtDateTime processor1;
-	private FmtDateTime processor2;
-	private FmtDateTime processor3;
-	private FmtDateTime processor4;
-	private FmtDateTime processorChain1;
-	private FmtDateTime processorChain2;
-	private FmtDateTime processorChain3;
-	private FmtDateTime processorChain4;
 	private List<FmtDateTime> processors;
 	private DateTimeFormatter formatter;
 
 	@Before
 	public void setUp() {
 		formatter = ISODateTimeFormat.dateTime();
-		processor1 = new FmtDateTime();
-		processor2 = new FmtDateTime(formatter);
-		processor3 = new FmtDateTime(DATE_TIME_FORMAT);
-		processor4 = new FmtDateTime(DATE_TIME_FORMAT, Locale.ENGLISH);
-		processorChain1 = new FmtDateTime(new IdentityTransform());
-		processorChain2 = new FmtDateTime(formatter, new IdentityTransform());
-		processorChain3 = new FmtDateTime(DATE_TIME_FORMAT,
+		FmtDateTime processor1 = new FmtDateTime();
+		FmtDateTime processor2 = new FmtDateTime(formatter);
+		FmtDateTime processor3 = new FmtDateTime(DATE_TIME_FORMAT);
+		FmtDateTime processor4 = new FmtDateTime(DATE_TIME_FORMAT, Locale.ENGLISH);
+		FmtDateTime processorChain1 = new FmtDateTime(new IdentityTransform());
+		FmtDateTime processorChain2 = new FmtDateTime(formatter, new IdentityTransform());
+		FmtDateTime processorChain3 = new FmtDateTime(DATE_TIME_FORMAT,
 				new IdentityTransform());
-		processorChain4 = new FmtDateTime(DATE_TIME_FORMAT, Locale.ENGLISH,
+		FmtDateTime processorChain4 = new FmtDateTime(DATE_TIME_FORMAT, Locale.ENGLISH,
 				new IdentityTransform());
 		processors = Arrays.asList(processor1, processor2, processor3,
 				processor4, processorChain1, processorChain2, processorChain3,
@@ -157,12 +149,12 @@ public class FmtDateTimeTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testConstructor7WithNullPattern() {
-		new FmtDateTime((String) null, Locale.ENGLISH, new IdentityTransform());
+		new FmtDateTime(null, Locale.ENGLISH, new IdentityTransform());
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testConstructor7WithNullNext() {
-		new FmtDateTime(DATE_TIME_FORMAT, Locale.ENGLISH, (CellProcessor) null);
+		new FmtDateTime(DATE_TIME_FORMAT, Locale.ENGLISH, null);
 	}
 
 }

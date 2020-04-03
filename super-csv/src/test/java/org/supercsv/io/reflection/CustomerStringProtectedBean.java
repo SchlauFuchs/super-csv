@@ -15,8 +15,9 @@
  */
 package org.supercsv.io.reflection;
 
-import org.supercsv.SuperCsvTestUtils;
 import org.supercsv.mock.CustomerStringBean;
+
+import java.util.Objects;
 
 /**
  * non-public Bean with String values only - for testing reading/writing without processors.
@@ -47,8 +48,6 @@ class CustomerStringProtectedBean {
 	
 	/**
 	 * Constructs a CustomerStringProtectedBean from a CustomerStringBean.
-	 * 
-	 * @param customerStringBean
 	 */
 	protected CustomerStringProtectedBean(CustomerStringBean customerStringBean) {
 		this.customerNo = customerStringBean.getCustomerNo();
@@ -75,6 +74,7 @@ class CustomerStringProtectedBean {
 	 * @param customerNo
 	 *            the customerNo to set
 	 */
+	@SuppressWarnings("unused")
 	protected void setCustomerNo(String customerNo) {
 		this.customerNo = customerNo;
 	}
@@ -90,6 +90,7 @@ class CustomerStringProtectedBean {
 	 * @param firstName
 	 *            the firstName to set
 	 */
+	@SuppressWarnings("unused")
 	protected void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -105,6 +106,7 @@ class CustomerStringProtectedBean {
 	 * @param lastName
 	 *            the lastName to set
 	 */
+	@SuppressWarnings("unused")
 	protected void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
@@ -117,9 +119,10 @@ class CustomerStringProtectedBean {
 	}
 	
 	/**
-	 * @param birthDate
-	 *            the birthDate to set
+	 * @param birthTime
+	 *            the birthTime to set
 	 */
+	@SuppressWarnings("unused")
 	protected void setBirthTime(String birthTime) {
 		this.birthTime = birthTime;
 	}
@@ -127,6 +130,7 @@ class CustomerStringProtectedBean {
 	/**
 	 * @return the birthDate
 	 */
+	@SuppressWarnings("unused")
 	protected String getBirthTime() {
 		return birthTime;
 	}
@@ -135,6 +139,7 @@ class CustomerStringProtectedBean {
 	 * @param birthDate
 	 *            the birthDate to set
 	 */
+	@SuppressWarnings("unused")
 	protected void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
@@ -142,6 +147,7 @@ class CustomerStringProtectedBean {
 	/**
 	 * @return the mailingAddress
 	 */
+	@SuppressWarnings("unused")
 	protected String getMailingAddress() {
 		return mailingAddress;
 	}
@@ -150,6 +156,7 @@ class CustomerStringProtectedBean {
 	 * @param mailingAddress
 	 *            the mailingAddress to set
 	 */
+	@SuppressWarnings("unused")
 	protected void setMailingAddress(String mailingAddress) {
 		this.mailingAddress = mailingAddress;
 	}
@@ -157,6 +164,7 @@ class CustomerStringProtectedBean {
 	/**
 	 * @return the married
 	 */
+	@SuppressWarnings("unused")
 	protected String getMarried() {
 		return married;
 	}
@@ -165,6 +173,7 @@ class CustomerStringProtectedBean {
 	 * @param married
 	 *            the married to set
 	 */
+	@SuppressWarnings("unused")
 	protected void setMarried(String married) {
 		this.married = married;
 	}
@@ -172,6 +181,7 @@ class CustomerStringProtectedBean {
 	/**
 	 * @return the numberOfKids
 	 */
+	@SuppressWarnings("unused")
 	protected String getNumberOfKids() {
 		return numberOfKids;
 	}
@@ -180,6 +190,7 @@ class CustomerStringProtectedBean {
 	 * @param numberOfKids
 	 *            the numberOfKids to set
 	 */
+	@SuppressWarnings("unused")
 	protected void setNumberOfKids(String numberOfKids) {
 		this.numberOfKids = numberOfKids;
 	}
@@ -187,6 +198,7 @@ class CustomerStringProtectedBean {
 	/**
 	 * @return the favouriteQuote
 	 */
+	@SuppressWarnings("unused")
 	protected String getFavouriteQuote() {
 		return favouriteQuote;
 	}
@@ -195,6 +207,7 @@ class CustomerStringProtectedBean {
 	 * @param favouriteQuote
 	 *            the favouriteQuote to set
 	 */
+	@SuppressWarnings("unused")
 	protected void setFavouriteQuote(String favouriteQuote) {
 		this.favouriteQuote = favouriteQuote;
 	}
@@ -210,6 +223,7 @@ class CustomerStringProtectedBean {
 	 * @param email
 	 *            the email to set
 	 */
+	@SuppressWarnings("unused")
 	protected void setEmail(String email) {
 		this.email = email;
 	}
@@ -259,50 +273,47 @@ class CustomerStringProtectedBean {
 			return false;
 		}
 		CustomerStringProtectedBean other = (CustomerStringProtectedBean) obj;
-		if( !SuperCsvTestUtils.equals(birthDate, other.birthDate) ) {
+		if( !Objects.equals(birthDate, other.birthDate) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(birthTime, other.birthTime) ) {
+		if( !Objects.equals(birthTime, other.birthTime) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(customerNo, other.customerNo) ) {
+		if( !Objects.equals(customerNo, other.customerNo) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(email, other.email) ) {
+		if( !Objects.equals(email, other.email) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(favouriteQuote, other.favouriteQuote) ) {
+		if( !Objects.equals(favouriteQuote, other.favouriteQuote) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(firstName, other.firstName) ) {
+		if( !Objects.equals(firstName, other.firstName) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(lastName, other.lastName) ) {
+		if( !Objects.equals(lastName, other.lastName) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(loyaltyPoints, other.loyaltyPoints) ) {
+		if( !Objects.equals(loyaltyPoints, other.loyaltyPoints) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(mailingAddress, other.mailingAddress) ) {
+		if( !Objects.equals(mailingAddress, other.mailingAddress) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(married, other.married) ) {
+		if( !Objects.equals(married, other.married) ) {
 			return false;
 		}
-		
-		if( !SuperCsvTestUtils.equals(numberOfKids, other.numberOfKids) ) {
-			return false;
-		}
-		return true;
+
+		return Objects.equals(numberOfKids, other.numberOfKids);
 	}
 	
 }

@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.prefs.CsvPreference;
@@ -67,7 +68,7 @@ public class CsvListReader extends AbstractCsvReader implements ICsvListReader {
 	public List<String> read() throws IOException {
 		
 		if( readRow() ) {
-			return new ArrayList<String>(getColumns());
+			return new ArrayList<>(getColumns());
 		}
 		
 		return null; // EOF
@@ -78,10 +79,8 @@ public class CsvListReader extends AbstractCsvReader implements ICsvListReader {
 	 */
 	public List<Object> read(final CellProcessor... processors) throws IOException {
 		
-		if( processors == null ) {
-			throw new NullPointerException("processors should not be null");
-		}
-		
+		Objects.requireNonNull(processors,"processors should not be null");
+
 		if( readRow() ) {
 			return executeProcessors(processors);
 		}
@@ -93,6 +92,6 @@ public class CsvListReader extends AbstractCsvReader implements ICsvListReader {
 	 * {@inheritDoc}
 	 */
 	public List<Object> executeProcessors(final CellProcessor... processors) {
-		return super.executeProcessors(new ArrayList<Object>(getColumns().size()), processors);
+		return super.executeProcessors(new ArrayList<>(getColumns().size()), processors);
 	}
 }

@@ -25,8 +25,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.mock.IdentityTransform;
 
 /**
@@ -99,7 +99,7 @@ public class RequireSubStrTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructionWithEmptyArray() {
-		new RequireSubStr(new String[] {});
+		new RequireSubStr();
 	}
 	
 	/**
@@ -115,7 +115,7 @@ public class RequireSubStrTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructionWithEmptyList() {
-		new RequireSubStr(new ArrayList<String>(), new IdentityTransform());
+		new RequireSubStr(new ArrayList<>(), new IdentityTransform());
 	}
 	
 	/**

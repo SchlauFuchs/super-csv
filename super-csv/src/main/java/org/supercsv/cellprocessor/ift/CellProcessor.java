@@ -19,8 +19,9 @@ import org.supercsv.util.CsvContext;
 
 /**
  * Defines the interface of all <code>CellProcessor</code>s.
+ * @param <T> the expected class of the returned object
  */
-public interface CellProcessor {
+public interface CellProcessor<T> {
 	
 	/**
 	 * This method is invoked by the framework when the processor needs to process data or check constraints.
@@ -29,9 +30,9 @@ public interface CellProcessor {
 	 *            the value to be processed
 	 * @param context
 	 *            the CSV context
-	 * @param <T> the expected class of the returned object
+
 	 * @return the result of cell processor execution
 	 * @since 1.0
 	 */
-	<T> T execute(final Object value, final CsvContext context);
+	T execute(final Object value, final CsvContext context);
 }

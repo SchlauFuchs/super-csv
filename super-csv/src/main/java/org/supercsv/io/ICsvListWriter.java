@@ -19,8 +19,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
-import org.supercsv.exception.SuperCsvException;
+import org.supercsv.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvException;
 
 /**
  * Interface for writers that write to a List.

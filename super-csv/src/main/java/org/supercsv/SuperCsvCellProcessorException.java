@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.supercsv.exception;
+package org.supercsv;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.util.CsvContext;
+
+import java.util.Objects;
 
 /**
  * Exception thrown when CellProcessor execution fails (typically due to invalid input) - constraint validating
@@ -95,9 +97,7 @@ public class SuperCsvCellProcessorException extends SuperCsvException {
 	 *             if expectedType is null
 	 */
 	private static String getUnexpectedTypeMessage(final Class<?> expectedType, final Object actualValue) {
-		if( expectedType == null ) {
-			throw new NullPointerException("expectedType should not be null");
-		}
+		Objects.requireNonNull(expectedType,"expectedType should not be null");
 		String expectedClassName = expectedType.getName();
 		String actualClassName = (actualValue != null) ? actualValue.getClass().getName() : "null";
 		return String.format("the input value should be of type %s but is %s", expectedClassName, actualClassName);

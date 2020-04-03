@@ -20,8 +20,8 @@ import java.util.Set;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -39,7 +39,7 @@ import org.supercsv.util.CsvContext;
  */
 public class UniqueHashCode extends CellProcessorAdaptor {
 	
-	private final Set<Integer> uniqueSet = new HashSet<Integer>();
+	private final Set<Integer> uniqueSet = new HashSet<>();
 	
 	/**
 	 * Constructs a new <code>UniqueHashCode</code> processor, which ensures that all rows in a column are unique.

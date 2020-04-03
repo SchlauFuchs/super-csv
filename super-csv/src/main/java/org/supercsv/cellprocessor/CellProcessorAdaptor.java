@@ -21,8 +21,10 @@ import org.supercsv.cellprocessor.ift.DateCellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
+
+import java.util.Objects;
 
 /**
  * Abstract super class containing shared behaviour of all cell processors. Processors are linked together in a linked
@@ -54,9 +56,7 @@ public abstract class CellProcessorAdaptor implements CellProcessor {
 	 */
 	protected CellProcessorAdaptor(final CellProcessor next) {
 		super();
-		if( next == null ) {
-			throw new NullPointerException("next CellProcessor should not be null");
-		}
+		Objects.requireNonNull(next,"next CellProcessor should not be null");
 		this.next = next;
 	}
 	

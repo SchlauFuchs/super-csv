@@ -39,8 +39,8 @@ public class DefaultCsvEncoder implements CsvEncoder {
 		
 		final StringBuilder currentColumn = new StringBuilder();
 		final int delimiter = preference.getDelimiterChar();
-		final char quote = (char) preference.getQuoteChar();
-		final char quoteEscapeChar = (char) preference.getQuoteEscapeChar();
+		final char quote = preference.getQuoteChar();
+		final char quoteEscapeChar = preference.getQuoteEscapeChar();
 		final String eolSymbols = preference.getEndOfLineSymbols();
 		final int lastCharIndex = input.length() - 1;
 		

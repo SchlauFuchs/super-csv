@@ -16,6 +16,7 @@
 package org.supercsv.cellprocessor;
 
 import java.util.Collection;
+import java.util.Objects;
 
 import org.supercsv.cellprocessor.ift.BoolCellProcessor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -79,9 +80,7 @@ public class Collector extends CellProcessorAdaptor implements BoolCellProcessor
 	 *             if collection is null
 	 */
 	private static void checkPreconditions(final Collection<Object> collection) {
-		if( collection == null ) {
-			throw new NullPointerException("collection should not be null");
-		}
+		Objects.requireNonNull(collection,"collection should not be null");
 	}
 	
 	/**

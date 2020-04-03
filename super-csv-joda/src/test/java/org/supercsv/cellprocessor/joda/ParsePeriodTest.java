@@ -29,7 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.joda.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the ParsePeriod cell processor.
@@ -39,20 +39,16 @@ public class ParsePeriodTest {
 	private static final String PERIOD_STRING = "P1Y2M3DT4H5M6S";
 	private static final Period PERIOD = new Period(1, 2, 0, 3, 4, 5, 6, 0);
 
-	private ParsePeriod processor1;
-	private ParsePeriod processor2;
-	private ParsePeriod processorChain1;
-	private ParsePeriod processorChain2;
 	private List<ParsePeriod> processors;
 	private PeriodFormatter formatter;
 
 	@Before
 	public void setUp() {
 		formatter = ISOPeriodFormat.standard();
-		processor1 = new ParsePeriod();
-		processor2 = new ParsePeriod(formatter);
-		processorChain1 = new ParsePeriod(new IdentityTransform());
-		processorChain2 = new ParsePeriod(formatter, new IdentityTransform());
+		ParsePeriod processor1 = new ParsePeriod();
+		ParsePeriod processor2 = new ParsePeriod(formatter);
+		ParsePeriod processorChain1 = new ParsePeriod(new IdentityTransform());
+		ParsePeriod processorChain2 = new ParsePeriod(formatter, new IdentityTransform());
 		processors = Arrays.asList(processor1, processor2, processorChain1,
 				processorChain2);
 	}
@@ -118,7 +114,7 @@ public class ParsePeriodTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testConstructor4WithNullFormatter() {
-		new ParsePeriod((PeriodFormatter) null, new IdentityTransform());
+		new ParsePeriod(null, new IdentityTransform());
 	}
 
 	@Test(expected = NullPointerException.class)

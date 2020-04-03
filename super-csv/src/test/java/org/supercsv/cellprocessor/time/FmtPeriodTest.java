@@ -27,7 +27,7 @@ import org.junit.experimental.theories.Theory;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.supercsv.cellprocessor.time.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the FmtPeriod cell processor.
@@ -39,7 +39,7 @@ public class FmtPeriodTest {
 		new FmtPeriod(new IdentityTransform()) };
 	@DataPoints public static final Period[] periods = { Period.of(1, 2, 3), Period.of(0, 0, 0), Period.of(4, 0, 8) };
 
-	@Rule public ExpectedException exception = ExpectedException.none();
+	@Rule public final ExpectedException exception = ExpectedException.none();
 
 	@Theory
 	public void testValidPeriodString(final Period period, final FmtPeriod processor) {

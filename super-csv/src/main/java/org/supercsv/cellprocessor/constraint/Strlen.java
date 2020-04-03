@@ -16,13 +16,14 @@
 package org.supercsv.cellprocessor.constraint;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -35,7 +36,7 @@ import org.supercsv.util.CsvContext;
  */
 public class Strlen extends CellProcessorAdaptor implements StringCellProcessor {
 	
-	private final Set<Integer> requiredLengths = new HashSet<Integer>();
+	private final Set<Integer> requiredLengths = new HashSet<>();
 	
 	/**
 	 * Constructs a new <code>Strlen</code> processor, which ensures that the input String has a length equal to any of the
@@ -101,9 +102,8 @@ public class Strlen extends CellProcessorAdaptor implements StringCellProcessor 
 	 *             if requiredLengths is empty
 	 */
 	private static void checkPreconditions(final int... requiredLengths) {
-		if( requiredLengths == null ) {
-			throw new NullPointerException("requiredLengths should not be null");
-		} else if( requiredLengths.length == 0 ) {
+		Objects.requireNonNull(requiredLengths,"requiredLengths should not be null");
+		if( requiredLengths.length == 0 ) {
 			throw new IllegalArgumentException("requiredLengths should not be empty");
 		}
 	}

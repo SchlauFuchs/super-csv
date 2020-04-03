@@ -24,8 +24,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 
+import java.util.Collections;
 import java.util.List;
 import org.dozer.DozerBeanMapper;
 import org.junit.After;
@@ -35,13 +35,10 @@ import org.supercsv.cellprocessor.Optional;
 import org.supercsv.cellprocessor.ParseBool;
 import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvException;
+import org.supercsv.SuperCsvException;
 import org.supercsv.io.ITokenizer;
 import org.supercsv.io.Tokenizer;
-import org.supercsv.mock.dozer.Answer;
-import org.supercsv.mock.dozer.SurveyResponse;
 import org.supercsv.prefs.CsvPreference;
-import org.supercsv.util.CsvContext;
 
 /**
  * Tests the CsvDozerBeanReader class.
@@ -67,8 +64,7 @@ public class CsvDozerBeanReaderTest {
 	private CsvDozerBeanReader tokenizerBeanReaderWithMapper;
 	private ITokenizer tokenizer;
 	private DozerBeanMapper beanMapper;
-	private DozerBeanMapper configuredBeanMapper;
-	
+
 	private static final String[] FIELD_MAPPING = new String[] { "age", "consentGiven", "answers[0].questionNo",
 		"answers[0].answer", "answers[1].questionNo", "answers[1].answer", "answers[2].questionNo", "answers[2].answer" };
 	
@@ -99,8 +95,8 @@ public class CsvDozerBeanReaderTest {
 		
 		beanMapper = new DozerBeanMapper();
 		beanReaderWithMapper = new CsvDozerBeanReader(reader, PREFS, beanMapper);
-		
-		configuredBeanMapper = new DozerBeanMapper(Arrays.asList("reference.xml"));
+
+		DozerBeanMapper configuredBeanMapper = new DozerBeanMapper(Collections.singletonList("reference.xml"));
 		beanReaderWithConfiguredMapper = new CsvDozerBeanReader(reader, PREFS, configuredBeanMapper);
 		
 		tokenizerBeanReaderWithMapper = new CsvDozerBeanReader(tokenizer, PREFS, beanMapper);
@@ -254,7 +250,7 @@ public class CsvDozerBeanReaderTest {
 	public void testReadForBeanReaderWithBrokenMaxSingleLineQuotes() throws IOException {
 		reader = new StringReader(BROKEN_CSV);
 		final CsvDozerBeanReader brokenCsvBeanReader = new CsvDozerBeanReader(reader, new CsvPreference.Builder(PREFS).maxLinesPerRow(1).build(), beanMapper);
-		final List<SurveyResponse> responses = new ArrayList<SurveyResponse>();
+		final List<SurveyResponse> responses = new ArrayList<>();
 		testReadForBrokenCSV(brokenCsvBeanReader, responses, "unexpected end of line while reading quoted column on line 2", 2);
 	}
 
@@ -262,7 +258,7 @@ public class CsvDozerBeanReaderTest {
 	public void testReadForBeanReaderWithBrokenMaxTwoLineQuotes() throws IOException {
 		reader = new StringReader(BROKEN_CSV);
 		final CsvDozerBeanReader brokenCsvBeanReader = new CsvDozerBeanReader(reader, new CsvPreference.Builder(PREFS).maxLinesPerRow(2).build(), beanMapper);
-		final List<SurveyResponse> responses = new ArrayList<SurveyResponse>();
+		final List<SurveyResponse> responses = new ArrayList<>();
 		testReadForBrokenCSV(brokenCsvBeanReader, responses, "max number of lines to read exceeded while reading quoted column beginning on line 2 and ending on line 3", 1);
 	}
 
@@ -332,7 +328,6 @@ public class CsvDozerBeanReaderTest {
 	 *            whether the reader is already configured
 	 * @param useExistingBean
 	 *            whether to map to an existing bean, or let Dozer create a new instance of a class
-	 * @throws IOException
 	 */
 	private void testRead(final CsvDozerBeanReader beanReader, final boolean useProcessors, final boolean configured,
 		final boolean useExistingBean) throws IOException {
@@ -390,7 +385,6 @@ public class CsvDozerBeanReaderTest {
 	 * @param useExistingBean
 	 *            whether to populate an existing bean, or let Dozer instantiate an instance of a class
 	 * @return the SurveyResponse
-	 * @throws IOException
 	 */
 	private SurveyResponse readSurveyResponse(final CsvDozerBeanReader beanReader, final boolean useProcessors,
 		final boolean useExistingBean) throws IOException {
@@ -558,7 +552,6 @@ public class CsvDozerBeanReaderTest {
 	 *            whether processors should be used for the test
 	 * @param useExistingBean
 	 *            whether to populate an existing bean, or let Dozer instantiate an instance of a class
-	 * @throws IOException
 	 */
 	private void testPartialRead(final CsvDozerBeanReader beanReader, final boolean useProcessors,
 		final boolean useExistingBean) throws IOException {
@@ -619,11 +612,7 @@ public class CsvDozerBeanReaderTest {
 		final Class<?>[] hintTypes = new Class<?>[] { null, Answer.class, Answer.class, Answer.class };
 		beanReader.configureBeanMapping(SurveyResponse.class, fieldMapping, hintTypes);
 		
-		final CellProcessor parseAnswer = new CellProcessor() {
-			public Object execute(Object value, CsvContext context) {
-				return value == null ? null : new Answer(0, (String) value);
-			}
-		};
+		final CellProcessor parseAnswer = (value, context) -> value == null ? null : new Answer(0, (String) value);
 		final CellProcessor[] processors = new CellProcessor[] { new Optional(new ParseInt()), parseAnswer,
 			parseAnswer, parseAnswer };
 		
@@ -663,70 +652,70 @@ public class CsvDozerBeanReaderTest {
 			new CsvDozerBeanReader((Reader) null, PREFS);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		// constructor one - null prefs
 		try {
 			new CsvDozerBeanReader(reader, null);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		// constructor two - null tokenizer
 		try {
 			new CsvDozerBeanReader((ITokenizer) null, PREFS);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		// constructor two - null prefs
 		try {
 			new CsvDozerBeanReader(tokenizer, null);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		// constructor three - null reader
 		try {
 			new CsvDozerBeanReader((Reader) null, PREFS, beanMapper);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		// constructor three - null prefs
 		try {
 			new CsvDozerBeanReader(reader, null, beanMapper);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		// constructor three - null dozerBeanMapper
 		try {
 			new CsvDozerBeanReader(reader, PREFS, null);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		// constructor four - null tokenizer
 		try {
 			new CsvDozerBeanReader((ITokenizer) null, PREFS, beanMapper);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		// constructor four - null prefs
 		try {
 			new CsvDozerBeanReader(tokenizer, null, beanMapper);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		// constructor four - null dozerBeanMapper
 		try {
 			new CsvDozerBeanReader(tokenizer, PREFS, null);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 	}
 	
@@ -739,13 +728,13 @@ public class CsvDozerBeanReaderTest {
 			beanReader.configureBeanMapping(null, FIELD_MAPPING);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		try {
 			beanReader.configureBeanMapping(null, FIELD_MAPPING, new Class<?>[FIELD_MAPPING.length]);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 	}
 	
 	/**
@@ -757,13 +746,13 @@ public class CsvDozerBeanReaderTest {
 			beanReader.configureBeanMapping(SurveyResponse.class, null);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		try {
 			beanReader.configureBeanMapping(SurveyResponse.class, null, new Class<?>[FIELD_MAPPING.length]);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 	}
 	
 	/**

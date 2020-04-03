@@ -30,7 +30,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.time.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the FmtZonedDateTime cell processor.
@@ -48,7 +48,7 @@ public class FmtZonedDateTimeTest {
 	@DataPoints public static final DateTimeFormatter[] formats = { DateTimeFormatter.ISO_ZONED_DATE_TIME,
 		DateTimeFormatter.ofPattern("eee MMM dd HH:mm:ss zzz yyyy") };
 
-	@Rule public ExpectedException exception = ExpectedException.none();
+	@Rule public final ExpectedException exception = ExpectedException.none();
 
 	@Theory
 	public void testValidDateTimeString(final FmtZonedDateTime p, final ZonedDateTime dateTime) {

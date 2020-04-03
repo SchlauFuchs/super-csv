@@ -22,6 +22,8 @@ import org.supercsv.io.EmptyColumnParsing;
 import org.supercsv.quote.NormalQuoteMode;
 import org.supercsv.quote.QuoteMode;
 
+import java.util.Objects;
+
 /**
  * Before reading or writing CSV files, you must supply the reader/writer with some preferences.
  * <p>
@@ -147,7 +149,7 @@ public final class CsvPreference {
 
 	private final EmptyFieldStrategy emptyFieldStrategy;
 
-	private int maxLinesPerRow = 0;
+	private final int maxLinesPerRow;
 	
 	private final EmptyColumnParsing emptyColumnParsing;
 
@@ -350,9 +352,9 @@ public final class CsvPreference {
 			if( quoteChar == delimiterChar ) {
 				throw new IllegalArgumentException(String.format(
 					"quoteChar and delimiterChar must not be the same character: %c", quoteChar));
-			} else if( endOfLineSymbols == null ) {
-				throw new NullPointerException("endOfLineSymbols should not be null");
 			}
+			Objects.requireNonNull(endOfLineSymbols, "endOfLineSymbols should not be null");
+
 			this.quoteChar = quoteChar;
 			this.delimiterChar = delimiterChar;
 			this.endOfLineSymbols = endOfLineSymbols;
@@ -404,9 +406,7 @@ public final class CsvPreference {
 		 *             if commentMatcher is null
 		 */
 		public Builder skipComments(final CommentMatcher commentMatcher) {
-			if( commentMatcher == null ) {
-				throw new NullPointerException("commentMatcher should not be null");
-			}
+			Objects.requireNonNull(commentMatcher,"commentMatcher should not be null");
 			this.commentMatcher = commentMatcher;
 			return this;
 		}
@@ -422,9 +422,7 @@ public final class CsvPreference {
 		 *             if encoder is null
 		 */
 		public Builder useEncoder(final CsvEncoder encoder) {
-			if( encoder == null ) {
-				throw new NullPointerException("encoder should not be null");
-			}
+			Objects.requireNonNull(encoder,"encoder should not be null");
 			this.encoder = encoder;
 			return this;
 		}
@@ -443,9 +441,7 @@ public final class CsvPreference {
 		 *             if quoteMode is null
 		 */
 		public Builder useQuoteMode(final QuoteMode quoteMode) {
-			if( quoteMode == null ) {
-				throw new NullPointerException("quoteMode should not be null");
-			}
+			Objects.requireNonNull(quoteMode,"quoteMode should not be null");
 			this.quoteMode = quoteMode;
 			return this;
 		}
@@ -477,9 +473,7 @@ public final class CsvPreference {
 		 * @return the updated Builder
 		 */
 		public Builder setEmptyColumnParsing(final EmptyColumnParsing emptyColumnParsing) {
-			if( emptyColumnParsing == null ) {
-				throw new NullPointerException("emptyColumnParsing should not be null");
-			}
+			Objects.requireNonNull(emptyColumnParsing,"emptyColumnParsing should not be null");
 			this.emptyColumnParsing = emptyColumnParsing;
 			return this;
 		}

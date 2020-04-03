@@ -21,7 +21,7 @@
 	<!-- configuration for CsvDozerBeanReader -->
 	<mapping type="one-way" wildcard="false" map-null="true">
 		<class-a>org.supercsv.io.dozer.CsvDozerBeanData</class-a>
-		<class-b>org.supercsv.mock.dozer.SurveyResponse</class-b>
+		<class-b>org.supercsv.io.dozer.SurveyResponse</class-b>
 		<field>
 			<a>columns[0]</a>
 			<b>age</b>
@@ -58,7 +58,7 @@
 
 	<!-- configuration for CsvDozerBeanWriter -->
 	<mapping type="one-way" wildcard="false" map-null="true">
-		<class-a>org.supercsv.mock.dozer.SurveyResponse</class-a>
+		<class-a>org.supercsv.io.dozer.SurveyResponse</class-a>
 		<class-b>org.supercsv.io.dozer.CsvDozerBeanData</class-b>
 		<field copy-by-reference="true">
 			<a>age</a>

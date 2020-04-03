@@ -19,7 +19,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
 
-import org.supercsv.exception.SuperCsvException;
+import org.supercsv.SuperCsvException;
 
 /**
  * The interface for tokenizers, which are responsible for reading the CSV file, line by line.

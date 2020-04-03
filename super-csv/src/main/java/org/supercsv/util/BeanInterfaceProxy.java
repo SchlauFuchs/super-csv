@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * This is part of the internal implementation of Super CSV.
@@ -37,7 +38,7 @@ import java.util.Map;
  */
 public final class BeanInterfaceProxy implements InvocationHandler {
 	
-	private final Map<String, Object> beanState = new HashMap<String, Object>();
+	private final Map<String, Object> beanState = new HashMap<>();
 	
 	// no instantiation
 	private BeanInterfaceProxy() {
@@ -55,9 +56,7 @@ public final class BeanInterfaceProxy implements InvocationHandler {
 	 *             if proxyInterface is null
 	 */
 	public static <T> T createProxy(final Class<T> proxyInterface) {
-		if( proxyInterface == null ) {
-			throw new NullPointerException("proxyInterface should not be null");
-		}
+		Objects.requireNonNull(proxyInterface, "proxyInterface must not be null");
 		return proxyInterface.cast(Proxy.newProxyInstance(proxyInterface.getClassLoader(),
 			new Class[] { proxyInterface }, new BeanInterfaceProxy()));
 	}

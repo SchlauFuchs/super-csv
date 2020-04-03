@@ -17,7 +17,7 @@ package org.supercsv.cellprocessor;
 
 import org.supercsv.cellprocessor.ift.BoolCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -78,7 +78,7 @@ public class FmtBool extends CellProcessorAdaptor implements BoolCellProcessor {
 			throw new SuperCsvCellProcessorException(Boolean.class, value, context, this);
 		}
 		
-		final String result = ((Boolean) value).booleanValue() ? trueValue : falseValue;
+		final String result = (Boolean) value ? trueValue : falseValue;
 		return next.execute(result, context);
 	}
 }

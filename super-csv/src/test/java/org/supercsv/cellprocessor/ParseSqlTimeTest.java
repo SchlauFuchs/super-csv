@@ -28,7 +28,7 @@ import java.util.Locale;
 import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.mock.IdentityTransform;
 
 /**
@@ -81,6 +81,7 @@ public class ParseSqlTimeTest {
 	/**
 	 * Tests execution with an invalid time (doesn't match format), should throw an exception.
 	 */
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	@Test(expected = SuperCsvCellProcessorException.class)
 	public void testBadlyFormattedDate() {
 		processor.execute("22-20-59", ANONYMOUS_CSVCONTEXT).toString();
@@ -90,6 +91,7 @@ public class ParseSqlTimeTest {
 	 * Tests execution with an invalid time (matches format, but data invalid) and non-lenient processors (should throw
 	 * an exception).
 	 */
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	@Test
 	public void testInvalidTimeWithNonLenient() {
 		final String dodgyDate = "22:20:61";
@@ -98,13 +100,14 @@ public class ParseSqlTimeTest {
 				cp.execute(dodgyDate, ANONYMOUS_CSVCONTEXT).toString();
 				fail("should have thrown a SuperCsvCellProcessorException");
 			}
-			catch(SuperCsvCellProcessorException e) {}
+			catch(SuperCsvCellProcessorException ignored) {}
 		}
 	}
 	
 	/**
 	 * Tests execution with a non String input (should throw an exception).
 	 */
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	@Test(expected = SuperCsvCellProcessorException.class)
 	public void testWithNonCharInput() {
 		processor.execute(1, ANONYMOUS_CSVCONTEXT).toString();

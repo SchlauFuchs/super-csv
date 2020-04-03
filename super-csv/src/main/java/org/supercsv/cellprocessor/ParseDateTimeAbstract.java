@@ -18,10 +18,11 @@ package org.supercsv.cellprocessor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.supercsv.cellprocessor.ift.DateCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -178,9 +179,7 @@ public abstract class ParseDateTimeAbstract extends CellProcessorAdaptor impleme
 	 *             if dateFormat is null
 	 */
 	private static void checkPreconditions(final String dateFormat) {
-		if( dateFormat == null ) {
-			throw new NullPointerException("dateFormat should not be null");
-		}
+		Objects.requireNonNull(dateFormat,"dateFormat should not be null");
 	}
 	
 	/**
@@ -194,11 +193,8 @@ public abstract class ParseDateTimeAbstract extends CellProcessorAdaptor impleme
 	 *             if dateFormat or locale is null
 	 */
 	private static void checkPreconditions(final String dateFormat, final Locale locale) {
-		if( dateFormat == null ) {
-			throw new NullPointerException("dateFormat should not be null");
-		} else if( locale == null ) {
-			throw new NullPointerException("locale should not be null");
-		}
+		Objects.requireNonNull(dateFormat,"dateFormat should not be null");
+		Objects.requireNonNull(locale,"locale should not be null");
 	}
 	
 	/**

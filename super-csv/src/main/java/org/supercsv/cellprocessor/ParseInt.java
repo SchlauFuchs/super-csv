@@ -17,7 +17,7 @@ package org.supercsv.cellprocessor;
 
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -56,12 +56,12 @@ public class ParseInt extends CellProcessorAdaptor implements StringCellProcesso
 	public Object execute(final Object value, final CsvContext context) {
 		validateInputNotNull(value, context);
 		
-		final Integer result;
+		final int result;
 		if( value instanceof Integer ) {
 			result = (Integer) value;
 		} else if( value instanceof String ) {
 			try {
-				result = Integer.valueOf((String) value);
+				result = Integer.parseInt((String) value);
 			}
 			catch(final NumberFormatException e) {
 				throw new SuperCsvCellProcessorException(

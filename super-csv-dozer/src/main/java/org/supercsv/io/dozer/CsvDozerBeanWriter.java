@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.loader.api.BeanMappingBuilder;
@@ -47,7 +48,7 @@ public class CsvDozerBeanWriter extends AbstractCsvWriter implements ICsvDozerBe
 	private final CsvDozerBeanData beanData = new CsvDozerBeanData();
 	
 	// temporary storage of processed columns to be written
-	private final List<Object> processedColumns = new ArrayList<Object>();
+	private final List<Object> processedColumns = new ArrayList<>();
 	
 	/**
 	 * Constructs a new <code>CsvDozerBeanWriter</code> with the supplied Writer and CSV preferences and and creates it's
@@ -80,9 +81,7 @@ public class CsvDozerBeanWriter extends AbstractCsvWriter implements ICsvDozerBe
 	 */
 	public CsvDozerBeanWriter(final Writer writer, final CsvPreference preference, final DozerBeanMapper dozerBeanMapper) {
 		super(writer, preference);
-		if( dozerBeanMapper == null ) {
-			throw new NullPointerException("dozerBeanMapper should not be null");
-		}
+		Objects.requireNonNull(dozerBeanMapper,"dozerBeanMapper should not be null");
 		this.dozerBeanMapper = dozerBeanMapper;
 	}
 	
@@ -98,10 +97,8 @@ public class CsvDozerBeanWriter extends AbstractCsvWriter implements ICsvDozerBe
 	 */
 	public void write(final Object source) throws IOException {
 		
-		if( source == null ) {
-			throw new NullPointerException("object to write should not be null");
-		}
-		
+		Objects.requireNonNull(source,"object to write should not be null");
+
 		// update the current row/line numbers
 		super.incrementRowAndLineNo();
 		
@@ -118,12 +115,9 @@ public class CsvDozerBeanWriter extends AbstractCsvWriter implements ICsvDozerBe
 	 */
 	public void write(final Object source, final CellProcessor[] processors) throws IOException {
 		
-		if( source == null ) {
-			throw new NullPointerException("object to write should not be null");
-		} else if( processors == null ) {
-			throw new NullPointerException("processors should not be null");
-		}
-		
+		Objects.requireNonNull(source,"object to write should not be null");
+		Objects.requireNonNull(processors,"processors should not be null");
+
 		// update the current row/line numbers
 		super.incrementRowAndLineNo();
 		
@@ -157,11 +151,8 @@ public class CsvDozerBeanWriter extends AbstractCsvWriter implements ICsvDozerBe
 		 *             if clazz or fieldMapping (or one of its elements) is null
 		 */
 		public MappingBuilder(final Class<?> clazz, final String[] fieldMapping) {
-			if( clazz == null ) {
-				throw new NullPointerException("clazz should not be null");
-			} else if( fieldMapping == null ) {
-				throw new NullPointerException("fieldMapping should not be null");
-			}
+			Objects.requireNonNull(clazz,"clazz should not be null");
+			Objects.requireNonNull(fieldMapping,"fieldMapping should not be null");
 			this.clazz = clazz;
 			this.fieldMapping = fieldMapping;
 		}

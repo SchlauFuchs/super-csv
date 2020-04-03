@@ -30,7 +30,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.joda.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the FmtLocalDateTime cell processor.
@@ -42,31 +42,23 @@ public class FmtLocalDateTimeTest {
 	private static final LocalDateTime LOCAL_DATE_TIME = new LocalDateTime(
 			2013, 10, 25, 1, 2, 3, 0);
 
-	private FmtLocalDateTime processor1;
-	private FmtLocalDateTime processor2;
-	private FmtLocalDateTime processor3;
-	private FmtLocalDateTime processor4;
-	private FmtLocalDateTime processorChain1;
-	private FmtLocalDateTime processorChain2;
-	private FmtLocalDateTime processorChain3;
-	private FmtLocalDateTime processorChain4;
 	private List<FmtLocalDateTime> processors;
 	private DateTimeFormatter formatter;
 
 	@Before
 	public void setUp() {
 		formatter = ISODateTimeFormat.dateHourMinuteSecondMillis();
-		processor1 = new FmtLocalDateTime();
-		processor2 = new FmtLocalDateTime(formatter);
-		processor3 = new FmtLocalDateTime(LOCAL_DATE_TIME_FORMAT);
-		processor4 = new FmtLocalDateTime(LOCAL_DATE_TIME_FORMAT,
+		FmtLocalDateTime processor1 = new FmtLocalDateTime();
+		FmtLocalDateTime processor2 = new FmtLocalDateTime(formatter);
+		FmtLocalDateTime processor3 = new FmtLocalDateTime(LOCAL_DATE_TIME_FORMAT);
+		FmtLocalDateTime processor4 = new FmtLocalDateTime(LOCAL_DATE_TIME_FORMAT,
 				Locale.ENGLISH);
-		processorChain1 = new FmtLocalDateTime(new IdentityTransform());
-		processorChain2 = new FmtLocalDateTime(formatter,
+		FmtLocalDateTime processorChain1 = new FmtLocalDateTime(new IdentityTransform());
+		FmtLocalDateTime processorChain2 = new FmtLocalDateTime(formatter,
 				new IdentityTransform());
-		processorChain3 = new FmtLocalDateTime(LOCAL_DATE_TIME_FORMAT,
+		FmtLocalDateTime processorChain3 = new FmtLocalDateTime(LOCAL_DATE_TIME_FORMAT,
 				new IdentityTransform());
-		processorChain4 = new FmtLocalDateTime(LOCAL_DATE_TIME_FORMAT,
+		FmtLocalDateTime processorChain4 = new FmtLocalDateTime(LOCAL_DATE_TIME_FORMAT,
 				Locale.ENGLISH, new IdentityTransform());
 		processors = Arrays.asList(processor1, processor2, processor3,
 				processor4, processorChain1, processorChain2, processorChain3,
@@ -159,14 +151,14 @@ public class FmtLocalDateTimeTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testConstructor7WithNullPattern() {
-		new FmtLocalDateTime((String) null, Locale.ENGLISH,
+		new FmtLocalDateTime(null, Locale.ENGLISH,
 				new IdentityTransform());
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testConstructor7WithNullNext() {
 		new FmtLocalDateTime(LOCAL_DATE_TIME_FORMAT, Locale.ENGLISH,
-				(CellProcessor) null);
+				null);
 	}
 
 }

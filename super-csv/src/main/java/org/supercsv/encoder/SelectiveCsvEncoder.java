@@ -16,6 +16,7 @@
 package org.supercsv.encoder;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.supercsv.prefs.CsvPreference;
@@ -30,7 +31,7 @@ import org.supercsv.util.CsvContext;
  */
 public class SelectiveCsvEncoder extends DefaultCsvEncoder {
 	
-	private final Set<Integer> columnNumbers = new HashSet<Integer>();
+	private final Set<Integer> columnNumbers = new HashSet<>();
 	
 	/**
 	 * Constructs a new <code>SelectiveCsvEncoder</code> that encodes columns by column number. If no column numbers are
@@ -42,9 +43,7 @@ public class SelectiveCsvEncoder extends DefaultCsvEncoder {
 	 *             if columnsToEncode is null
 	 */
 	public SelectiveCsvEncoder(final int... columnsToEncode) {
-		if( columnsToEncode == null ) {
-			throw new NullPointerException("columnsToEncode should not be null");
-		}
+		Objects.requireNonNull(columnsToEncode,"columnsToEncode should not be null");
 		for( final Integer columnToEncode : columnsToEncode ) {
 			columnNumbers.add(columnToEncode);
 		}
@@ -60,9 +59,7 @@ public class SelectiveCsvEncoder extends DefaultCsvEncoder {
 	 *             if columnsToEncode is null
 	 */
 	public SelectiveCsvEncoder(final boolean[] columnsToEncode) {
-		if( columnsToEncode == null ) {
-			throw new NullPointerException("columnsToEncode should not be null");
-		}
+		Objects.requireNonNull(columnsToEncode,"columnsToEncode should not be null");
 		for( int i = 0; i < columnsToEncode.length; i++ ) {
 			if( columnsToEncode[i] ) {
 				columnNumbers.add(i + 1); // column numbers start at 1

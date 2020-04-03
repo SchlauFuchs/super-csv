@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.mock.IdentityTransform;
 
 /**
@@ -35,7 +35,7 @@ public class IsElementOfTest {
 	
 	private IsElementOf processor;
 	private IsElementOf chainedProcessor;
-	private List<Object> input = Arrays.asList(new Object[] { "one", 2, 3.0, true, null });
+	private final List<Object> input = Arrays.asList(new Object[] { "one", 2, 3.0, true, null });
 	
 	/**
 	 * Sets up the IsElementOf processors.
@@ -60,7 +60,7 @@ public class IsElementOfTest {
 			processor.execute("not an element", ANONYMOUS_CSVCONTEXT);
 			fail("should have thrown SuperCsvConstraintViolationException");
 		}
-		catch(final SuperCsvConstraintViolationException e) {}
+		catch(final SuperCsvConstraintViolationException ignored) {}
 		
 	}
 	
@@ -78,7 +78,7 @@ public class IsElementOfTest {
 			chainedProcessor.execute("not an element", ANONYMOUS_CSVCONTEXT);
 			fail("should have thrown SuperCsvConstraintViolationException");
 		}
-		catch(final SuperCsvConstraintViolationException e) {}
+		catch(final SuperCsvConstraintViolationException ignored) {}
 		
 	}
 	

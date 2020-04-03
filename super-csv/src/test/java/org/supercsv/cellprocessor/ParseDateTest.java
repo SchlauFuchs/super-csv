@@ -28,7 +28,7 @@ import java.util.Locale;
 import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.mock.IdentityTransform;
 
 /**
@@ -133,7 +133,7 @@ public class ParseDateTest {
 				cp.execute(dodgyDate, ANONYMOUS_CSVCONTEXT);
 				fail("should have thrown a SuperCsvCellProcessorException");
 			}
-			catch(SuperCsvCellProcessorException e) {}
+			catch(SuperCsvCellProcessorException ignored) {}
 		}
 	}
 	

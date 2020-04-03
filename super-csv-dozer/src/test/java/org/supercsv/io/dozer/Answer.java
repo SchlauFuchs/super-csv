@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.supercsv.mock.dozer;
+package org.supercsv.io.dozer;
 
 /**
  * An individual survey answer.
@@ -23,7 +23,8 @@ public class Answer {
 	private Integer questionNo;
 	
 	private String answer;
-	
+
+	@SuppressWarnings("unused")
 	public Answer() {
 	}
 
@@ -35,7 +36,8 @@ public class Answer {
 	public Integer getQuestionNo() {
 		return questionNo;
 	}
-	
+
+	@SuppressWarnings("unused")
 	public void setQuestionNo(Integer questionNo) {
 		this.questionNo = questionNo;
 	}
@@ -43,7 +45,8 @@ public class Answer {
 	public String getAnswer() {
 		return answer;
 	}
-	
+
+	@SuppressWarnings("unused")
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}

@@ -19,8 +19,8 @@ import java.io.IOException;
 
 import org.dozer.MappingException;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
-import org.supercsv.exception.SuperCsvException;
+import org.supercsv.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvException;
 import org.supercsv.io.ICsvWriter;
 
 /**

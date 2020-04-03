@@ -18,9 +18,10 @@ package org.supercsv.io;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
+import java.util.Objects;
 
 import org.supercsv.comment.CommentMatcher;
-import org.supercsv.exception.SuperCsvException;
+import org.supercsv.SuperCsvException;
 import org.supercsv.prefs.CsvPreference;
 import org.supercsv.prefs.EmptyFieldStrategy;
 
@@ -61,13 +62,13 @@ public class Tokenizer extends AbstractTokenizer {
 
 	private final char quoteEscapeChar;
 
-	protected EmptyFieldStrategy emptyFieldStrategy;
+	protected final EmptyFieldStrategy emptyFieldStrategy;
 
 	/**
 	 * Enumeration of tokenizer states. QUOTE_MODE is activated between quotes.
 	 */
 	private enum TokenizerState {
-		NORMAL, QUOTE_MODE;
+		NORMAL, QUOTE_MODE
 	}
 	
 	/**
@@ -98,10 +99,8 @@ public class Tokenizer extends AbstractTokenizer {
 	 */
 	public boolean readColumns(final List<String> columns) throws IOException {
 		
-		if( columns == null ) {
-			throw new NullPointerException("columns should not be null");
-		}
-		
+		Objects.requireNonNull(columns,"columns should not be null");
+
 		// clear the reusable List and StringBuilders
 		columns.clear();
 		currentColumn.setLength(0);
@@ -291,7 +290,7 @@ public class Tokenizer extends AbstractTokenizer {
 					boolean availableCharacters = nextCharIndex < line.length();
 					boolean nextCharIsQuote = availableCharacters && line.charAt(nextCharIndex) == quoteChar;
 
-					if( quoteEscapeChar != quoteChar && nextCharIsQuote ) {
+					if(nextCharIsQuote) {
 						throw new SuperCsvException("Encountered repeat quote char (" +
 								quoteChar + ") when quoteEscapeChar was (" + quoteEscapeChar + ")" +
 								".  Cannot process data where quotes are escaped both with " +
@@ -312,10 +311,6 @@ public class Tokenizer extends AbstractTokenizer {
 	/**
 	 * Adds the currentColumn to columns list managing the case with currentColumn.length() == 0
 	 * It was introduced to manage the emptyColumnParsing.
-	 * 
-	 * @param columns
-	 * @param line
-	 * @param charIndex
 	 */
 	private void addColumn(final List<String> columns, String line, int charIndex) {
 		
@@ -340,9 +335,7 @@ public class Tokenizer extends AbstractTokenizer {
 	 *            the required number of spaces to append
 	 */
 	private static void appendSpaces(final StringBuilder sb, final int spaces) {
-		for( int i = 0; i < spaces; i++ ) {
-			sb.append(SPACE);
-		}
+		sb.append(String.valueOf(SPACE).repeat(Math.max(0, spaces)));
 	}
 	
 	/**

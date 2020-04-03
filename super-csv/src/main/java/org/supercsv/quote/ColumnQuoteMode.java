@@ -16,6 +16,7 @@
 package org.supercsv.quote;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.supercsv.prefs.CsvPreference;
@@ -30,7 +31,7 @@ import org.supercsv.util.CsvContext;
  */
 public class ColumnQuoteMode implements QuoteMode {
 	
-	private final Set<Integer> columnNumbers = new HashSet<Integer>();
+	private final Set<Integer> columnNumbers = new HashSet<>();
 	
 	/**
 	 * Constructs a new <code>ColumnQuoteMode</code> that quotes columns by column number. If no column numbers are supplied
@@ -42,9 +43,7 @@ public class ColumnQuoteMode implements QuoteMode {
 	 *             if columnsToQuote is null
 	 */
 	public ColumnQuoteMode(final int... columnsToQuote) {
-		if( columnsToQuote == null ) {
-			throw new NullPointerException("columnsToQuote should not be null");
-		}
+		Objects.requireNonNull(columnsToQuote,"columnsToQuote should not be null");
 		for( final Integer columnToQuote : columnsToQuote ) {
 			columnNumbers.add(columnToQuote);
 		}
@@ -61,9 +60,7 @@ public class ColumnQuoteMode implements QuoteMode {
 	 *             if columnsToQuote is null
 	 */
 	public ColumnQuoteMode(final boolean[] columnsToQuote) {
-		if( columnsToQuote == null ) {
-			throw new NullPointerException("columnsToQuote should not be null");
-		}
+		Objects.requireNonNull(columnsToQuote,"columnsToQuote should not be null");
 		for( int i = 0; i < columnsToQuote.length; i++ ) {
 			if( columnsToQuote[i] ) {
 				columnNumbers.add(i + 1); // column numbers start at 1

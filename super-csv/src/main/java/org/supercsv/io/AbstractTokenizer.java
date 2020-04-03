@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
 import java.util.List;
+import java.util.Objects;
 
 import org.supercsv.prefs.CsvPreference;
 import org.supercsv.util.Util;
@@ -47,12 +48,8 @@ public abstract class AbstractTokenizer implements ITokenizer {
 	 *             if reader or preferences are null
 	 */
 	public AbstractTokenizer(final Reader reader, final CsvPreference preferences) {
-		if( reader == null ) {
-			throw new NullPointerException("reader should not be null");
-		}
-		if( preferences == null ) {
-			throw new NullPointerException("preferences should not be null");
-		}
+		Objects.requireNonNull(reader,"reader should not be null");
+		Objects.requireNonNull(preferences,"preferences should not be null");
 		this.preferences = preferences;
 		lnr = new LineNumberReader(reader);
 	}

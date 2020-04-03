@@ -49,9 +49,7 @@ import org.supercsv.prefs.CsvPreference;
 public class CsvBeanReaderReflectionTest {
 	
 	private static final CsvPreference PREFS = CsvPreference.STANDARD_PREFERENCE;
-	
-	private Reader reader;
-	
+
 	private CsvBeanReader beanReader;
 	
 	/**
@@ -59,13 +57,10 @@ public class CsvBeanReaderReflectionTest {
 	 */
 	@Before
 	public void setUp() {
-		reader = new StringReader(CSV_FILE);
+		Reader reader = new StringReader(CSV_FILE);
 		beanReader = new CsvBeanReader(reader, PREFS);
 	}
-	
-	public void none() {
-	}
-	
+
 	/**
 	 * Closes the readers after the test.
 	 */

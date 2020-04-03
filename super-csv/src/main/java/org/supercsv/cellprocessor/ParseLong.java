@@ -17,7 +17,7 @@ package org.supercsv.cellprocessor;
 
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -56,7 +56,7 @@ public class ParseLong extends CellProcessorAdaptor implements StringCellProcess
 	public Object execute(final Object value, final CsvContext context) {
 		validateInputNotNull(value, context);
 		
-		final Long result;
+		final long result;
 		if( value instanceof Long ) {
 			result = (Long) value;
 		} else if( value instanceof String ) {

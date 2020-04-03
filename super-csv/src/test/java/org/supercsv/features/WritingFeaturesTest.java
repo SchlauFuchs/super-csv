@@ -75,7 +75,7 @@ public class WritingFeaturesTest {
 	
 	@Ignore
 	@Test
-	public void testCustomEscape() throws IOException {
+	public void testCustomEscape() {
 		throw new UnsupportedOperationException("Not implemented yet!");
 	}
 	
@@ -115,7 +115,7 @@ public class WritingFeaturesTest {
 	
 	@Ignore
 	@Test
-	public void testDifferentEscapeAndQuote() throws IOException {
+	public void testDifferentEscapeAndQuote() {
 		throw new UnsupportedOperationException("Not implemented yet!");
 	}
 	
@@ -133,7 +133,7 @@ public class WritingFeaturesTest {
 	
 	@Ignore
 	@Test
-	public void testColumnIndexBasedMapping() throws IOException {
+	public void testColumnIndexBasedMapping() {
 		throw new UnsupportedOperationException("not implemented yet!");
 	}
 	
@@ -153,7 +153,7 @@ public class WritingFeaturesTest {
 	
 	@Ignore
 	@Test
-	public void testSupportsAnnotations() throws IOException {
+	public void testSupportsAnnotations() {
 		throw new UnsupportedOperationException("Annotations are not implemented yet!");
 	}
 	
@@ -180,7 +180,7 @@ public class WritingFeaturesTest {
 		calendar.set(Calendar.DAY_OF_MONTH, 12);
 		
 		FeatureBean character = new FeatureBean("John", "Connor", 16);
-		character.setSavings(new BigDecimal(6.65));
+		character.setSavings(new BigDecimal("6.65"));
 		character.setBirthDate(calendar.getTime());
 		
 		String[] mapping = { "lastName", "firstName", "age", "birthDate", "savings" };
@@ -208,7 +208,7 @@ public class WritingFeaturesTest {
 		calendar.set(Calendar.DAY_OF_MONTH, 12);
 		
 		FeatureBean character = new FeatureBean("John", "Connor", 16);
-		character.setSavings(new BigDecimal(6.65));
+		character.setSavings(new BigDecimal("6.65"));
 		character.setBirthDate(calendar.getTime());
 		
 		String[] mapping = { "lastName", "firstName", "age", "birthDate", "savings" };
@@ -252,12 +252,7 @@ public class WritingFeaturesTest {
 		Assert.assertNotNull(csv);
 		Assert.assertEquals("1999-07-12\r\n", csv);
 	}
-	
-	@Test
-	public void testDeepConversion() {
-		Assert.assertNotNull("See org.supercsv.example.dozer.Writing class!");
-	}
-	
+
 	@Ignore
 	@Test
 	public void testSplitCellToMultipleProperties() {
@@ -271,7 +266,7 @@ public class WritingFeaturesTest {
 	}
 	
 	@Test
-	public void testWriteToWriter() throws IOException {
+	public void testWriteToWriter() {
 		StringWriter writer = new StringWriter();
 		new CsvListWriter(writer, STANDARD_PREFERENCE);
 		new CsvMapWriter(writer, STANDARD_PREFERENCE);

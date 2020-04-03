@@ -61,13 +61,11 @@ public final class CsvTypedBeanWriterTest {
 
 
     private static String csv(final String[] headers, final FakeBean bean) {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(String.join(COMMA, headers)).append("\r\n");
-        builder.append(bean.bool()).append(COMMA)
-            .append(QUOTE).append(bean.stringField()).append(QUOTE).append(COMMA)
-            .append(QUOTE).append(bean.collection()).append(QUOTE).append(COMMA)
-            .append(bean.decimal()).append("\r\n");
-        return builder.toString();
+        return String.join(COMMA, headers) + "\r\n" +
+                bean.bool() + COMMA +
+                QUOTE + bean.stringField() + QUOTE + COMMA +
+                QUOTE + bean.collection() + QUOTE + COMMA +
+                bean.decimal() + "\r\n";
     }
 
     private static String[] headers() {

@@ -25,8 +25,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.mock.IdentityTransform;
 
 /**
@@ -111,7 +111,7 @@ public class ForbidSubStrTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructionWithEmptyArray() {
-		new ForbidSubStr(new String[] {});
+		new ForbidSubStr();
 	}
 	
 	/**
@@ -127,7 +127,7 @@ public class ForbidSubStrTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructionWithEmptyList() {
-		new ForbidSubStr(new ArrayList<String>(), new IdentityTransform());
+		new ForbidSubStr(new ArrayList<>(), new IdentityTransform());
 	}
 	
 	/**

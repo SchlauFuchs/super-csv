@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.supercsv.exception;
+package org.supercsv;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
+import org.supercsv.SuperCsvReflectionException;
 
 /**
  * Tests the SuperCsvReflectionException class.
@@ -27,7 +28,7 @@ import org.junit.Test;
  */
 public class SuperCsvReflectionExceptionTest {
 	
-	private static final String CLASSNAME = "org.supercsv.exception.SuperCsvReflectionException";
+	private static final String CLASSNAME = "org.supercsv.SuperCsvReflectionException";
 	private static final String MSG = "Reflection failed";
 	private static final Throwable THROWABLE = new RuntimeException("Mirror is broken");
 	

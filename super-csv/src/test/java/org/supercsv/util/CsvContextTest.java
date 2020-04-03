@@ -15,13 +15,11 @@
  */
 package org.supercsv.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.util.Arrays;
 
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * Tests the CsvContext class.
@@ -44,7 +42,7 @@ public class CsvContextTest {
 		assertEquals(1, context.getLineNumber());
 		assertEquals(2, context.getRowNumber());
 		assertEquals(3, context.getColumnNumber());
-		assertTrue(Arrays.equals(rowSource, context.getRowSource().toArray()));
+		assertArrayEquals(rowSource, context.getRowSource().toArray());
 		
 	}
 	
@@ -95,38 +93,38 @@ public class CsvContextTest {
 		contextWithSource.setRowSource(Arrays.asList(new Object[] { "one", "two", "three" }));
 		
 		// same object
-		assertTrue(context.equals(context));
+		assertEquals(context, context);
 		
 		// null
-		assertFalse(context.equals(null));
+		assertNotEquals(null, context);
 		
 		// different class
-		assertFalse(context.equals("A String, not a CsvContext!"));
+		assertNotEquals("A String, not a CsvContext!", context);
 		
 		// different column
-		assertFalse(context.equals(new CsvContext(1, 2, 4)));
+		assertNotEquals(context, new CsvContext(1, 2, 4));
 		
 		// different row
-		assertFalse(context.equals(new CsvContext(1, 4, 3)));
+		assertNotEquals(context, new CsvContext(1, 4, 3));
 		
 		// different line no
-		assertFalse(context.equals(new CsvContext(4, 2, 3)));
+		assertNotEquals(context, new CsvContext(4, 2, 3));
 		
 		// only 1 context with line source
-		assertFalse(context.equals(contextWithSource));
+		assertNotEquals(context, contextWithSource);
 		
 		// same column/line no, but different line sources
 		final CsvContext contextWithDifferentSource = new CsvContext(1, 2, 3);
 		contextWithDifferentSource.setRowSource(Arrays.asList(new Object[] { "four", "five", "six" }));
-		assertFalse(contextWithSource.equals(contextWithDifferentSource));
+		assertNotEquals(contextWithSource, contextWithDifferentSource);
 		
 		// same with no line source
-		assertTrue(context.equals(new CsvContext(1, 2, 3)));
+		assertEquals(context, new CsvContext(1, 2, 3));
 		
 		// same with line source
 		final CsvContext same = new CsvContext(1, 2, 3);
 		same.setRowSource(Arrays.asList(new Object[] { "one", "two", "three" }));
-		assertTrue(contextWithSource.equals(same));
+		assertEquals(contextWithSource, same);
 	}
 	
 	@Test
@@ -135,19 +133,19 @@ public class CsvContextTest {
 		// to make sure that copy constructor does not dereference a null
 		CsvContext original = new CsvContext(1,2,3);
 		CsvContext clone = new CsvContext(original);
-		assertFalse(original == clone);   // The clone is a new object
+		assertNotSame(original, clone);   // The clone is a new object
 		assertEquals(original, clone);    // that passes the equals test
 		
 		// Test with a homogeneous rowSource
 		original.setRowSource(Arrays.asList(new Object[] { "four", "five", "six" }));
 		CsvContext clone2 = new CsvContext(original);
-		assertFalse(original == clone2);   // The clone is a new object
+		assertNotSame(original, clone2);   // The clone is a new object
 		assertEquals(original, clone2);    // that passes the equals test
 		
 		// Corner cases
-		original.setRowSource(Arrays.asList(new Object[] { null, "five", new Integer(6) }));
+		original.setRowSource(Arrays.asList(new Object[] { null, "five", 6}));
 		CsvContext clone3 = new CsvContext(original);
-		assertFalse(original == clone3);   // The clone is a new object
+		assertNotSame(original, clone3);   // The clone is a new object
 		assertEquals(original, clone3);    // that passes the equals test
 	}
 }

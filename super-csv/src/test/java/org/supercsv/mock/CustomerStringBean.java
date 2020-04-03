@@ -15,9 +15,8 @@
  */
 package org.supercsv.mock;
 
-import org.supercsv.SuperCsvTestUtils;
-
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 
 /**
  * Bean with String values only - for testing reading/writing without processors.
@@ -47,8 +46,6 @@ public class CustomerStringBean {
 	
 	/**
 	 * Constructs a CustomerStringBean from a CustomerBean.
-	 * 
-	 * @param customerBean
 	 */
 	public CustomerStringBean(final CustomerBean customerBean) {
 		this.customerNo = customerBean.getCustomerNo();
@@ -126,7 +123,7 @@ public class CustomerStringBean {
 	}
 	
 	/**
-	 * @param birthDate
+	 * @param birthTime
 	 *            the birthDate to set
 	 */
 	public void setBirthTime(String birthTime) {
@@ -268,50 +265,47 @@ public class CustomerStringBean {
 			return false;
 		}
 		CustomerStringBean other = (CustomerStringBean) obj;
-		if( !SuperCsvTestUtils.equals(birthDate, other.birthDate) ) {
+		if( !Objects.equals(birthDate, other.birthDate) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(birthTime, other.birthTime) ) {
+		if( !Objects.equals(birthTime, other.birthTime) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(customerNo, other.customerNo) ) {
+		if( !Objects.equals(customerNo, other.customerNo) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(email, other.email) ) {
+		if( !Objects.equals(email, other.email) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(favouriteQuote, other.favouriteQuote) ) {
+		if( !Objects.equals(favouriteQuote, other.favouriteQuote) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(firstName, other.firstName) ) {
+		if( !Objects.equals(firstName, other.firstName) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(lastName, other.lastName) ) {
+		if( !Objects.equals(lastName, other.lastName) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(loyaltyPoints, other.loyaltyPoints) ) {
+		if( !Objects.equals(loyaltyPoints, other.loyaltyPoints) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(mailingAddress, other.mailingAddress) ) {
+		if( !Objects.equals(mailingAddress, other.mailingAddress) ) {
 			return false;
 		}
 		
-		if( !SuperCsvTestUtils.equals(married, other.married) ) {
+		if( !Objects.equals(married, other.married) ) {
 			return false;
 		}
-		
-		if( !SuperCsvTestUtils.equals(numberOfKids, other.numberOfKids) ) {
-			return false;
-		}
-		return true;
+
+		return Objects.equals(numberOfKids, other.numberOfKids);
 	}
 	
 }

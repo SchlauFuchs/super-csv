@@ -17,7 +17,6 @@ package org.supercsv.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ import java.util.Map;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvException;
+import org.supercsv.SuperCsvException;
 import org.supercsv.mock.IdentityTransform;
 
 /**
@@ -50,7 +49,7 @@ public class UtilTest {
 	
 	private static final int ROW_NO = 12;
 	
-	private static final Map<String, Object> MAP = new HashMap<String, Object>();
+	private static final Map<String, Object> MAP = new HashMap<>();
 	static {
 		MAP.put("name", "Ezio");
 		MAP.put("age", 25);
@@ -63,7 +62,7 @@ public class UtilTest {
 	@Test
 	public void testFilterMapToList() {
 		List<Object> list = Util.filterMapToList(MAP, NAME_MAPPING);
-		assertTrue(list.size() == 3);
+		assertEquals(3, list.size());
 		assertEquals("Ezio", list.get(0));
 		assertNull(list.get(1));
 		assertEquals("Venice", list.get(2));
@@ -90,9 +89,9 @@ public class UtilTest {
 	 */
 	@Test
 	public void testFilterListToMap() {
-		final Map<String, String> map = new HashMap<String, String>();
+		final Map<String, String> map = new HashMap<>();
 		Util.filterListToMap(map, NAME_MAPPING, LIST);
-		assertTrue(map.size() == 2);
+		assertEquals(2, map.size());
 		assertEquals("Ezio", map.get("name"));
 		assertEquals("Venice", map.get("city"));
 	}
@@ -110,7 +109,7 @@ public class UtilTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testFilterListToMapWithNullNameMapping() {
-		Util.filterListToMap(new HashMap<String, String>(), null, LIST);
+		Util.filterListToMap(new HashMap<>(), null, LIST);
 	}
 	
 	/**
@@ -126,7 +125,7 @@ public class UtilTest {
 	 */
 	@Test(expected = SuperCsvException.class)
 	public void testFilterListToMapWithSizeMismatch() {
-		Util.filterListToMap(new HashMap<String, String>(), new String[] { "notEnoughColumns" }, LIST);
+		Util.filterListToMap(new HashMap<>(), new String[] { "notEnoughColumns" }, LIST);
 	}
 	
 	/**
@@ -134,7 +133,7 @@ public class UtilTest {
 	 */
 	@Test(expected = SuperCsvException.class)
 	public void testFilterListToMapWithDuplicateNameMapping() {
-		Util.filterListToMap(new HashMap<String, String>(), new String[] { "name", "name", "city" }, LIST);
+		Util.filterListToMap(new HashMap<>(), new String[] { "name", "name", "city" }, LIST);
 	}
 	
 	/**
@@ -142,11 +141,11 @@ public class UtilTest {
 	 */
 	@Test
 	public void testExecuteCellProcessors() {
-		List<Object> destinationList = new ArrayList<Object>();
+		List<Object> destinationList = new ArrayList<>();
 		Util.executeCellProcessors(destinationList, LIST, PROCESSORS, LINE_NO, ROW_NO);
-		assertTrue(destinationList.size() == 3);
+		assertEquals(3, destinationList.size());
 		assertEquals("Ezio", destinationList.get(0));
-		assertEquals(Integer.valueOf(25), destinationList.get(1));
+		assertEquals(25, destinationList.get(1));
 		assertEquals("Venice", destinationList.get(2));
 	}
 	
@@ -163,7 +162,7 @@ public class UtilTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testExecuteCellProcessorsWithNullSource() {
-		Util.executeCellProcessors(new ArrayList<Object>(), null, PROCESSORS, LINE_NO, ROW_NO);
+		Util.executeCellProcessors(new ArrayList<>(), null, PROCESSORS, LINE_NO, ROW_NO);
 	}
 	
 	/**
@@ -171,7 +170,7 @@ public class UtilTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testExecuteCellProcessorsWithNullProcessors() {
-		Util.executeCellProcessors(new ArrayList<Object>(), LIST, null, LINE_NO, ROW_NO);
+		Util.executeCellProcessors(new ArrayList<>(), LIST, null, LINE_NO, ROW_NO);
 	}
 	
 	/**
@@ -180,8 +179,8 @@ public class UtilTest {
 	 */
 	@Test(expected = SuperCsvException.class)
 	public void testExecuteCellProcessorsWithSizeMismatch() {
-		final List<Object> invalidSizeList = new ArrayList<Object>();
-		Util.executeCellProcessors(new ArrayList<Object>(), invalidSizeList, PROCESSORS, LINE_NO, ROW_NO);
+		final List<Object> invalidSizeList = new ArrayList<>();
+		Util.executeCellProcessors(new ArrayList<>(), invalidSizeList, PROCESSORS, LINE_NO, ROW_NO);
 	}
 	
 	/**
@@ -190,7 +189,7 @@ public class UtilTest {
 	@Test
 	public void testFilterMapToObjectArray() {
 		final Object[] objectArray = Util.filterMapToObjectArray(MAP, NAME_MAPPING);
-		assertTrue(objectArray.length == 3);
+		assertEquals(3, objectArray.length);
 		assertEquals("Ezio", objectArray[0]);
 		assertNull(objectArray[1]);
 		assertEquals("Venice", objectArray[2]);

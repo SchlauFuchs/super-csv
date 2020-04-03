@@ -24,8 +24,8 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.mock.IdentityTransform;
 
 /**
@@ -36,7 +36,7 @@ import org.supercsv.mock.IdentityTransform;
  */
 public class IsIncludedInTest {
 	
-	private static final Set<Object> VALUE_SET = new HashSet<Object>();
+	private static final Set<Object> VALUE_SET = new HashSet<>();
 	
 	private static final Integer ONE = 1;
 	private static final String TWO = "Two";
@@ -131,7 +131,7 @@ public class IsIncludedInTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructionWithEmptySet() {
-		new IsIncludedIn(new HashSet<Object>());
+		new IsIncludedIn(new HashSet<>());
 	}
 	
 }

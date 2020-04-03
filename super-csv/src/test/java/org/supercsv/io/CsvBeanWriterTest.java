@@ -30,7 +30,7 @@ import java.io.Writer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.supercsv.exception.SuperCsvReflectionException;
+import org.supercsv.SuperCsvReflectionException;
 import org.supercsv.mock.CustomerBean;
 import org.supercsv.mock.CustomerStringBean;
 import org.supercsv.prefs.CsvPreference;

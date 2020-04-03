@@ -35,7 +35,7 @@ import java.util.Set;
  */
 public class ThreeDHashMap<K1, K2, K3, V> {
 	
-	private final HashMap<K1, HashMap<K2, HashMap<K3, V>>> map = new HashMap<K1, HashMap<K2, HashMap<K3, V>>>();
+	private final HashMap<K1, HashMap<K2, HashMap<K3, V>>> map = new HashMap<>();
 	
 	/**
 	 * Existence check of a value (or <code>null</code>) mapped to the keys.
@@ -103,9 +103,9 @@ public class ThreeDHashMap<K1, K2, K3, V> {
 	public TwoDHashMap<K2, K3, V> getAs2d(final K1 firstKey) {
 		final HashMap<K2, HashMap<K3, V>> innerMap1 = map.get(firstKey);
 		if( innerMap1 != null ) {
-			return new TwoDHashMap<K2, K3, V>(innerMap1);
+			return new TwoDHashMap<>(innerMap1);
 		} else {
-			return new TwoDHashMap<K2, K3, V>();
+			return new TwoDHashMap<>();
 		}
 		
 	}
@@ -168,24 +168,14 @@ public class ThreeDHashMap<K1, K2, K3, V> {
 	 *            the value to be inserted. <code>null</code> may be inserted as well.
 	 * @return null or the value the insert is replacing.
 	 */
+	@SuppressWarnings("UnusedReturnValue")
 	public Object set(final K1 firstKey, final K2 secondKey, final K3 thirdKey, final V value) {
 		// existence check on inner map1
-		HashMap<K2, HashMap<K3, V>> innerMap1 = map.get(firstKey);
-		
-		if( innerMap1 == null ) {
-			// no inner map, create it
-			innerMap1 = new HashMap<K2, HashMap<K3, V>>();
-			map.put(firstKey, innerMap1);
-		}
-		
-		// existence check on inner map1
-		HashMap<K3, V> innerMap2 = innerMap1.get(secondKey);
-		if( innerMap2 == null ) {
-			// no inner map, create it
-			innerMap2 = new HashMap<K3, V>();
-			innerMap1.put(secondKey, innerMap2);
-		}
-		
+		HashMap<K2, HashMap<K3, V>> innerMap1 = map.computeIfAbsent(firstKey, k -> new HashMap<>());
+
+		HashMap<K3, V> innerMap2 = innerMap1.computeIfAbsent(secondKey, k -> new HashMap<>());
+		// no inner map, create it
+
 		return innerMap2.put(thirdKey, value);
 	}
 	

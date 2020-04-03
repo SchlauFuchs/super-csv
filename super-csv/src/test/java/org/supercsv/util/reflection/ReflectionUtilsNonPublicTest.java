@@ -17,13 +17,13 @@ package org.supercsv.util.reflection;
 
 import java.lang.reflect.Method;
 import org.junit.After;
-import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.mock.NonPublicBeanUtil;
-import org.supercsv.mock.ReflectionBean;
+
 import static org.supercsv.util.ReflectionUtils.findSetter;
 
 /**
@@ -58,21 +58,21 @@ public class ReflectionUtilsNonPublicTest {
 	 * Tests the findSetter() method.
 	 */
 	@Test
-	public void testFindSetter() throws Exception {
+	public void testFindSetter() {
 		Method setter = findSetter(nonPublicBean, "name", String.class);
-		assertFalse(setter.isAccessible());
+		assertFalse(setter.canAccess(nonPublicBean));
 	}
 	
 	/**
 	 * Tests the findSetter() method.
 	 */
 	@Test
-	public void testFindSetterExtended() throws Exception {
+	public void testFindSetterExtended() {
 		Method ageSetter = findSetter(extendedNonPublicBean, "age", Long.class);
-		assertFalse(ageSetter.isAccessible());
+		assertFalse(ageSetter.canAccess(extendedNonPublicBean));
 		
 		Method nameSetter = findSetter(extendedNonPublicBean, "name", String.class);
-		assertFalse(nameSetter.isAccessible());
+		assertFalse(nameSetter.canAccess(extendedNonPublicBean));
 	}
 	
 }

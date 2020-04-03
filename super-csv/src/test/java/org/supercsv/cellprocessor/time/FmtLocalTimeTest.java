@@ -31,7 +31,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.time.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the FmtLocalTime cell processor.
@@ -48,7 +48,7 @@ public class FmtLocalTimeTest {
 	@DataPoints public static final DateTimeFormatter[] formats = {
 		DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM), DateTimeFormatter.ofPattern("mm:ss") };
 
-	@Rule public ExpectedException exception = ExpectedException.none();
+	@Rule public final ExpectedException exception = ExpectedException.none();
 
 	@Theory
 	public void testValidDateTimeString(final FmtLocalTime p, final LocalTime localTime) {

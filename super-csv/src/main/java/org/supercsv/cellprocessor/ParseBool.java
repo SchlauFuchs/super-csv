@@ -17,11 +17,12 @@ package org.supercsv.cellprocessor;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.supercsv.cellprocessor.ift.BoolCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -50,8 +51,8 @@ public class ParseBool extends CellProcessorAdaptor implements StringCellProcess
 	private static final String[] DEFAULT_TRUE_VALUES = new String[] { "1", "true", "t", "y" };
 	private static final String[] DEFAULT_FALSE_VALUES = new String[] { "0", "false", "f", "n" };
 	
-	private final Set<String> trueValues = new HashSet<String>();
-	private final Set<String> falseValues = new HashSet<String>();
+	private final Set<String> trueValues = new HashSet<>();
+	private final Set<String> falseValues = new HashSet<>();
 	
 	private final boolean ignoreCase;
 	
@@ -281,12 +282,8 @@ public class ParseBool extends CellProcessorAdaptor implements StringCellProcess
 	 *             if trueValue or falseValue is null
 	 */
 	private static void checkPreconditions(final String trueValue, final String falseValue) {
-		if( trueValue == null ) {
-			throw new NullPointerException("trueValue should not be null");
-		}
-		if( falseValue == null ) {
-			throw new NullPointerException("falseValue should not be null");
-		}
+		Objects.requireNonNull(trueValue,"trueValue should not be null");
+		Objects.requireNonNull(falseValue,"falseValue should not be null");
 	}
 	
 	/**
@@ -303,15 +300,13 @@ public class ParseBool extends CellProcessorAdaptor implements StringCellProcess
 	 */
 	private static void checkPreconditions(final String[] trueValues, final String[] falseValues) {
 		
-		if( trueValues == null ) {
-			throw new NullPointerException("trueValues should not be null");
-		} else if( trueValues.length == 0 ) {
+		Objects.requireNonNull(trueValues,"trueValues should not be null");
+		if( trueValues.length == 0 ) {
 			throw new IllegalArgumentException("trueValues should not be empty");
 		}
 		
-		if( falseValues == null ) {
-			throw new NullPointerException("falseValues should not be null");
-		} else if( falseValues.length == 0 ) {
+		Objects.requireNonNull(falseValues,"falseValues should not be null");
+		if( falseValues.length == 0 ) {
 			throw new IllegalArgumentException("falseValues should not be empty");
 		}
 		

@@ -41,15 +41,13 @@ public class TwoDHashMapTest {
 	
 	/**
 	 * Sets up the maps TwoDHashMaps for the test, using both constructors.
-	 * 
-	 * @throws Exception
 	 */
 	@Before
 	public void setUp() {
-		orchestraMap = new TwoDHashMap<String, String, Integer>();
+		orchestraMap = new TwoDHashMap<>();
 		populateTwoDHashMap(orchestraMap);
 		
-		orchestraMap2 = new TwoDHashMap<String, String, Integer>(new HashMap<String, HashMap<String, Integer>>());
+		orchestraMap2 = new TwoDHashMap<>(new HashMap<>());
 		populateTwoDHashMap(orchestraMap2);
 	}
 	
@@ -178,8 +176,8 @@ public class TwoDHashMapTest {
 	 */
 	@Test
 	public void keySet() {
-		final Set<String> expectedKeys = new HashSet<String>(
-			Arrays.asList("Woodwind", "Brass", "Percussion", "Strings"));
+		final Set<String> expectedKeys = new HashSet<>(
+				Arrays.asList("Woodwind", "Brass", "Percussion", "Strings"));
 		assertEquals(expectedKeys.size(), orchestraMap.keySet().size());
 		assertEquals(expectedKeys.size(), orchestraMap2.keySet().size());
 		assertTrue(orchestraMap.keySet().containsAll(expectedKeys));

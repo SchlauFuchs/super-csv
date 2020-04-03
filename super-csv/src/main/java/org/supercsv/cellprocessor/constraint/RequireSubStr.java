@@ -18,12 +18,13 @@ package org.supercsv.cellprocessor.constraint;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -35,7 +36,7 @@ import org.supercsv.util.CsvContext;
  */
 public class RequireSubStr extends CellProcessorAdaptor implements StringCellProcessor {
 	
-	private final List<String> requiredSubStrings = new ArrayList<String>();
+	private final List<String> requiredSubStrings = new ArrayList<>();
 	
 	/**
 	 * Converts the input to a String and ensures that the input contains at least one of the specified substrings.
@@ -119,9 +120,8 @@ public class RequireSubStr extends CellProcessorAdaptor implements StringCellPro
 	 *             if requiredSubStrings is empty
 	 */
 	private static void checkPreconditions(String... requiredSubStrings) {
-		if( requiredSubStrings == null ) {
-			throw new NullPointerException("requiredSubStrings array should not be null");
-		} else if( requiredSubStrings.length == 0 ) {
+		Objects.requireNonNull(requiredSubStrings,"requiredSubStrings array should not be null");
+		if( requiredSubStrings.length == 0 ) {
 			throw new IllegalArgumentException("requiredSubStrings array should not be empty");
 		}
 	}
@@ -137,9 +137,8 @@ public class RequireSubStr extends CellProcessorAdaptor implements StringCellPro
 	 *             if requiredSubStrings is empty
 	 */
 	private static void checkPreconditions(List<String> requiredSubStrings) {
-		if( requiredSubStrings == null ) {
-			throw new NullPointerException("requiredSubStrings List should not be null");
-		} else if( requiredSubStrings.isEmpty() ) {
+		Objects.requireNonNull(requiredSubStrings,"requiredSubStrings List should not be null");
+		if( requiredSubStrings.isEmpty() ) {
 			throw new IllegalArgumentException("requiredSubStrings List should not be empty");
 		}
 	}
@@ -154,9 +153,7 @@ public class RequireSubStr extends CellProcessorAdaptor implements StringCellPro
 	 */
 	private void checkAndAddRequiredSubStrings(final List<String> requiredSubStrings) {
 		for( String required : requiredSubStrings ) {
-			if( required == null ) {
-				throw new NullPointerException("required substring should not be null");
-			}
+			Objects.requireNonNull(required,"required substring should not be null");
 			this.requiredSubStrings.add(required);
 		}
 	}

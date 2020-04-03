@@ -16,6 +16,7 @@
 package org.supercsv.util;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -40,7 +41,7 @@ public class TwoDHashMap<K1, K2, V> {
 	 * Constructs a new <code>TwoDHashMap</code>.
 	 */
 	public TwoDHashMap() {
-		map = new HashMap<K1, HashMap<K2, V>>();
+		map = new HashMap<>();
 	}
 	
 	/**
@@ -52,9 +53,8 @@ public class TwoDHashMap<K1, K2, V> {
 	 *             if map is null
 	 */
 	public TwoDHashMap(final HashMap<K1, HashMap<K2, V>> map) {
-		if( map == null ) {
-			throw new NullPointerException("map should not be null");
-		}
+		Objects.requireNonNull(map,"map should not be null");
+
 		this.map = map;
 	}
 	
@@ -105,16 +105,9 @@ public class TwoDHashMap<K1, K2, V> {
 	 *            the value to be inserted. <code>null</code> may be inserted as well.
 	 * @return null or the value the insert is replacing.
 	 */
+	@SuppressWarnings("UnusedReturnValue")
 	public Object set(final K1 firstKey, final K2 secondKey, final V value) {
-		// existence check on inner map
-		HashMap<K2, V> innerMap = map.get(firstKey);
-		
-		if( innerMap == null ) {
-			// no inner map, create it
-			innerMap = new HashMap<K2, V>();
-			map.put(firstKey, innerMap);
-		}
-		
+		HashMap<K2, V> innerMap = map.computeIfAbsent(firstKey, k -> new HashMap<>());
 		return innerMap.put(secondKey, value);
 	}
 	

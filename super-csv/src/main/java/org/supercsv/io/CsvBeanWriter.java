@@ -15,14 +15,16 @@
  */
 package org.supercsv.io;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvReflectionException;
+import org.supercsv.SuperCsvReflectionException;
 import org.supercsv.prefs.CsvPreference;
 import org.supercsv.util.MethodCache;
 import org.supercsv.util.Util;
@@ -34,13 +36,13 @@ import org.supercsv.util.Util;
  * @author Kasper B. Graversen
  * @author James Bassett
  */
-public class CsvBeanWriter extends AbstractCsvWriter implements ICsvBeanWriter {
+public class CsvBeanWriter extends AbstractCsvWriter implements ICsvBeanWriter, Closeable {
 	
 	// temporary storage of bean values
-	private final List<Object> beanValues = new ArrayList<Object>();
+	private final List<Object> beanValues = new ArrayList<>();
 	
 	// temporary storage of processed columns to be written
-	private final List<Object> processedColumns = new ArrayList<Object>();
+	private final List<Object> processedColumns = new ArrayList<>();
 	
 	// cache of methods for mapping from fields to columns
 	private final MethodCache cache = new MethodCache();
@@ -74,33 +76,26 @@ public class CsvBeanWriter extends AbstractCsvWriter implements ICsvBeanWriter {
 	 */
 	private void extractBeanValues(final Object source, final String[] nameMapping) {
 		
-		if( source == null ) {
-			throw new NullPointerException("the bean to write should not be null");
-		} else if( nameMapping == null ) {
-			throw new NullPointerException(
+		Objects.requireNonNull(source,"the bean to write should not be null");
+		Objects.requireNonNull(nameMapping,
 				"the nameMapping array can't be null as it's used to map from fields to columns");
-		}
 		
 		beanValues.clear();
-		
-		for( int i = 0; i < nameMapping.length; i++ ) {
-			
-			final String fieldName = nameMapping[i];
-			
-			if( fieldName == null ) {
+
+		for (final String fieldName : nameMapping) {
+
+			if (fieldName == null) {
 				beanValues.add(null); // assume they always want a blank column
-				
 			} else {
 				Method getMethod = cache.getGetMethod(source, fieldName);
 				try {
 					beanValues.add(getMethod.invoke(source));
-				}
-				catch(final Exception e) {
+				} catch (final Exception e) {
 					throw new SuperCsvReflectionException(String.format("error extracting bean value for field %s",
-						fieldName), e);
+							fieldName), e);
 				}
 			}
-			
+
 		}
 		
 	}

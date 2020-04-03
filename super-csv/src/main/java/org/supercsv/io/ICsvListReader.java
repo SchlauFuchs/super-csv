@@ -19,8 +19,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
-import org.supercsv.exception.SuperCsvException;
+import org.supercsv.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvException;
 
 /**
  * Interface for readers that read into Lists.
@@ -33,7 +33,7 @@ public interface ICsvListReader extends ICsvReader {
 	/**
 	 * Reads a row of a CSV file and returns a List of Strings containing each column. If you are forced to use this
 	 * method instead of {@link #read(CellProcessor...)} because your CSV file has a variable number of columns, then
-	 * you can call the {@link #executeProcessors(CellProcessor...)} method after calling {@link #read()} to execute the
+	 * you can call the {@link #executeProcessors(CellProcessor...)} method after calling <code>read()</code> to execute the
 	 * cell processors manually (after determining the number of columns read in and which cell processors to use).
 	 * 
 	 * @return the List of columns, or null if EOF

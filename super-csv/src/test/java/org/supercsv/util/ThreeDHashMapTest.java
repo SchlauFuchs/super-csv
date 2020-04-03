@@ -42,7 +42,7 @@ public class ThreeDHashMapTest {
 	 */
 	@Before
 	public void setUp() {
-		personMap = new ThreeDHashMap<String, String, String, Integer>();
+		personMap = new ThreeDHashMap<>();
 		personMap.set("Australia", "Brisbane", "Jim", 26);
 		personMap.set("Australia", "Brisbane", "Jane", 57);
 		personMap.set("Australia", "Sydney", "Harry", 19);
@@ -219,8 +219,8 @@ public class ThreeDHashMapTest {
 	 */
 	@Test
 	public void keySet() {
-		final Set<String> expectedKeys = new HashSet<String>(Arrays.asList("Australia", "New Zealand",
-			"United Kingdom", "India"));
+		final Set<String> expectedKeys = new HashSet<>(Arrays.asList("Australia", "New Zealand",
+				"United Kingdom", "India"));
 		assertEquals(expectedKeys.size(), personMap.keySet().size());
 		assertTrue(personMap.keySet().containsAll(expectedKeys));
 	}

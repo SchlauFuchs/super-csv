@@ -17,8 +17,10 @@ package org.supercsv.cellprocessor;
 
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
+
+import static java.lang.Double.parseDouble;
 
 /**
  * Converts a String to a Double.
@@ -56,12 +58,12 @@ public class ParseDouble extends CellProcessorAdaptor implements StringCellProce
 	public Object execute(final Object value, final CsvContext context) {
 		validateInputNotNull(value, context);
 		
-		final Double result;
+		final double result;
 		if( value instanceof Double ) {
 			result = (Double) value;
 		} else if( value instanceof String ) {
 			try {
-				result = new Double((String) value);
+				result = parseDouble((String)value);
 			}
 			catch(final NumberFormatException e) {
 				throw new SuperCsvCellProcessorException(String.format("'%s' could not be parsed as a Double", value),

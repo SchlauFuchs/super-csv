@@ -27,7 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.joda.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the ParseDateTimeZone cell processor.
@@ -37,14 +37,12 @@ public class ParseDateTimeZoneTest {
 	private static final String TIME_ZONE_STRING = "Australia/Brisbane";
 	private static final DateTimeZone DATE_TIME_ZONE = DateTimeZone.forID("Australia/Brisbane");
 
-	private ParseDateTimeZone processor1;
-	private ParseDateTimeZone processorChain1;
 	private List<ParseDateTimeZone> processors;
 
 	@Before
 	public void setUp() {
-		processor1 = new ParseDateTimeZone();
-		processorChain1 = new ParseDateTimeZone(new IdentityTransform());
+		ParseDateTimeZone processor1 = new ParseDateTimeZone();
+		ParseDateTimeZone processorChain1 = new ParseDateTimeZone(new IdentityTransform());
 		processors = Arrays.asList(processor1, processorChain1);
 	}
 
@@ -100,7 +98,7 @@ public class ParseDateTimeZoneTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testConstructor2WithNullNext() {
-		new ParseDateTimeZone((CellProcessor) null);
+		new ParseDateTimeZone(null);
 	}
 
 }

@@ -17,7 +17,6 @@ package org.supercsv.cellprocessor;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import org.supercsv.cellprocessor.ift.DateCellProcessor;
@@ -91,8 +90,7 @@ public class ParseDate extends ParseDateTimeAbstract {
 	 */
 	@Override
 	protected Object parseValue(Object value) throws ParseException {
-		final Date result = formatter.parse((String) value);
-		return result;
+		return formatter.parse((String) value);
 	}
 	
 }

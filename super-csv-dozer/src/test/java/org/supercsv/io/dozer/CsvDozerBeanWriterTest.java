@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.dozer.DozerBeanMapper;
 import org.junit.After;
@@ -31,8 +32,6 @@ import org.supercsv.cellprocessor.FmtBool;
 import org.supercsv.cellprocessor.Optional;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.mock.dozer.Answer;
-import org.supercsv.mock.dozer.SurveyResponse;
 import org.supercsv.prefs.CsvPreference;
 
 /**
@@ -65,8 +64,7 @@ public class CsvDozerBeanWriterTest {
 	private CsvDozerBeanWriter beanWriterWithMapper;
 	private CsvDozerBeanWriter beanWriterWithConfiguredMapper;
 	private DozerBeanMapper beanMapper;
-	private DozerBeanMapper configuredBeanMapper;
-	
+
 	private SurveyResponse response1;
 	private SurveyResponse response2;
 	private SurveyResponse response3;
@@ -82,8 +80,8 @@ public class CsvDozerBeanWriterTest {
 		
 		beanMapper = new DozerBeanMapper();
 		beanWriterWithMapper = new CsvDozerBeanWriter(writer, PREFS, beanMapper);
-		
-		configuredBeanMapper = new DozerBeanMapper(Arrays.asList("reference.xml"));
+
+		DozerBeanMapper configuredBeanMapper = new DozerBeanMapper(Collections.singletonList("reference.xml"));
 		beanWriterWithConfiguredMapper = new CsvDozerBeanWriter(writer, PREFS, configuredBeanMapper);
 	}
 	
@@ -168,7 +166,6 @@ public class CsvDozerBeanWriterTest {
 	 *            whether to use processors for the test
 	 * @param configured
 	 *            whether the writer is already configured
-	 * @throws IOException
 	 */
 	private void testWrite(final CsvDozerBeanWriter beanWriter, final boolean useProcessors, final boolean configured)
 		throws IOException {
@@ -207,38 +204,38 @@ public class CsvDozerBeanWriterTest {
 		
 		// constructor one - null Writer
 		try {
-			new CsvDozerBeanWriter((Writer) null, PREFS);
+			new CsvDozerBeanWriter(null, PREFS);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		// constructor one - null prefs
 		try {
 			new CsvDozerBeanWriter(writer, null);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		// constructor two - null Writer
 		try {
-			new CsvDozerBeanWriter((Writer) null, PREFS, beanMapper);
+			new CsvDozerBeanWriter(null, PREFS, beanMapper);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		// constructor two - null prefs
 		try {
 			new CsvDozerBeanWriter(writer, null, beanMapper);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 		// constructor two - null dozerBeanMapper
 		try {
 			new CsvDozerBeanWriter(writer, PREFS, null);
 			fail("should have thrown NullPointerException");
 		}
-		catch(NullPointerException e) {}
+		catch(NullPointerException ignored) {}
 		
 	}
 	
@@ -287,7 +284,7 @@ public class CsvDozerBeanWriterTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testWriteWithProcessorsWithNullProcessors() throws IOException {
-		beanWriter.write(SurveyResponse.class, (CellProcessor[]) null);
+		beanWriter.write(SurveyResponse.class, null);
 	}
 	
 }

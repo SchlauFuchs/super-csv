@@ -19,7 +19,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.supercsv.exception.SuperCsvException;
+import org.supercsv.SuperCsvException;
 import org.supercsv.prefs.CsvPreference;
 
 import java.io.IOException;
@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Section of TokenizerTest that deals solely with escaping.
@@ -44,7 +43,7 @@ public class TokenizerEscapingTest {
 	 */
 	@Before
 	public void setUp() {
-		columns = new ArrayList<String>();
+		columns = new ArrayList<>();
 	}
 
 	/**
@@ -80,7 +79,7 @@ public class TokenizerEscapingTest {
 		tokenizer = createTokenizer(input, CsvPreference.STANDARD_PREFERENCE);
 		tokenizer.readColumns(columns);
 
-		assertTrue(columns.size() == 4);
+		assertEquals(4, columns.size());
 		assertEquals("one", columns.get(0));
 		assertEquals("two", columns.get(1));
 		assertEquals("field with \" quote char", columns.get(2));
@@ -103,7 +102,7 @@ public class TokenizerEscapingTest {
 		tokenizer = createTokenizer(input, csvPref);
 		tokenizer.readColumns(columns);
 
-		assertTrue(columns.size() == 4);
+		assertEquals(4, columns.size());
 		assertEquals("one", columns.get(0));
 		assertEquals("two", columns.get(1));
 		assertEquals("field with \" quote char", columns.get(2));
@@ -125,7 +124,7 @@ public class TokenizerEscapingTest {
 		tokenizer = createTokenizer(input, csvPref);
 		tokenizer.readColumns(columns);
 
-		assertTrue(columns.size() == 1);
+		assertEquals(1, columns.size());
 		assertEquals("field with \\ escape char", columns.get(0));
 		assertEquals(input, tokenizer.getUntokenizedRow());
 	}
@@ -145,7 +144,7 @@ public class TokenizerEscapingTest {
 		tokenizer = createTokenizer(input, csvPref);
 		tokenizer.readColumns(columns);
 
-		assertTrue(columns.size() == 1);
+		assertEquals(1, columns.size());
 		assertEquals("###", columns.get(0));
 		assertEquals(input, tokenizer.getUntokenizedRow());
 	}
@@ -182,7 +181,7 @@ public class TokenizerEscapingTest {
 		tokenizer = createTokenizer(input, csvPref);
 		tokenizer.readColumns(columns);
 
-		assertTrue(columns.size() == 1);
+		assertEquals(1, columns.size());
 		assertEquals("\\\\", columns.get(0));
 		assertEquals(input, tokenizer.getUntokenizedRow());
 	}
@@ -201,7 +200,7 @@ public class TokenizerEscapingTest {
 		tokenizer = createTokenizer(input, csvPref);
 		tokenizer.readColumns(columns);
 
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals("one\\", columns.get(0));
 		assertEquals("\\two", columns.get(1));
 		assertEquals("thr\\ee", columns.get(2));
@@ -221,7 +220,7 @@ public class TokenizerEscapingTest {
 		tokenizer = createTokenizer(input, csvPref);
 		tokenizer.readColumns(columns);
 
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals("one##", columns.get(0));
 		assertEquals("##two", columns.get(1));
 		assertEquals("thr##ee", columns.get(2));
@@ -244,7 +243,7 @@ public class TokenizerEscapingTest {
 		tokenizer = createTokenizer(input, csvPref);
 		tokenizer.readColumns(columns);
 
-		assertTrue(columns.size() == 1);
+		assertEquals(1, columns.size());
 		assertEquals("field with \\an escape char on neither escape nor quote", columns.get(0));
 		assertEquals(input, tokenizer.getUntokenizedRow());
 	}

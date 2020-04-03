@@ -75,7 +75,7 @@ public class CsvMapReader extends AbstractCsvReader implements ICsvMapReader {
 		}
 		
 		if( readRow() ) {
-			final Map<String, String> destination = new HashMap<String, String>();
+			final Map<String, String> destination = new HashMap<>();
 			Util.filterListToMap(destination, nameMapping, getColumns());
 			return destination;
 		}
@@ -96,12 +96,12 @@ public class CsvMapReader extends AbstractCsvReader implements ICsvMapReader {
 		
 		if( readRow() ) {
 			// process the columns
-			final List<Object> processedColumns = executeProcessors(new ArrayList<Object>(getColumns().size()),
+			final List<Object> processedColumns = executeProcessors(new ArrayList<>(getColumns().size()),
 				processors);
 			
 			// convert the List to a Map
-			final Map<String, Object> destination = new HashMap<String, Object>(processedColumns.size());
-			Util.filterListToMap((Map<String, Object>) destination, nameMapping, (List<Object>) processedColumns);
+			final Map<String, Object> destination = new HashMap<>(processedColumns.size());
+			Util.filterListToMap(destination, nameMapping, processedColumns);
 			return destination;
 		}
 		

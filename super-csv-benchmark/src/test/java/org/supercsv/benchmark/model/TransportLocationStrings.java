@@ -20,6 +20,7 @@ package org.supercsv.benchmark.model;
  * 
  * @author James Bassett
  */
+@SuppressWarnings("unused")
 public class TransportLocationStrings {
 	
 	private String atcoCode;

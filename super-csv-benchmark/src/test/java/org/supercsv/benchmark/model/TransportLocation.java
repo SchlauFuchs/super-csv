@@ -21,6 +21,7 @@ package org.supercsv.benchmark.model;
  * 
  * @author James Bassett
  */
+@SuppressWarnings("unused")
 public class TransportLocation {
 	
 	private String atcoCode;

@@ -31,7 +31,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.time.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the ParseZoneId cell processor.
@@ -46,9 +46,9 @@ public class ParseZoneIdTest {
 		new ParseZoneId(ZoneId.SHORT_IDS), new ParseZoneId(ZoneId.SHORT_IDS, new IdentityTransform()) };
 
 	@DataPoints public static final String[] shortIds = ZoneId.SHORT_IDS.keySet()
-		.toArray(new String[ZoneId.SHORT_IDS.size()]);
+		.toArray(new String[0]);
 
-	@Rule public ExpectedException exception = ExpectedException.none();
+	@Rule public final ExpectedException exception = ExpectedException.none();
 
 	@Theory
 	public void testValidDateTimeZone(final ParseZoneId processor, final ZoneId zoneId) {

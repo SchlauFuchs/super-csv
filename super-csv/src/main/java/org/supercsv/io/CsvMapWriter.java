@@ -34,7 +34,7 @@ import org.supercsv.util.Util;
 public class CsvMapWriter extends AbstractCsvWriter implements ICsvMapWriter {
 	
 	// temporary storage of processed columns to be written
-	private final List<Object> processedColumns = new ArrayList<Object>();
+	private final List<Object> processedColumns = new ArrayList<>();
 	
 	/**
 	 * Constructs a new <code>CsvMapWriter</code> with the supplied Writer and CSV preferences. Note that the

@@ -72,7 +72,7 @@ public class CsvContext implements Serializable {
 			// Shallow clone is OK here. A deep clone implementation would be tricky
 			// because the declared type of the items in the array is "Object" which does not 
 			// have an exposed copy constructor or clone method.
-			this.rowSource = new ArrayList<Object>(c.rowSource);
+			this.rowSource = new ArrayList<>(c.rowSource);
 		}
 	}
 	
@@ -184,13 +184,8 @@ public class CsvContext implements Serializable {
 			return false;
 		}
 		if( rowSource == null ) {
-			if( other.rowSource != null ) {
-				return false;
-			}
-		} else if( !rowSource.equals(other.rowSource) ) {
-			return false;
-		}
-		return true;
+			return other.rowSource == null;
+		} else return rowSource.equals(other.rowSource);
 	}
 	
 }

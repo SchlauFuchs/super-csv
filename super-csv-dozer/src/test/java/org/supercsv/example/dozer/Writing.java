@@ -27,8 +27,8 @@ import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.dozer.CsvDozerBeanWriter;
 import org.supercsv.io.dozer.ICsvDozerBeanWriter;
-import org.supercsv.mock.dozer.Answer;
-import org.supercsv.mock.dozer.SurveyResponse;
+import org.supercsv.io.dozer.Answer;
+import org.supercsv.io.dozer.SurveyResponse;
 import org.supercsv.prefs.CsvPreference;
 
 /**
@@ -75,29 +75,22 @@ public class Writing {
 		SurveyResponse response3 = new SurveyResponse(42, false, Arrays.asList(new Answer(1, null), new Answer(2,
 			"Carl Sagan"), new Answer(3, "Star Wars")));
 		final List<SurveyResponse> surveyResponses = Arrays.asList(response1, response2, response3);
-		
-		ICsvDozerBeanWriter beanWriter = null;
-		try {
-			beanWriter = new CsvDozerBeanWriter(new FileWriter("target/writeWithCsvDozerBeanWriter.csv"),
-				CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvDozerBeanWriter beanWriter = new CsvDozerBeanWriter(new FileWriter("target/writeWithCsvDozerBeanWriter.csv"),
+				CsvPreference.STANDARD_PREFERENCE)) {
+
 			// configure the mapping from the fields to the CSV columns
 			beanWriter.configureBeanMapping(SurveyResponse.class, FIELD_MAPPING);
-			
+
 			// write the header
 			beanWriter.writeHeader("age", "consentGiven", "questionNo1", "answer1", "questionNo2", "answer2",
-				"questionNo3", "answer3");
-			
+					"questionNo3", "answer3");
+
 			// write the beans
-			for( final SurveyResponse surveyResponse : surveyResponses ) {
+			for (final SurveyResponse surveyResponse : surveyResponses) {
 				beanWriter.write(surveyResponse, processors);
 			}
-			
-		}
-		finally {
-			if( beanWriter != null ) {
-				beanWriter.close();
-			}
+
 		}
 	}
 	
@@ -131,29 +124,22 @@ public class Writing {
 		SurveyResponse response3 = new SurveyResponse(42, false, Arrays.asList(new Answer(1, null), new Answer(2,
 			"Carl Sagan"), new Answer(3, "Star Wars")));
 		final List<SurveyResponse> surveyResponses = Arrays.asList(response1, response2, response3);
-		
-		ICsvDozerBeanWriter beanWriter = null;
-		try {
-			beanWriter = new CsvDozerBeanWriter(new FileWriter("target/partialWriteWithCsvDozerBeanWriter.csv"),
-				CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvDozerBeanWriter beanWriter = new CsvDozerBeanWriter(new FileWriter("target/partialWriteWithCsvDozerBeanWriter.csv"),
+				CsvPreference.STANDARD_PREFERENCE)) {
+
 			// configure the mapping from the fields to the CSV columns
 			beanWriter.configureBeanMapping(SurveyResponse.class, partialFieldMapping);
-			
+
 			// write the header
 			beanWriter.writeHeader("age", "consentGiven", "questionNo2", "answer2",
-				"questionNo3", "answer3");
-			
+					"questionNo3", "answer3");
+
 			// write the beans
-			for( final SurveyResponse surveyResponse : surveyResponses ) {
+			for (final SurveyResponse surveyResponse : surveyResponses) {
 				beanWriter.write(surveyResponse, partialProcessors);
 			}
-			
-		}
-		finally {
-			if( beanWriter != null ) {
-				beanWriter.close();
-			}
+
 		}
 	}
 	
@@ -211,9 +197,7 @@ public class Writing {
 			beanWriter.write(response3, processors);
 		}
 		finally {
-			if( beanWriter != null ){
-				beanWriter.close();
-			}
+			beanWriter.close();
 		}
 	}
 }

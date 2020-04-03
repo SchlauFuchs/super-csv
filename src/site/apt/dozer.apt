@@ -77,7 +77,7 @@ addresses[0].city.name
   
   The following XML is provided as a reference - it's the XML configuration used in the project's unit tests.
   The <<<CsvDozerBeanData>>> class is used internally as the input/output of any Dozer mapping (each indexed column represents a column of CSV). 
-  At a minimum, you should replace the <<<org.supercsv.mock.dozer.SurveyResponse>>> with the class you're mapping, 
+  At a minimum, you should replace the <<<org.supercsv.io.dozer.SurveyResponse>>> with the class you're mapping,
   and update the field mappings as appropriate (but try not to change the XML attributes, as they're important!).
   
 +---------------------------------------------------------------------------------------------------+
@@ -88,7 +88,7 @@ addresses[0].city.name
 	<!-- configuration for CsvDozerBeanReader -->
 	<mapping type="one-way" wildcard="false" map-null="true">
 		<class-a>org.supercsv.io.dozer.CsvDozerBeanData</class-a>
-		<class-b>org.supercsv.mock.dozer.SurveyResponse</class-b>
+		<class-b>org.supercsv.io.dozer.SurveyResponse</class-b>
 		<field>
 			<a>columns[0]</a>
 			<b>age</b>
@@ -125,7 +125,7 @@ addresses[0].city.name
 
 	<!-- configuration for CsvDozerBeanWriter -->
 	<mapping type="one-way" wildcard="false" map-null="true">
-		<class-a>org.supercsv.mock.dozer.SurveyResponse</class-a>
+		<class-a>org.supercsv.io.dozer.SurveyResponse</class-a>
 		<class-b>org.supercsv.io.dozer.CsvDozerBeanData</class-b>
 		<field copy-by-reference="true">
 			<a>age</a>

@@ -15,23 +15,18 @@
  */
 package org.supercsv.io;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.supercsv.exception.SuperCsvException;
+import org.supercsv.SuperCsvException;
 import org.supercsv.prefs.CsvPreference;
+
+import static org.junit.Assert.*;
 
 /**
  * Tests AbstractCsvReader.
@@ -47,9 +42,7 @@ public class AbstractCsvReaderTest {
 		CsvPreference.STANDARD_PREFERENCE).surroundingSpacesNeedQuotes(true).build();
 	
 	private Reader reader;
-	
-	private Reader surroundingSpacesNeedQuotesReader;
-	
+
 	private AbstractCsvReader abstractReader;
 	
 	private AbstractCsvReader tokenizerAbstractReader;
@@ -84,9 +77,9 @@ public class AbstractCsvReaderTest {
 		
 		tokenizer = new Tokenizer(reader, PREFS);
 		tokenizerAbstractReader = new MockCsvReader(tokenizer, PREFS);
-		
-		surroundingSpacesNeedQuotesReader = new StringReader("firstName, lastName, age, address\n"
-			+ " John , Smith, 23 , \n" + "Harry, Potter, , \"Gryffindor\nHogwarts Castle\nUK\" ");
+
+		Reader surroundingSpacesNeedQuotesReader = new StringReader("firstName, lastName, age, address\n"
+				+ " John , Smith, 23 , \n" + "Harry, Potter, , \"Gryffindor\nHogwarts Castle\nUK\" ");
 		surroundingSpacesNeedQuotesAbstractReader = new MockCsvReader(surroundingSpacesNeedQuotesReader,
 			SURROUNDING_SPACES_NEED_QUOTES_PREFS);
 	}
@@ -153,8 +146,8 @@ public class AbstractCsvReaderTest {
 		assertNull(line.get(3));
 		
 		// get() should return the same values as the List from read()
-		assertTrue(Arrays.equals(line.toArray(), new Object[] { csvReader.get(1), csvReader.get(2), csvReader.get(3),
-			csvReader.get(4) }));
+		assertArrayEquals(line.toArray(), new Object[]{csvReader.get(1), csvReader.get(2), csvReader.get(3),
+				csvReader.get(4)});
 		
 		assertEquals(2, csvReader.getLineNumber());
 		assertEquals(2, csvReader.getRowNumber());
@@ -171,8 +164,8 @@ public class AbstractCsvReaderTest {
 		assertEquals("Gryffindor\nHogwarts Castle\nUK", line.get(3));
 		
 		// get() should return the same values as the List from read()
-		assertTrue(Arrays.equals(line.toArray(), new Object[] { csvReader.get(1), csvReader.get(2), csvReader.get(3),
-			csvReader.get(4) }));
+		assertArrayEquals(line.toArray(), new Object[]{csvReader.get(1), csvReader.get(2), csvReader.get(3),
+				csvReader.get(4)});
 		
 		assertEquals(5, csvReader.getLineNumber()); // 2 newlines in harry's address
 		assertEquals(3, csvReader.getRowNumber());
@@ -233,8 +226,8 @@ public class AbstractCsvReaderTest {
 		assertNull(line.get(3));
 		
 		// get() should return the same values as the List from read()
-		assertTrue(Arrays.equals(line.toArray(), new Object[] { csvReader.get(1), csvReader.get(2), csvReader.get(3),
-			csvReader.get(4) }));
+		assertArrayEquals(line.toArray(), new Object[]{csvReader.get(1), csvReader.get(2), csvReader.get(3),
+				csvReader.get(4)});
 		
 		assertEquals(2, csvReader.getLineNumber());
 		assertEquals(2, csvReader.getRowNumber());
@@ -251,8 +244,8 @@ public class AbstractCsvReaderTest {
 		assertEquals("Gryffindor\nHogwarts Castle\nUK", line.get(3));
 		
 		// get() should return the same values as the List from read()
-		assertTrue(Arrays.equals(line.toArray(), new Object[] { csvReader.get(1), csvReader.get(2), csvReader.get(3),
-			csvReader.get(4) }));
+		assertArrayEquals(line.toArray(), new Object[]{csvReader.get(1), csvReader.get(2), csvReader.get(3),
+				csvReader.get(4)});
 		
 		assertEquals(5, csvReader.getLineNumber()); // 2 newlines in harry's address
 		assertEquals(3, csvReader.getRowNumber());

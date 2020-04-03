@@ -71,8 +71,8 @@ public class Writing {
 	 * @return the cell processors
 	 */
 	private static CellProcessor[] getProcessors() {
-		
-		final CellProcessor[] processors = new CellProcessor[] { new UniqueHashCode(), // customerNo (must be unique)
+
+		return new CellProcessor[] { new UniqueHashCode(), // customerNo (must be unique)
 			new NotNull(), // firstName
 			new NotNull(), // lastName
 			new FmtDate("dd/MM/yyyy"), // birthDate
@@ -83,8 +83,6 @@ public class Writing {
 			new NotNull(), // email
 			new LMinMax(0L, LMinMax.MAX_LONG) // loyaltyPoints
 		};
-		
-		return processors;
 	}
 	
 	/**
@@ -102,30 +100,23 @@ public class Writing {
 			"1601 Willow Rd.\nMenlo Park, CA 94025\nUnited States", true, 0,
 			"\"Frankly, my dear, I don't give a damn.\" - Gone With The Wind", "bobdown@hotmail.com", 123456L);
 		final List<CustomerBean> customers = Arrays.asList(john, bob);
-		
-		ICsvBeanWriter beanWriter = null;
-		try {
-			beanWriter = new CsvBeanWriter(new FileWriter("target/writeWithCsvBeanWriter.csv"),
-				CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvBeanWriter beanWriter = new CsvBeanWriter(new FileWriter("target/writeWithCsvBeanWriter.csv"),
+				CsvPreference.STANDARD_PREFERENCE)) {
+
 			// the header elements are used to map the bean values to each column (names must match)
-			final String[] header = new String[] { "customerNo", "firstName", "lastName", "birthDate",
-				"mailingAddress", "married", "numberOfKids", "favouriteQuote", "email", "loyaltyPoints" };
+			final String[] header = new String[]{"customerNo", "firstName", "lastName", "birthDate",
+					"mailingAddress", "married", "numberOfKids", "favouriteQuote", "email", "loyaltyPoints"};
 			final CellProcessor[] processors = getProcessors();
-			
+
 			// write the header
 			beanWriter.writeHeader(header);
-			
+
 			// write the beans
-			for( final CustomerBean customer : customers ) {
+			for (final CustomerBean customer : customers) {
 				beanWriter.write(customer, header, processors);
 			}
-			
-		}
-		finally {
-			if( beanWriter != null ) {
-				beanWriter.close();
-			}
+
 		}
 	}
 	
@@ -146,20 +137,14 @@ public class Writing {
 			"1601 Willow Rd.\nMenlo Park, CA 94025\nUnited States", true, 0,
 			"\"Frankly, my dear, I don't give a damn.\" - Gone With The Wind", "bobdown@hotmail.com", 123456L}};
 		final ResultSet bob = new ResultSetMock(bobData, header);
-		
-		ICsvResultSetWriter resultSetWriter = null;
-		try {
-			resultSetWriter = new CsvResultSetWriter(new FileWriter("target/writeWithCsvResultSetWriter.csv"),
-				CsvPreference.STANDARD_PREFERENCE);
+
+		try (ICsvResultSetWriter resultSetWriter = new CsvResultSetWriter(new FileWriter("target/writeWithCsvResultSetWriter.csv"),
+				CsvPreference.STANDARD_PREFERENCE)) {
 			final CellProcessor[] processors = getProcessors();
-			
+
 			// writer csv file from ResultSet
 			resultSetWriter.write(john, processors);
 			resultSetWriter.write(bob, processors);
-		} finally {
-			if ( resultSetWriter != null ) {
-				resultSetWriter.close();
-			}
 		}
 	}
 	
@@ -178,28 +163,21 @@ public class Writing {
 			new GregorianCalendar(1919, Calendar.FEBRUARY, 25).getTime(),
 			"1601 Willow Rd.\nMenlo Park, CA 94025\nUnited States", true, 0,
 			"\"Frankly, my dear, I don't give a damn.\" - Gone With The Wind", "bobdown@hotmail.com", 123456L });
-		
-		ICsvListWriter listWriter = null;
-		try {
-			listWriter = new CsvListWriter(new FileWriter("target/writeWithCsvListWriter.csv"),
-				CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvListWriter listWriter = new CsvListWriter(new FileWriter("target/writeWithCsvListWriter.csv"),
+				CsvPreference.STANDARD_PREFERENCE)) {
+
 			final CellProcessor[] processors = getProcessors();
-			final String[] header = new String[] { "customerNo", "firstName", "lastName", "birthDate",
-				"mailingAddress", "married", "numberOfKids", "favouriteQuote", "email", "loyaltyPoints" };
-			
+			final String[] header = new String[]{"customerNo", "firstName", "lastName", "birthDate",
+					"mailingAddress", "married", "numberOfKids", "favouriteQuote", "email", "loyaltyPoints"};
+
 			// write the header
 			listWriter.writeHeader(header);
-			
+
 			// write the customer lists
 			listWriter.write(john, processors);
 			listWriter.write(bob, processors);
-			
-		}
-		finally {
-			if ( listWriter != null ) {
-				listWriter.close();
-			}
+
 		}
 	}
 	
@@ -212,7 +190,7 @@ public class Writing {
 			"married", "numberOfKids", "favouriteQuote", "email", "loyaltyPoints" };
 		
 		// create the customer Maps (using the header elements for the column keys)
-		final Map<String, Object> john = new HashMap<String, Object>();
+		final Map<String, Object> john = new HashMap<>();
 		john.put(header[0], "1");
 		john.put(header[1], "John");
 		john.put(header[2], "Dunbar");
@@ -224,7 +202,7 @@ public class Writing {
 		john.put(header[8], "jdunbar@gmail.com");
 		john.put(header[9], 0L);
 		
-		final Map<String, Object> bob = new HashMap<String, Object>();
+		final Map<String, Object> bob = new HashMap<>();
 		bob.put(header[0], "2");
 		bob.put(header[1], "Bob");
 		bob.put(header[2], "Down");
@@ -235,26 +213,19 @@ public class Writing {
 		bob.put(header[7], "\"Frankly, my dear, I don't give a damn.\" - Gone With The Wind");
 		bob.put(header[8], "bobdown@hotmail.com");
 		bob.put(header[9], 123456L);
-		
-		ICsvMapWriter mapWriter = null;
-		try {
-			mapWriter = new CsvMapWriter(new FileWriter("target/writeWithCsvMapWriter.csv"),
-				CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvMapWriter mapWriter = new CsvMapWriter(new FileWriter("target/writeWithCsvMapWriter.csv"),
+				CsvPreference.STANDARD_PREFERENCE)) {
+
 			final CellProcessor[] processors = getProcessors();
-			
+
 			// write the header
 			mapWriter.writeHeader(header);
-			
+
 			// write the customer maps
 			mapWriter.write(john, header, processors);
 			mapWriter.write(bob, header, processors);
-			
-		}
-		finally {
-			if( mapWriter != null ) {
-				mapWriter.close();
-			}
+
 		}
 	}
 	
@@ -273,32 +244,25 @@ public class Writing {
 			"1601 Willow Rd.\nMenlo Park, CA 94025\nUnited States", true, 0,
 			"\"Frankly, my dear, I don't give a damn.\" - Gone With The Wind", "bobdown@hotmail.com", 123456L);
 		final List<CustomerBean> customers = Arrays.asList(john, bob);
-		
-		ICsvBeanWriter beanWriter = null;
-		try {
-			beanWriter = new CsvBeanWriter(new FileWriter("target/partialWriteWithCsvBeanWriter.csv"),
-				CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvBeanWriter beanWriter = new CsvBeanWriter(new FileWriter("target/partialWriteWithCsvBeanWriter.csv"),
+				CsvPreference.STANDARD_PREFERENCE)) {
+
 			// only map 5 of the 10 fields
-			final String[] header = new String[] { "customerNo", "firstName", "lastName", "married", "numberOfKids" };
-			
+			final String[] header = new String[]{"customerNo", "firstName", "lastName", "married", "numberOfKids"};
+
 			// assign a default value for married (if null), and write numberOfKids as an empty column if null
-			final CellProcessor[] processors = new CellProcessor[] { new UniqueHashCode(), new NotNull(),
-				new NotNull(), new ConvertNullTo("no response", new FmtBool("yes", "no")), new Optional() };
-			
+			final CellProcessor[] processors = new CellProcessor[]{new UniqueHashCode(), new NotNull(),
+					new NotNull(), new ConvertNullTo("no response", new FmtBool("yes", "no")), new Optional()};
+
 			// write the header
 			beanWriter.writeHeader(header);
-			
+
 			// write the customer beans
-			for( final CustomerBean customer : customers ) {
+			for (final CustomerBean customer : customers) {
 				beanWriter.write(customer, header, processors);
 			}
-			
-		}
-		finally {
-			if( beanWriter != null ) {
-				beanWriter.close();
-			}
+
 		}
 	}
 	
@@ -312,28 +276,21 @@ public class Writing {
 		// create the customer Lists (CsvListWriter also accepts arrays!)
 		final List<Object> john = Arrays.asList(new Object[] { "1", "John", "Dunbar",null, null});
 		final List<Object> bob = Arrays.asList(new Object[] { "2", "Bob", "Down", true, 0 });
-		
-		ICsvListWriter listWriter = null;
-		try {
-			listWriter = new CsvListWriter(new FileWriter("target/partialWriteWithCsvListWriter.csv"),
-				CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvListWriter listWriter = new CsvListWriter(new FileWriter("target/partialWriteWithCsvListWriter.csv"),
+				CsvPreference.STANDARD_PREFERENCE)) {
+
 			// assign a default value for married (if null), and write numberOfKids as an empty column if null
-			final CellProcessor[] processors = new CellProcessor[] { new UniqueHashCode(), new NotNull(),
-				new NotNull(), new ConvertNullTo("no response", new FmtBool("yes", "no")), new Optional() };
-			
+			final CellProcessor[] processors = new CellProcessor[]{new UniqueHashCode(), new NotNull(),
+					new NotNull(), new ConvertNullTo("no response", new FmtBool("yes", "no")), new Optional()};
+
 			// write the header
 			listWriter.writeHeader(header);
-			
+
 			// write the customer Lists
 			listWriter.write(john, processors);
 			listWriter.write(bob, processors);
-			
-		}
-		finally {
-			if( listWriter != null ) {
-				listWriter.close();
-			}
+
 		}
 	}
 	
@@ -345,41 +302,34 @@ public class Writing {
 		final String[] header = new String[] { "customerNo", "firstName", "lastName", "married", "numberOfKids" };
 		
 		// create the customer Maps (using the header elements for the column keys)
-		final Map<String, Object> john = new HashMap<String, Object>();
+		final Map<String, Object> john = new HashMap<>();
 		john.put(header[0], "1");
 		john.put(header[1], "John");
 		john.put(header[2], "Dunbar");
 		john.put(header[3], null);
 		john.put(header[4], null);
 		
-		final Map<String, Object> bob = new HashMap<String, Object>();
+		final Map<String, Object> bob = new HashMap<>();
 		bob.put(header[0], "2");
 		bob.put(header[1], "Bob");
 		bob.put(header[2], "Down");
 		bob.put(header[3], true);
 		bob.put(header[4], 0);
-		
-		ICsvMapWriter mapWriter = null;
-		try {
-			mapWriter = new CsvMapWriter(new FileWriter("target/partialWriteWithCsvMapWriter.csv"),
-				CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvMapWriter mapWriter = new CsvMapWriter(new FileWriter("target/partialWriteWithCsvMapWriter.csv"),
+				CsvPreference.STANDARD_PREFERENCE)) {
+
 			// assign a default value for married (if null), and write numberOfKids as an empty column if null
-			final CellProcessor[] processors = new CellProcessor[] { new UniqueHashCode(), new NotNull(),
-				new NotNull(), new ConvertNullTo("no response", new FmtBool("yes", "no")), null };
-			
+			final CellProcessor[] processors = new CellProcessor[]{new UniqueHashCode(), new NotNull(),
+					new NotNull(), new ConvertNullTo("no response", new FmtBool("yes", "no")), null};
+
 			// write the header
 			mapWriter.writeHeader(header);
-			
+
 			// write the customer Maps
 			mapWriter.write(john, header, processors);
 			mapWriter.write(bob, header, processors);
-			
-		}
-		finally {
-			if( mapWriter != null ) {
-				mapWriter.close();
-			}
+
 		}
 	}
 	
@@ -421,9 +371,7 @@ public class Writing {
 			beanWriter.write(bob, header, processors);
 		}
 		finally {
-			if( beanWriter != null ) {
-				beanWriter.close();
-			}
+			beanWriter.close();
 		}
 	}
 	
@@ -468,9 +416,7 @@ public class Writing {
 			listWriter.write(bob, processors);
 		}
 		finally {
-			if( listWriter != null ){
-				listWriter.close();
-			}
+			listWriter.close();
 		}
 	}
 	
@@ -483,7 +429,7 @@ public class Writing {
 				"married", "numberOfKids", "favouriteQuote", "email", "loyaltyPoints" };
 
 		// create the customer Maps (using the header elements for the column keys)
-		final Map<String, Object> john = new HashMap<String, Object>();
+		final Map<String, Object> john = new HashMap<>();
 		john.put(header[0], "1");
 		john.put(header[1], "John");
 		john.put(header[2], "Dunbar");
@@ -495,7 +441,7 @@ public class Writing {
 		john.put(header[8], "jdunbar@gmail.com");
 		john.put(header[9], 0L);
 
-		final Map<String, Object> bob = new HashMap<String, Object>();
+		final Map<String, Object> bob = new HashMap<>();
 		bob.put(header[0], "2");
 		bob.put(header[1], "Bob");
 		bob.put(header[2], "Down");
@@ -533,9 +479,7 @@ public class Writing {
 			mapWriter.write(bob, header, processors);
 		}
 		finally {
-			if( mapWriter != null ){
-				mapWriter.close();
-			}
+			mapWriter.close();
 		}
 	}
 	

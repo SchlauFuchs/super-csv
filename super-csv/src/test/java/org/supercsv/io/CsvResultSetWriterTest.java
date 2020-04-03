@@ -34,7 +34,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.supercsv.cellprocessor.FmtDate;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.mock.CustomerBean;
 import org.supercsv.mock.CustomerStringBean;
 import org.supercsv.mock.ResultSetMock;
@@ -107,8 +107,6 @@ public class CsvResultSetWriterTest {
 	
 	/**
 	 * Tests writing ResultSet to a CSV file (no CellProcessors)
-	 * 
-	 * @throws SQLException
 	 */
 	@Test
 	public void testWrite() throws IOException, SQLException {
@@ -120,9 +118,6 @@ public class CsvResultSetWriterTest {
 	
 	/**
 	 * Test writing ResultSet to a CSV file with CellProcessors
-	 * 
-	 * @throws IOException
-	 * @throws SQLException
 	 */
 	@Test
 	public void testWriteWithProcessors() throws SQLException, IOException {
@@ -154,9 +149,6 @@ public class CsvResultSetWriterTest {
 	
 	/**
 	 * Tests the write() method with null ResultSet
-	 * 
-	 * @throws SQLException
-	 * @throws IOException
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testWriteNullResultSet() throws SQLException, IOException {
@@ -165,9 +157,6 @@ public class CsvResultSetWriterTest {
 	
 	/**
 	 * Test the write() method (with processors) with null ResultSet
-	 * 
-	 * @throws IOException
-	 * @throws SQLException
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testWriteWithProcessorsNullResultSet() throws SQLException, IOException {
@@ -176,9 +165,6 @@ public class CsvResultSetWriterTest {
 	
 	/**
 	 * Tests the write() method (with processors) with a null cell processor array
-	 * 
-	 * @throws IOException
-	 * @throws SQLException
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testWriteNullProcessors() throws SQLException, IOException {
@@ -189,9 +175,6 @@ public class CsvResultSetWriterTest {
 	
 	/**
 	 * Test that row/line numbers reported during exception are determined correctly
-	 * 
-	 * @throws IOException
-	 * @throws SQLException
 	 */
 	@Test(expected = SuperCsvCellProcessorException.class)
 	public void testRowLineNumberCorrectness() throws SQLException, IOException {

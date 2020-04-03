@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
@@ -96,7 +97,7 @@ public class CsvListWriterTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testWriteListAndProcessorsWithNullProcessors() throws IOException {
-		listWriter.write(Arrays.asList(""), null);
+		listWriter.write(Collections.singletonList(""), null);
 	}
 	
 	/**

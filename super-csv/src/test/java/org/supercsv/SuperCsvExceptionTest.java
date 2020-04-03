@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.supercsv.exception;
+package org.supercsv;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.supercsv.SuperCsvTestUtils.ANONYMOUS_CSVCONTEXT;
 
 import org.junit.Test;
-import org.supercsv.util.CsvContext;
+import org.supercsv.SuperCsvException;
 
 /**
  * Tests the SuperCsvException class.
@@ -29,7 +29,7 @@ import org.supercsv.util.CsvContext;
  */
 public class SuperCsvExceptionTest {
 	
-	private static final String CLASSNAME = "org.supercsv.exception.SuperCsvException";
+	private static final String CLASSNAME = "org.supercsv.SuperCsvException";
 	private static final String MSG = "Something terrible happened!";
 	private static final Throwable THROWABLE = new RuntimeException("I'm the cause of the problem");
 	
@@ -57,7 +57,7 @@ public class SuperCsvExceptionTest {
 		assertEquals(String.format("%s: %s%ncontext=%s", CLASSNAME, MSG, ANONYMOUS_CSVCONTEXT), e.toString());
 		
 		// test with null msg and context
-		e = new SuperCsvException(null, (CsvContext) null);
+		e = new SuperCsvException(null, null);
 		assertNull(e.getMessage());
 		assertNull(e.getCsvContext());
 	}
@@ -74,7 +74,7 @@ public class SuperCsvExceptionTest {
 		assertEquals(String.format("%s: %s%ncontext=%s", CLASSNAME, MSG, ANONYMOUS_CSVCONTEXT), e.toString());
 		
 		// test with null msg, context and throwable
-		e = new SuperCsvException(null, (CsvContext) null, (Throwable) null);
+		e = new SuperCsvException(null, null, null);
 		assertNull(e.getMessage());
 		assertNull(e.getCsvContext());
 		assertNull(e.getCause());

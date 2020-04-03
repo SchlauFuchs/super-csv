@@ -29,7 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.joda.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the ParseDuration cell processor.
@@ -43,14 +43,12 @@ public class ParseDurationTest {
 			DateTimeZone.UTC);
 	private static final Duration DURATION = new Duration(START, END);
 
-	private ParseDuration processor1;
-	private ParseDuration processorChain1;
 	private List<ParseDuration> processors;
 
 	@Before
 	public void setUp() {
-		processor1 = new ParseDuration();
-		processorChain1 = new ParseDuration(new IdentityTransform());
+		ParseDuration processor1 = new ParseDuration();
+		ParseDuration processorChain1 = new ParseDuration(new IdentityTransform());
 		processors = Arrays.asList(processor1, processorChain1);
 	}
 
@@ -106,7 +104,7 @@ public class ParseDurationTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testConstructor2WithNullNext() {
-		new ParseDuration((CellProcessor) null);
+		new ParseDuration(null);
 	}
 
 }

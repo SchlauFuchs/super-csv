@@ -25,7 +25,7 @@ import java.lang.reflect.Constructor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.supercsv.exception.SuperCsvReflectionException;
+import org.supercsv.SuperCsvReflectionException;
 import org.supercsv.mock.ReflectionBean;
 
 /**
@@ -70,9 +70,8 @@ public class ReflectionUtilsTest {
 	 */
 	@Test
 	public void testFindBooleanGetter() throws Exception {
-		final Boolean boolValue = true;
-		bean.setBooleanWrapper(boolValue);
-		assertEquals(boolValue, findGetter(bean, "booleanWrapper").invoke(bean));
+		bean.setBooleanWrapper(true);
+		assertEquals(true, findGetter(bean, "booleanWrapper").invoke(bean));
 	}
 	
 	/**
@@ -90,9 +89,8 @@ public class ReflectionUtilsTest {
 	 */
 	@Test
 	public void testFindAlternateBooleanWrapperGetter() throws Exception {
-		final Boolean boolValue = Boolean.TRUE;
-		bean.setBooleanWrapper2(boolValue);
-		assertEquals(boolValue, findGetter(bean, "booleanWrapper2").invoke(bean));
+		bean.setBooleanWrapper2(true);
+		assertEquals(true, findGetter(bean, "booleanWrapper2").invoke(bean));
 	}
 	
 	/**
@@ -110,7 +108,7 @@ public class ReflectionUtilsTest {
 	 */
 	@Test
 	public void testFindSetterWithSubtype() throws Exception {
-		findSetter(bean, "favouriteNumber", Integer.class).invoke(bean, Integer.valueOf(123));
+		findSetter(bean, "favouriteNumber", Integer.class).invoke(bean, 123);
 		assertEquals(123, bean.getFavouriteNumber().intValue());
 	}
 	
@@ -120,7 +118,7 @@ public class ReflectionUtilsTest {
 	 */
 	@Test
 	public void testFindSetterWithTwoOptions() throws Exception {
-		findSetter(bean, "overloaded", Number.class).invoke(bean, Integer.valueOf(123));
+		findSetter(bean, "overloaded", Number.class).invoke(bean, 123);
 		assertEquals(123, bean.getOverloaded().intValue());
 	}
 	
@@ -204,9 +202,9 @@ public class ReflectionUtilsTest {
 		// first try setting wrapper values onto the primitive setters
 		
 		findSetter(bean, "primitiveBoolean", Boolean.class).invoke(bean, Boolean.TRUE);
-		assertEquals(true, bean.isPrimitiveBoolean());
+		assertTrue(bean.isPrimitiveBoolean());
 		
-		findSetter(bean, "primitiveInt", Integer.class).invoke(bean, Integer.valueOf(1));
+		findSetter(bean, "primitiveInt", Integer.class).invoke(bean, 1);
 		assertEquals(1, bean.getPrimitiveInt());
 		
 		findSetter(bean, "primitiveShort", Short.class).invoke(bean, Short.valueOf("2"));
@@ -221,7 +219,7 @@ public class ReflectionUtilsTest {
 		findSetter(bean, "primitiveFloat", Float.class).invoke(bean, Float.valueOf("5.0"));
 		assertEquals(Float.parseFloat("5.0"), bean.getPrimitiveFloat(), DOUBLE_ASSERT_DELTA);
 		
-		findSetter(bean, "primitiveChar", Character.class).invoke(bean, Character.valueOf('a'));
+		findSetter(bean, "primitiveChar", Character.class).invoke(bean, 'a');
 		assertEquals('a', bean.getPrimitiveChar());
 		
 		findSetter(bean, "primitiveByte", Byte.class).invoke(bean, Byte.valueOf("123"));

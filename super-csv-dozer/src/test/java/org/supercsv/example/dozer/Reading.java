@@ -24,8 +24,8 @@ import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.dozer.CsvDozerBeanReader;
 import org.supercsv.io.dozer.ICsvDozerBeanReader;
-import org.supercsv.mock.dozer.Answer;
-import org.supercsv.mock.dozer.SurveyResponse;
+import org.supercsv.io.dozer.Answer;
+import org.supercsv.io.dozer.SurveyResponse;
 import org.supercsv.prefs.CsvPreference;
 import org.supercsv.util.CsvContext;
 
@@ -68,25 +68,18 @@ public class Reading {
 			new ParseInt(),               // questionNo 3
 			new Optional()                // answer 3
 		};
-		
-		ICsvDozerBeanReader beanReader = null;
-		try {
-			beanReader = new CsvDozerBeanReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvDozerBeanReader beanReader = new CsvDozerBeanReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE)) {
+
 			beanReader.getHeader(true); // ignore the header
 			beanReader.configureBeanMapping(SurveyResponse.class, FIELD_MAPPING);
-			
+
 			SurveyResponse surveyResponse;
-			while( (surveyResponse = beanReader.read(SurveyResponse.class, processors)) != null ) {
+			while ((surveyResponse = beanReader.read(SurveyResponse.class, processors)) != null) {
 				System.out.println(String.format("lineNo=%s, rowNo=%s, surveyResponse=%s", beanReader.getLineNumber(),
-					beanReader.getRowNumber(), surveyResponse));
+						beanReader.getRowNumber(), surveyResponse));
 			}
-			
-		}
-		finally {
-			if( beanReader != null ) {
-				beanReader.close();
-			}
+
 		}
 	}
 	
@@ -102,25 +95,18 @@ public class Reading {
 		// set processors for ignored columns to null for efficiency (could have used full array if we wanted them to execute anyway)
 		final CellProcessor[] processors = new CellProcessor[] { null, new ParseBool(), new ParseInt(), new Optional(),
 			new ParseInt(), new Optional(), null, null };
-		
-		ICsvDozerBeanReader beanReader = null;
-		try {
-			beanReader = new CsvDozerBeanReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvDozerBeanReader beanReader = new CsvDozerBeanReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE)) {
+
 			beanReader.getHeader(true); // ignore the header
 			beanReader.configureBeanMapping(SurveyResponse.class, partialFieldMapping);
-			
+
 			SurveyResponse surveyResponse;
-			while( (surveyResponse = beanReader.read(SurveyResponse.class, processors)) != null ) {
+			while ((surveyResponse = beanReader.read(SurveyResponse.class, processors)) != null) {
 				System.out.println(String.format("lineNo=%s, rowNo=%s, surveyResponse=%s", beanReader.getLineNumber(),
-					beanReader.getRowNumber(), surveyResponse));
+						beanReader.getRowNumber(), surveyResponse));
 			}
-			
-		}
-		finally {
-			if( beanReader != null ) {
-				beanReader.close();
-			}
+
 		}
 	}
 	
@@ -153,25 +139,18 @@ public class Reading {
 		
 		// the indexed mappings need a hint for Dozer to work
 		final Class<?>[] hintTypes = {null, null, null, Answer.class, null, Answer.class, null, Answer.class};
-		
-		ICsvDozerBeanReader beanReader = null;
-		try {
-			beanReader = new CsvDozerBeanReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE);
-			
+
+		try (ICsvDozerBeanReader beanReader = new CsvDozerBeanReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE)) {
+
 			beanReader.getHeader(true); // ignore the header
 			beanReader.configureBeanMapping(SurveyResponse.class, fieldMapping, hintTypes);
-			
+
 			SurveyResponse surveyResponse;
-			while( (surveyResponse = beanReader.read(SurveyResponse.class, processors)) != null ) {
+			while ((surveyResponse = beanReader.read(SurveyResponse.class, processors)) != null) {
 				System.out.println(String.format("lineNo=%s, rowNo=%s, surveyResponse=%s", beanReader.getLineNumber(),
-					beanReader.getRowNumber(), surveyResponse));
+						beanReader.getRowNumber(), surveyResponse));
 			}
-			
-		}
-		finally {
-			if( beanReader != null ) {
-				beanReader.close();
-			}
+
 		}
 	}
 	

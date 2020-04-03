@@ -71,7 +71,7 @@ public class AbstractJodaFormattingProcessorTest {
 				new IdentityTransform());
 	}
 
-	private class FmtNothing extends AbstractJodaFormattingProcessor<String> {
+	private static class FmtNothing extends AbstractJodaFormattingProcessor<String> {
 
 		public FmtNothing(Class<String> jodaClass, CellProcessor next) {
 			super(jodaClass, next);

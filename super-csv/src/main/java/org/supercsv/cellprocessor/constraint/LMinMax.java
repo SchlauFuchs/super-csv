@@ -18,8 +18,8 @@ package org.supercsv.cellprocessor.constraint;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -139,7 +139,7 @@ public class LMinMax extends CellProcessorAdaptor implements StringCellProcessor
 	public Object execute(final Object value, final CsvContext context) {
 		validateInputNotNull(value, context);
 		
-		final Long result;
+		final long result;
 		if( value instanceof Long ) {
 			result = (Long) value;
 		} else {

@@ -17,10 +17,11 @@ package org.supercsv.cellprocessor;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormatSymbols;
+import java.util.Objects;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -105,9 +106,7 @@ public class ParseBigDecimal extends CellProcessorAdaptor implements StringCellP
 	 *             if symbols is null
 	 */
 	private static void checkPreconditions(final DecimalFormatSymbols symbols) {
-		if( symbols == null ) {
-			throw new NullPointerException("symbols should not be null");
-		}
+		Objects.requireNonNull(symbols,"symbols should not be null");
 	}
 	
 	/**

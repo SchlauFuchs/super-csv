@@ -23,7 +23,7 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.mock.IdentityTransform;
 
 /**
@@ -84,8 +84,8 @@ public class UniqueTest {
 	 */
 	@Test(expected = SuperCsvConstraintViolationException.class)
 	public void testInvalidIntegerInput() {
-		assertEquals(Integer.valueOf(99), processor.execute(Integer.valueOf(99), ANONYMOUS_CSVCONTEXT));
-		processor.execute(Integer.valueOf(99), ANONYMOUS_CSVCONTEXT);
+		assertEquals(99, processor.execute(99, ANONYMOUS_CSVCONTEXT));
+		processor.execute(99, ANONYMOUS_CSVCONTEXT);
 		
 	}
 }

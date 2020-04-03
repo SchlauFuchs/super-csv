@@ -34,7 +34,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.comment.CommentMatches;
 import org.supercsv.comment.CommentStartsWith;
-import org.supercsv.exception.SuperCsvException;
+import org.supercsv.SuperCsvException;
 import org.supercsv.prefs.CsvPreference;
 
 public class TokenizerTest {
@@ -51,12 +51,10 @@ public class TokenizerTest {
 	
 	/**
 	 * Sets up the columns List for the test.
-	 * 
-	 * @throws Exception
 	 */
 	@Before
 	public void setUp() {
-		columns = new ArrayList<String>();
+		columns = new ArrayList<>();
 	}
 	
 	/**
@@ -87,7 +85,7 @@ public class TokenizerTest {
 	 * Tests the constructor with a null Reader (should throw an Exception).
 	 */
 	@Test(expected = NullPointerException.class)
-	public void testConstructorWithNullReader() throws Exception {
+	public void testConstructorWithNullReader() {
 		createTokenizer(null, EXCEL_PREFERENCE);
 	}
 	
@@ -95,7 +93,7 @@ public class TokenizerTest {
 	 * Tests the constructor with a null CsvPreference (should throw an Exception).
 	 */
 	@Test(expected = NullPointerException.class)
-	public void testConstructorWithNullPreferences() throws Exception {
+	public void testConstructorWithNullPreferences() {
 		createTokenizer("", null);
 	}
 	
@@ -112,7 +110,7 @@ public class TokenizerTest {
 	 * Tests the getPreferences() method.
 	 */
 	@Test()
-	public void testGetPreferences() throws Exception {
+	public void testGetPreferences() {
 		tokenizer = createTokenizer("", EXCEL_PREFERENCE);
 		CsvPreference prefs = tokenizer.getPreferences();
 		assertEquals(EXCEL_PREFERENCE.getDelimiterChar(), prefs.getDelimiterChar());
@@ -142,7 +140,7 @@ public class TokenizerTest {
 		final String input = "\n\nthis is the third line\n";
 		tokenizer = createTokenizer(input, EXCEL_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 1);
+		assertEquals(1, columns.size());
 		assertEquals("this is the third line", columns.get(0));
 		assertEquals(3, tokenizer.getLineNumber());
 		assertEquals("this is the third line", tokenizer.getUntokenizedRow());
@@ -153,7 +151,7 @@ public class TokenizerTest {
 	 */
 	@Test
 	public void testEmptyFieldsOnlyLinesDefaultBehaviour() throws Exception {
-		final String input = "a,b,c,d\r\n,,,,\r\ne,f,g,h\r\n";;
+		final String input = "a,b,c,d\r\n,,,,\r\ne,f,g,h\r\n";
 		final List<String> expectedColumnsRow1 = Arrays.asList("a","b","c", "d");
 		final List<String> expectedColumnsRow2 = Arrays.asList(null, null, null, null, null);
 		final List<String> expectedColumnsRow3 = Arrays.asList("e","f","g", "h");
@@ -172,7 +170,7 @@ public class TokenizerTest {
 	 */
 	@Test
 	public void testEmptyFieldsOnlyLinesBehaviourSkipping() throws Exception {
-		final String input = "a,b,c,d\r\n,,,,\r\ne,f,g,h\r\n";;
+		final String input = "a,b,c,d\r\n,,,,\r\ne,f,g,h\r\n";
 		final List<String> expectedColumnsRow1 = Arrays.asList("a","b","c", "d");
 		final List<String> expectedColumnsRow3 = Arrays.asList("e","f","g", "h");
 		CsvPreference preference = new CsvPreference.Builder(EXCEL_PREFERENCE).ignoreEmptyFieldLines(true).build();
@@ -195,19 +193,19 @@ public class TokenizerTest {
 		final String input = "\nthis is the second line\n\n";
 		tokenizer = createTokenizer(input, DONT_IGNORE_EMPTY_LINES_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 1);
+		assertEquals(1, columns.size());
 		assertNull(columns.get(0));
 		assertEquals(1, tokenizer.getLineNumber());
 		assertEquals("", tokenizer.getUntokenizedRow());
 		
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 1);
+		assertEquals(1, columns.size());
 		assertEquals("this is the second line", columns.get(0));
 		assertEquals(2, tokenizer.getLineNumber());
 		assertEquals("this is the second line", tokenizer.getUntokenizedRow());
 		
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 1);
+		assertEquals(1, columns.size());
 		assertNull(columns.get(0));
 		assertEquals(3, tokenizer.getLineNumber());
 		assertEquals("", tokenizer.getUntokenizedRow());
@@ -223,7 +221,7 @@ public class TokenizerTest {
 		final String input = "surrounding \"quoted\" text";
 		tokenizer = createTokenizer(input, EXCEL_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 1);
+		assertEquals(1, columns.size());
 		assertEquals("surrounding quoted text", columns.get(0));
 		assertEquals(1, tokenizer.getLineNumber());
 		assertEquals(input, tokenizer.getUntokenizedRow());
@@ -231,7 +229,7 @@ public class TokenizerTest {
 		// same result when surrounding spaces require quotes
 		tokenizer = createTokenizer(input, SPACES_NEED_QUOTES_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 1);
+		assertEquals(1, columns.size());
 		assertEquals("surrounding quoted text", columns.get(0));
 		assertEquals(1, tokenizer.getLineNumber());
 		assertEquals(input, tokenizer.getUntokenizedRow());
@@ -271,14 +269,14 @@ public class TokenizerTest {
 		final String input = "\"\n\"";
 		tokenizer = createTokenizer(input, EXCEL_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 1);
+		assertEquals(1, columns.size());
 		assertEquals("\n", columns.get(0));
 		assertEquals(input, tokenizer.getUntokenizedRow());
 		
 		// same input when surrounding spaces require quotes (results should be identical)
 		tokenizer = createTokenizer(input, SPACES_NEED_QUOTES_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 1);
+		assertEquals(1, columns.size());
 		assertEquals("\n", columns.get(0));
 		assertEquals(input, tokenizer.getUntokenizedRow());
 	}
@@ -292,7 +290,7 @@ public class TokenizerTest {
 		final String input = "\"one line\",\"two\nlines\",\"three\nlines\n!\"";
 		tokenizer = createTokenizer(input, EXCEL_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals("one line", columns.get(0));
 		assertEquals("two\nlines", columns.get(1));
 		assertEquals("three\nlines\n!", columns.get(2));
@@ -301,7 +299,7 @@ public class TokenizerTest {
 		// same input when surrounding spaces require quotes (results should be identical)
 		tokenizer = createTokenizer(input, SPACES_NEED_QUOTES_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals("one line", columns.get(0));
 		assertEquals("two\nlines", columns.get(1));
 		assertEquals("three\nlines\n!", columns.get(2));
@@ -328,7 +326,7 @@ public class TokenizerTest {
 		// should have exactly the same result when surrounding spaces need quotes
 		tokenizer = createTokenizer(input, SPACES_NEED_QUOTES_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 2);
+		assertEquals(2, columns.size());
 		assertEquals("one", columns.get(0));
 		assertEquals("multiline\n\n\ntext", columns.get(1));
 		assertEquals(input, tokenizer.getUntokenizedRow());
@@ -371,7 +369,7 @@ public class TokenizerTest {
 		tokenizer = createTokenizer(input, pref);
 		try {
 			boolean first = tokenizer.readColumns(columns);
-			assertEquals(true , first);
+			assertTrue(first);
 
 			tokenizer.readColumns(columns);
 			fail("should have thrown SuperCsvException");
@@ -400,10 +398,10 @@ public class TokenizerTest {
 		tokenizer = createTokenizer(input, pref);
 		try {
 			boolean first = tokenizer.readColumns(columns);
-			assertEquals(true , first);
+			assertTrue(first);
 
 			boolean second = tokenizer.readColumns(columns);
-			assertEquals(true , second);
+			assertTrue(second);
 
 			tokenizer.readColumns(columns);
 			fail("should have thrown SuperCsvException");
@@ -428,7 +426,7 @@ public class TokenizerTest {
 		tokenizer = createTokenizer(input, pref);
 		try {
 			final boolean first = tokenizer.readColumns(columns);
-			assertEquals(true , first);
+			assertTrue(first);
 			assertEquals("[col1, col2]" , columns.toString());
 
 			tokenizer.readColumns(columns);
@@ -439,16 +437,16 @@ public class TokenizerTest {
 					e.getMessage());
 		}
 		final boolean third = tokenizer.readColumns(columns);
-		assertEquals(true , third);
+		assertTrue(third);
 		assertEquals("[baz, zoo]" , columns.toString());
 
 		final boolean fourth = tokenizer.readColumns(columns);
-		assertEquals(true , fourth);
+		assertTrue(fourth);
 		assertEquals("[aaa, bbb]" , columns.toString());
 
 		//line 4 was the last 
 		final boolean fifth = tokenizer.readColumns(columns);
-		assertEquals(false , fifth);
+		assertFalse(fifth);
 	}
 
 	/**
@@ -469,12 +467,12 @@ public class TokenizerTest {
 		tokenizer = createTokenizer(input, pref);
 		try {
 			boolean first = tokenizer.readColumns(columns);
-			assertEquals(true , first);
+			assertTrue(first);
 			assertEquals("[col1, col2]" , columns.toString());
 			
 
 			boolean second = tokenizer.readColumns(columns);
-			assertEquals(true , second);
+			assertTrue(second);
 			assertEquals("[\"foo,bar]" , columns.toString());
 
 
@@ -486,7 +484,7 @@ public class TokenizerTest {
 					e.getMessage());
 		}
 		boolean fourth = tokenizer.readColumns(columns);
-		assertEquals(true , fourth);
+		assertTrue(fourth);
 		assertEquals("[aaa, bbb]" , columns.toString());
 		
 	}
@@ -503,7 +501,7 @@ public class TokenizerTest {
 		final String input = "  \"quoted with leading spaces\",two";
 		tokenizer = createTokenizer(input, EXCEL_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 2);
+		assertEquals(2, columns.size());
 		assertEquals("  quoted with leading spaces", columns.get(0));
 		assertEquals("two", columns.get(1));
 		assertEquals(input, tokenizer.getUntokenizedRow());
@@ -511,7 +509,7 @@ public class TokenizerTest {
 		// same input when surrounding spaces require quotes (leading spaces trimmed)
 		tokenizer = createTokenizer(input, SPACES_NEED_QUOTES_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 2);
+		assertEquals(2, columns.size());
 		assertEquals("quoted with leading spaces", columns.get(0));
 		assertEquals("two", columns.get(1));
 		assertEquals(input, tokenizer.getUntokenizedRow());
@@ -529,7 +527,7 @@ public class TokenizerTest {
 		final String input = "one,two,  \"quoted with leading spaces\"";
 		tokenizer = createTokenizer(input, EXCEL_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals("one", columns.get(0));
 		assertEquals("two", columns.get(1));
 		assertEquals("  quoted with leading spaces", columns.get(2));
@@ -538,7 +536,7 @@ public class TokenizerTest {
 		// leading space should be trimmed off
 		tokenizer = createTokenizer(input, SPACES_NEED_QUOTES_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals("one", columns.get(0));
 		assertEquals("two", columns.get(1));
 		assertEquals("quoted with leading spaces", columns.get(2));
@@ -557,7 +555,7 @@ public class TokenizerTest {
 		final String input = "\"quoted with trailing spaces\"  ,two";
 		tokenizer = createTokenizer(input, EXCEL_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 2);
+		assertEquals(2, columns.size());
 		assertEquals("quoted with trailing spaces  ", columns.get(0));
 		assertEquals("two", columns.get(1));
 		assertEquals(input, tokenizer.getUntokenizedRow());
@@ -565,7 +563,7 @@ public class TokenizerTest {
 		// trailing spaces should be trimmed
 		tokenizer = createTokenizer(input, SPACES_NEED_QUOTES_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 2);
+		assertEquals(2, columns.size());
 		assertEquals("quoted with trailing spaces", columns.get(0));
 		assertEquals("two", columns.get(1));
 		assertEquals(input, tokenizer.getUntokenizedRow());
@@ -583,7 +581,7 @@ public class TokenizerTest {
 		final String input = "one,two,\"quoted with trailing spaces\"  ";
 		tokenizer = createTokenizer(input, EXCEL_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals("one", columns.get(0));
 		assertEquals("two", columns.get(1));
 		assertEquals("quoted with trailing spaces  ", columns.get(2));
@@ -592,7 +590,7 @@ public class TokenizerTest {
 		// trailing spaces should be trimmed off
 		tokenizer = createTokenizer(input, SPACES_NEED_QUOTES_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals("one", columns.get(0));
 		assertEquals("two", columns.get(1));
 		assertEquals("quoted with trailing spaces", columns.get(2));
@@ -608,7 +606,7 @@ public class TokenizerTest {
 		final String input = "\" one \",\"  two  \",\"   three   \"";
 		tokenizer = createTokenizer(input, EXCEL_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals(" one ", columns.get(0));
 		assertEquals("  two  ", columns.get(1));
 		assertEquals("   three   ", columns.get(2));
@@ -617,7 +615,7 @@ public class TokenizerTest {
 		// same input when surrounding spaces require quotes (results should be identical)
 		tokenizer = createTokenizer(input, SPACES_NEED_QUOTES_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals(" one ", columns.get(0));
 		assertEquals("  two  ", columns.get(1));
 		assertEquals("   three   ", columns.get(2));
@@ -633,7 +631,7 @@ public class TokenizerTest {
 		final String input = " one ,  two  ,   three   ";
 		tokenizer = createTokenizer(input, EXCEL_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals(" one ", columns.get(0));
 		assertEquals("  two  ", columns.get(1));
 		assertEquals("   three   ", columns.get(2));
@@ -642,7 +640,7 @@ public class TokenizerTest {
 		// same input when surrounding spaces require quotes
 		tokenizer = createTokenizer(input, SPACES_NEED_QUOTES_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals("one", columns.get(0));
 		assertEquals("two", columns.get(1));
 		assertEquals("three", columns.get(2));
@@ -659,7 +657,7 @@ public class TokenizerTest {
 		final String input = "\t, \tone\t ,  \ttwo\t  ,   \tthree\t   ";
 		tokenizer = createTokenizer(input, EXCEL_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 4);
+		assertEquals(4, columns.size());
 		assertEquals("\t", columns.get(0));
 		assertEquals(" \tone\t ", columns.get(1));
 		assertEquals("  \ttwo\t  ", columns.get(2));
@@ -669,7 +667,7 @@ public class TokenizerTest {
 		// same input when surrounding spaces require quotes
 		tokenizer = createTokenizer(input, SPACES_NEED_QUOTES_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 4);
+		assertEquals(4, columns.size());
 		assertEquals("\t", columns.get(0));
 		assertEquals("\tone\t", columns.get(1));
 		assertEquals("\ttwo\t", columns.get(2));
@@ -686,7 +684,7 @@ public class TokenizerTest {
 		final String input = " one partridge ,  two turtle doves  ,   three french hens   ";
 		tokenizer = createTokenizer(input, EXCEL_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals(" one partridge ", columns.get(0));
 		assertEquals("  two turtle doves  ", columns.get(1));
 		assertEquals("   three french hens   ", columns.get(2));
@@ -695,7 +693,7 @@ public class TokenizerTest {
 		// same input when surrounding spaces require quotes
 		tokenizer = createTokenizer(input, SPACES_NEED_QUOTES_PREFERENCE);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals("one partridge", columns.get(0));
 		assertEquals("two turtle doves", columns.get(1));
 		assertEquals("three french hens", columns.get(2));
@@ -714,13 +712,13 @@ public class TokenizerTest {
 		final String input = "#comment\nnot,a,comment\n# another comment\nalso,not,comment";
 		final Tokenizer tokenizer = createTokenizer(input, commentsStartWithPrefs);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals("not", columns.get(0));
 		assertEquals("a", columns.get(1));
 		assertEquals("comment", columns.get(2));
 		
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals("also", columns.get(0));
 		assertEquals("not", columns.get(1));
 		assertEquals("comment", columns.get(2));
@@ -740,13 +738,13 @@ public class TokenizerTest {
 		final String input = "<!--comment-->\nnot,a,comment\n<!-- another comment-->\nalso,not,comment";
 		final Tokenizer tokenizer = createTokenizer(input, commentsMatchesPrefs);
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals("not", columns.get(0));
 		assertEquals("a", columns.get(1));
 		assertEquals("comment", columns.get(2));
 		
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 3);
+		assertEquals(3, columns.size());
 		assertEquals("also", columns.get(0));
 		assertEquals("not", columns.get(1));
 		assertEquals("comment", columns.get(2));
@@ -763,13 +761,13 @@ public class TokenizerTest {
 		
 		final String input = ",";
 		tokenizer = createTokenizer(input, EXCEL_PREFERENCE);
-		assertTrue(EXCEL_PREFERENCE.getEmptyColumnParsing().equals(EmptyColumnParsing.ParseEmptyColumnsAsNull));
+		assertEquals(EXCEL_PREFERENCE.getEmptyColumnParsing(), EmptyColumnParsing.ParseEmptyColumnsAsNull);
 		
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 2);
+		assertEquals(2, columns.size());
 		assertEquals(",", tokenizer.getUntokenizedRow());
-		assertEquals(null, columns.get(0));
-		assertEquals(null, columns.get(1));
+		assertNull(columns.get(0));
+		assertNull(columns.get(1));
 	}
 	
 
@@ -781,13 +779,13 @@ public class TokenizerTest {
 		
 		final String input = "\"\",\"\"";
 		tokenizer = createTokenizer(input, EXCEL_PREFERENCE);
-		assertTrue(EXCEL_PREFERENCE.getEmptyColumnParsing().equals(EmptyColumnParsing.ParseEmptyColumnsAsNull));
+		assertEquals(EXCEL_PREFERENCE.getEmptyColumnParsing(), EmptyColumnParsing.ParseEmptyColumnsAsNull);
 		
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 2);
+		assertEquals(2, columns.size());
 		assertEquals("\"\",\"\"", tokenizer.getUntokenizedRow());
-		assertEquals(null, columns.get(0));
-		assertEquals(null, columns.get(1));
+		assertNull(columns.get(0));
+		assertNull(columns.get(1));
 	}
 	
 	/**
@@ -798,13 +796,13 @@ public class TokenizerTest {
 		
 		final String input = ",";
 		tokenizer = createTokenizer(input, PARSE_EMPTY_COLUMNS_AS_EMPTY_STRING_PREFERENCE);
-		assertTrue(PARSE_EMPTY_COLUMNS_AS_EMPTY_STRING_PREFERENCE.getEmptyColumnParsing().equals(EmptyColumnParsing.ParseEmptyColumnsAsEmptyString));
+		assertEquals(PARSE_EMPTY_COLUMNS_AS_EMPTY_STRING_PREFERENCE.getEmptyColumnParsing(), EmptyColumnParsing.ParseEmptyColumnsAsEmptyString);
 		
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 2);
+		assertEquals(2, columns.size());
 		assertEquals(",", tokenizer.getUntokenizedRow());
-		assertEquals(null, columns.get(0));
-		assertEquals(null, columns.get(1));
+		assertNull(columns.get(0));
+		assertNull(columns.get(1));
 	}
 	
 	/**
@@ -815,10 +813,10 @@ public class TokenizerTest {
 		
 		final String input = "\"\",\"\"";
 		tokenizer = createTokenizer(input, PARSE_EMPTY_COLUMNS_AS_EMPTY_STRING_PREFERENCE);
-		assertTrue(PARSE_EMPTY_COLUMNS_AS_EMPTY_STRING_PREFERENCE.getEmptyColumnParsing().equals(EmptyColumnParsing.ParseEmptyColumnsAsEmptyString));
+		assertEquals(PARSE_EMPTY_COLUMNS_AS_EMPTY_STRING_PREFERENCE.getEmptyColumnParsing(), EmptyColumnParsing.ParseEmptyColumnsAsEmptyString);
 		
 		tokenizer.readColumns(columns);
-		assertTrue(columns.size() == 2);
+		assertEquals(2, columns.size());
 		assertEquals("\"\",\"\"", tokenizer.getUntokenizedRow());
 		assertEquals("", columns.get(0));
 		assertEquals("", columns.get(1));

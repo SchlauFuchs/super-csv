@@ -52,7 +52,7 @@ import static org.supercsv.prefs.CsvPreference.STANDARD_PREFERENCE;
  */
 public class ReadingFeaturesTest {
 	
-	private DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance();
+	private final DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance();
 	
 	@Test
 	public void testCustomSeparator() throws IOException {
@@ -87,7 +87,7 @@ public class ReadingFeaturesTest {
 	
 	@Ignore
 	@Test
-	public void testCustomEscape() throws IOException {
+	public void testCustomEscape() {
 		throw new UnsupportedOperationException("Not implemented yet!");
 	}
 	
@@ -139,7 +139,7 @@ public class ReadingFeaturesTest {
 	
 	@Ignore
 	@Test
-	public void testDifferentEscapeAndQuote() throws IOException {
+	public void testDifferentEscapeAndQuote() {
 		throw new UnsupportedOperationException("Not implemented yet!");
 	}
 	
@@ -204,7 +204,7 @@ public class ReadingFeaturesTest {
 	
 	@Ignore
 	@Test
-	public void testReadAllLines() throws IOException {
+	public void testReadAllLines() {
 		throw new UnsupportedOperationException("'reader.readAll()' not implemented yet!");
 	}
 	
@@ -242,7 +242,7 @@ public class ReadingFeaturesTest {
 	
 	@Ignore
 	@Test
-	public void testColumnIndexBasedMapping() throws IOException {
+	public void testColumnIndexBasedMapping() {
 		throw new UnsupportedOperationException("not implemented yet!");
 	}
 	
@@ -261,7 +261,7 @@ public class ReadingFeaturesTest {
 	
 	@Ignore
 	@Test
-	public void testSupportsAnnotations() throws IOException {
+	public void testSupportsAnnotations() {
 		throw new UnsupportedOperationException("Annotations are not implemented yet!");
 	}
 	
@@ -296,7 +296,7 @@ public class ReadingFeaturesTest {
 		Assert.assertEquals("Connor", character.getLastName());
 		Assert.assertEquals(16, character.getAge());
 		Assert.assertEquals(new SimpleDateFormat("yyyy-MM-dd").parse("1999-07-12"), character.getBirthDate());
-		Assert.assertEquals(new BigDecimal(6.65, new MathContext(3)), character.getSavings());
+		Assert.assertEquals(new BigDecimal("6.65", new MathContext(3)), character.getSavings());
 	}
 	
 	@Test
@@ -315,7 +315,7 @@ public class ReadingFeaturesTest {
 		Assert.assertEquals("Connor", character.getLastName());
 		Assert.assertEquals(16, character.getAge());
 		Assert.assertEquals(new SimpleDateFormat("yyyy-MM-dd").parse("1999-07-12"), character.getBirthDate());
-		Assert.assertEquals(new BigDecimal(6.65, new MathContext(3)), character.getSavings());
+		Assert.assertEquals(new BigDecimal("6.65", new MathContext(3)), character.getSavings());
 	}
 	
 	@Test
@@ -332,7 +332,7 @@ public class ReadingFeaturesTest {
 	}
 	
 	@Test
-	public void testReturnsTypedBean() throws Exception {
+	public void testReturnsTypedBean() {
 		int methodCounter = 0;
 		Method[] methods = CsvBeanReader.class.getMethods();
 		for( Method method : methods ) {
@@ -350,12 +350,7 @@ public class ReadingFeaturesTest {
 		}
 		Assert.assertTrue(methodCounter > 0);
 	}
-	
-	@Test
-	public void testDeepConversion() {
-		Assert.assertNotNull("See org.supercsv.example.dozer.Reading class!");
-	}
-	
+
 	@Ignore
 	@Test
 	public void testSplitCellToMultipleProperties() {

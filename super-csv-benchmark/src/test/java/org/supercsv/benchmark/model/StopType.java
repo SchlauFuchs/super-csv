@@ -21,5 +21,5 @@ package org.supercsv.benchmark.model;
  * @author James Bassett
  */
 public enum StopType {
-	AIR, BCE, BCQ, BCS, BCT, FER, FTD, GAT, MET, PLT, RSE, RLY, STR, TMU, TXR;
+	AIR, BCE, BCQ, BCS, BCT, FER, FTD, GAT, MET, PLT, RSE, RLY, STR, TMU, TXR
 }

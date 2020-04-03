@@ -82,7 +82,7 @@ public class CsvListReaderTest {
 		assertArrayEquals(HEADER, header);
 		
 		// read all of the customers in
-		final List<List<String>> customers = new ArrayList<List<String>>();
+		final List<List<String>> customers = new ArrayList<>();
 		List<String> customer;
 		while( (customer = listReader.read()) != null ) {
 			customers.add(customer);
@@ -95,7 +95,7 @@ public class CsvListReaderTest {
 			assertEquals(STRING_CUSTOMERS.get(i).getFirstName(), customer.get(1));
 			assertEquals(STRING_CUSTOMERS.get(i).getLastName(), customer.get(2));
 			assertEquals(STRING_CUSTOMERS.get(i).getBirthDate(), customer.get(3));
-			assertEquals(STRING_CUSTOMERS.get(i).getBirthTime().toString(), customer.get(4).toString());
+			assertEquals(STRING_CUSTOMERS.get(i).getBirthTime(), customer.get(4));
 			assertEquals(STRING_CUSTOMERS.get(i).getMailingAddress(), customer.get(5));
 			assertEquals(STRING_CUSTOMERS.get(i).getMarried(), customer.get(6));
 			assertEquals(STRING_CUSTOMERS.get(i).getNumberOfKids(), customer.get(7));
@@ -117,7 +117,7 @@ public class CsvListReaderTest {
 		assertArrayEquals(HEADER, header);
 		
 		// read all of the customers in
-		final List<List<Object>> customers = new ArrayList<List<Object>>();
+		final List<List<Object>> customers = new ArrayList<>();
 		List<Object> customer;
 		while( (customer = listReader.read(READ_PROCESSORS)) != null ) {
 			customers.add(customer);
@@ -152,7 +152,7 @@ public class CsvListReaderTest {
 		assertArrayEquals(HEADER, header);
 		
 		// read all of the customers in (manually processing each)
-		final List<List<Object>> customers = new ArrayList<List<Object>>();
+		final List<List<Object>> customers = new ArrayList<>();
 		while( listReader.read() != null ) {
 			final List<Object> customer = listReader.executeProcessors(READ_PROCESSORS);
 			customers.add(customer);
@@ -188,7 +188,7 @@ public class CsvListReaderTest {
 		assertArrayEquals(HEADER, header);
 		
 		// read all of the customers in
-		final List<List<String>> customers = new ArrayList<List<String>>();
+		final List<List<String>> customers = new ArrayList<>();
 		List<String> customer;
 		while( (customer = tokenizerListReader.read()) != null ) {
 			customers.add(customer);
@@ -201,7 +201,7 @@ public class CsvListReaderTest {
 			assertEquals(STRING_CUSTOMERS.get(i).getFirstName(), customer.get(1));
 			assertEquals(STRING_CUSTOMERS.get(i).getLastName(), customer.get(2));
 			assertEquals(STRING_CUSTOMERS.get(i).getBirthDate(), customer.get(3));
-			assertEquals(STRING_CUSTOMERS.get(i).getBirthTime().toString(), customer.get(4).toString());
+			assertEquals(STRING_CUSTOMERS.get(i).getBirthTime(), customer.get(4));
 			assertEquals(STRING_CUSTOMERS.get(i).getMailingAddress(), customer.get(5));
 			assertEquals(STRING_CUSTOMERS.get(i).getMarried(), customer.get(6));
 			assertEquals(STRING_CUSTOMERS.get(i).getNumberOfKids(), customer.get(7));
@@ -225,7 +225,7 @@ public class CsvListReaderTest {
 	 * Tests the executeProcessors() method (with processors), with a null cell processor array.
 	 */
 	@Test(expected = NullPointerException.class)
-	public void testExecuteProcessorsWithNullProcessors() throws IOException {
+	public void testExecuteProcessorsWithNullProcessors() {
 		listReader.executeProcessors((CellProcessor[]) null);
 	}
 	

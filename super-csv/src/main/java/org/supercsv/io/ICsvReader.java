@@ -18,7 +18,7 @@ package org.supercsv.io;
 import java.io.Closeable;
 import java.io.IOException;
 
-import org.supercsv.exception.SuperCsvException;
+import org.supercsv.SuperCsvException;
 
 /**
  * The interface for CSV readers.

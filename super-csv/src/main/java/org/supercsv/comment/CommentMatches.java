@@ -15,6 +15,7 @@
  */
 package org.supercsv.comment;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -39,9 +40,8 @@ public class CommentMatches implements CommentMatcher {
 	 *             if the regex is invalid
 	 */
 	public CommentMatches(final String regex) {
-		if( regex == null ) {
-			throw new NullPointerException("regex should not be null");
-		} else if( regex.length() == 0 ) {
+		Objects.requireNonNull(regex,"regex should not be null");
+		if( regex.length() == 0 ) {
 			throw new IllegalArgumentException("regex should not be empty");
 		}
 		this.pattern = Pattern.compile(regex);

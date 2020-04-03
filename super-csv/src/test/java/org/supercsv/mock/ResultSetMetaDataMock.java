@@ -17,21 +17,20 @@
 package org.supercsv.mock;
 
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 
 class ResultSetMetaDataMock implements ResultSetMetaData {
 	
-	private String[] headers;
+	private final String[] headers;
 	
 	public ResultSetMetaDataMock(final String[] headers) {
 		this.headers = headers;
 	}
 
-	public int getColumnCount() throws SQLException {
+	public int getColumnCount() {
 		return headers.length;
 	}
 	
-	public String getColumnName(final int column) throws SQLException {
+	public String getColumnName(final int column) {
 		return headers[column - 1];
 	}
 	
@@ -42,87 +41,87 @@ class ResultSetMetaDataMock implements ResultSetMetaData {
 	 *  ------------------------------------------------------------------------
 	 */
 
-	public <T> T unwrap(Class<T> iface) throws SQLException {
+	public <T> T unwrap(Class<T> iface) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean isWrapperFor(Class<?> iface) throws SQLException {
+	public boolean isWrapperFor(Class<?> iface) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean isAutoIncrement(int column) throws SQLException {
+	public boolean isAutoIncrement(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean isCaseSensitive(int column) throws SQLException {
+	public boolean isCaseSensitive(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean isSearchable(int column) throws SQLException {
+	public boolean isSearchable(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean isCurrency(int column) throws SQLException {
+	public boolean isCurrency(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public int isNullable(int column) throws SQLException {
+	public int isNullable(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean isSigned(int column) throws SQLException {
+	public boolean isSigned(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public int getColumnDisplaySize(int column) throws SQLException {
+	public int getColumnDisplaySize(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public String getColumnLabel(int column) throws SQLException {
+	public String getColumnLabel(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public String getSchemaName(int column) throws SQLException {
+	public String getSchemaName(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public int getPrecision(int column) throws SQLException {
+	public int getPrecision(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public int getScale(int column) throws SQLException {
+	public int getScale(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public String getTableName(int column) throws SQLException {
+	public String getTableName(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public String getCatalogName(int column) throws SQLException {
+	public String getCatalogName(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public int getColumnType(int column) throws SQLException {
+	public int getColumnType(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public String getColumnTypeName(int column) throws SQLException {
+	public String getColumnTypeName(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean isReadOnly(int column) throws SQLException {
+	public boolean isReadOnly(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean isWritable(int column) throws SQLException {
+	public boolean isWritable(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean isDefinitelyWritable(int column) throws SQLException {
+	public boolean isDefinitelyWritable(int column) {
 		throw new UnsupportedOperationException();
 	}
 
-	public String getColumnClassName(int column) throws SQLException {
+	public String getColumnClassName(int column) {
 		throw new UnsupportedOperationException();
 	}
 	

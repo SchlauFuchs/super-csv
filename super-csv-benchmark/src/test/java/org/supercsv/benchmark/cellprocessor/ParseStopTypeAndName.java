@@ -21,7 +21,7 @@ import java.util.Map;
 import org.supercsv.benchmark.model.StopTypeAndName;
 import org.supercsv.cellprocessor.HashMapper;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -31,7 +31,7 @@ import org.supercsv.util.CsvContext;
  */
 public class ParseStopTypeAndName extends HashMapper {
 
-	private static final Map<Object, Object> MAP = new HashMap<Object, Object>();
+	private static final Map<Object, Object> MAP = new HashMap<>();
 	static {
 		MAP.put("Airport, airport stop", StopTypeAndName.AIRPORT_STOP);
 		MAP.put("Bus/coach stop", StopTypeAndName.BUS_COACH_STOP);

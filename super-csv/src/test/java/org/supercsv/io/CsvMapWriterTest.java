@@ -88,21 +88,19 @@ public class CsvMapWriterTest {
 	
 	/**
 	 * Tests the write() method.
-	 * 
-	 * @throws IOException
 	 */
 	@Test
 	public void testWrite() throws IOException {
 		mapWriter.writeHeader(HEADER);
 		for( CustomerStringBean customer : STRING_CUSTOMERS ) {
-			Map<String, Object> customerMap = new HashMap<String, Object>();
+			Map<String, Object> customerMap = new HashMap<>();
 			Util.filterListToMap(
 				customerMap,
 				HEADER,
-				Arrays.asList(new String[] { customer.getCustomerNo(), customer.getFirstName(), customer.getLastName(),
-					customer.getBirthDate(), customer.getBirthTime(), customer.getMailingAddress(),
-					customer.getMarried(), customer.getNumberOfKids(), customer.getFavouriteQuote(),
-					customer.getEmail(), customer.getLoyaltyPoints() }));
+				Arrays.asList(customer.getCustomerNo(), customer.getFirstName(), customer.getLastName(),
+						customer.getBirthDate(), customer.getBirthTime(), customer.getMailingAddress(),
+						customer.getMarried(), customer.getNumberOfKids(), customer.getFavouriteQuote(),
+						customer.getEmail(), customer.getLoyaltyPoints()));
 			mapWriter.write(customerMap, HEADER);
 		}
 		mapWriter.flush();
@@ -116,14 +114,14 @@ public class CsvMapWriterTest {
 	public void testWriteProcessors() throws IOException {
 		mapWriter.writeHeader(HEADER);
 		for( CustomerBean customer : CUSTOMERS ) {
-			Map<String, Object> customerMap = new HashMap<String, Object>();
+			Map<String, Object> customerMap = new HashMap<>();
 			Util.filterListToMap(
 				customerMap,
 				HEADER,
-				Arrays.asList(new Object[] { customer.getCustomerNo(), customer.getFirstName(), customer.getLastName(),
-					customer.getBirthDate(), customer.getBirthTime(), customer.getMailingAddress(),
-					customer.getMarried(), customer.getNumberOfKids(), customer.getFavouriteQuote(),
-					customer.getEmail(), customer.getLoyaltyPoints() }));
+				Arrays.asList(customer.getCustomerNo(), customer.getFirstName(), customer.getLastName(),
+						customer.getBirthDate(), customer.getBirthTime(), customer.getMailingAddress(),
+						customer.getMarried(), customer.getNumberOfKids(), customer.getFavouriteQuote(),
+						customer.getEmail(), customer.getLoyaltyPoints()));
 			mapWriter.write(customerMap, HEADER, WRITE_PROCESSORS);
 		}
 		mapWriter.flush();
@@ -143,7 +141,7 @@ public class CsvMapWriterTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testWriteWithNullNameMapping() throws IOException {
-		mapWriter.write(new HashMap<String, Object>(), (String[]) null);
+		mapWriter.write(new HashMap<>(), (String[]) null);
 	}
 	
 	/**
@@ -159,7 +157,7 @@ public class CsvMapWriterTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testWriteProcessorsWithNullNameMapping() throws IOException {
-		mapWriter.write(new HashMap<String, Object>(), null, WRITE_PROCESSORS);
+		mapWriter.write(new HashMap<>(), null, WRITE_PROCESSORS);
 		
 	}
 	
@@ -168,7 +166,7 @@ public class CsvMapWriterTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testWriteProcessorsWithNullProcessors() throws IOException {
-		mapWriter.write(new HashMap<String, Object>(), HEADER, null);
+		mapWriter.write(new HashMap<>(), HEADER, null);
 		
 	}
 	

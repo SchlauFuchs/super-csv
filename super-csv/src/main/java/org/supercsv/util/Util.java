@@ -18,10 +18,11 @@ package org.supercsv.util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
-import org.supercsv.exception.SuperCsvException;
+import org.supercsv.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvException;
 
 /**
  * Useful utility methods.
@@ -62,17 +63,14 @@ public final class Util {
 	public static void executeCellProcessors(final List<Object> destination, final List<?> source,
 		final CellProcessor[] processors, final int lineNo, final int rowNo) {
 		
-		if( destination == null ) {
-			throw new NullPointerException("destination should not be null");
-		} else if( source == null ) {
-			throw new NullPointerException("source should not be null");
-		} else if( processors == null ) {
-			throw new NullPointerException("processors should not be null");
-		}
+		Objects.requireNonNull(destination,"destination should not be null");
+		Objects.requireNonNull(source,"source should not be null");
+		Objects.requireNonNull(processors,"processors should not be null");
+
 		
 		// the context used when cell processors report exceptions
 		final CsvContext context = new CsvContext(lineNo, rowNo, 1);
-		context.setRowSource(new ArrayList<Object>(source));
+		context.setRowSource(new ArrayList<>(source));
 		
 		if( source.size() != processors.length ) {
 			throw new SuperCsvException(String.format(
@@ -113,13 +111,10 @@ public final class Util {
 	 */
 	public static <T> void filterListToMap(final Map<String, T> destinationMap, final String[] nameMapping,
 		final List<? extends T> sourceList) {
-		if( destinationMap == null ) {
-			throw new NullPointerException("destinationMap should not be null");
-		} else if( nameMapping == null ) {
-			throw new NullPointerException("nameMapping should not be null");
-		} else if( sourceList == null ) {
-			throw new NullPointerException("sourceList should not be null");
-		} else if( nameMapping.length != sourceList.size() ) {
+		Objects.requireNonNull(destinationMap,"destinationMap should not be null");
+		Objects.requireNonNull(nameMapping,"nameMapping should not be null");
+		Objects.requireNonNull(sourceList,"sourceList should not be null");
+		if( nameMapping.length != sourceList.size() ) {
 			throw new SuperCsvException(
 				String
 					.format(
@@ -157,13 +152,10 @@ public final class Util {
 	 *             if map or nameMapping is null
 	 */
 	public static List<Object> filterMapToList(final Map<String, ?> map, final String[] nameMapping) {
-		if( map == null ) {
-			throw new NullPointerException("map should not be null");
-		} else if( nameMapping == null ) {
-			throw new NullPointerException("nameMapping should not be null");
-		}
+		Objects.requireNonNull(map,"map should not be null");
+		Objects.requireNonNull(nameMapping,"nameMapping should not be null");
 		
-		final List<Object> result = new ArrayList<Object>(nameMapping.length);
+		final List<Object> result = new ArrayList<>(nameMapping.length);
 		for( final String key : nameMapping ) {
 			result.add(map.get(key));
 		}
@@ -183,11 +175,8 @@ public final class Util {
 	 */
 	public static Object[] filterMapToObjectArray(final Map<String, ?> values, final String[] nameMapping) {
 		
-		if( values == null ) {
-			throw new NullPointerException("values should not be null");
-		} else if( nameMapping == null ) {
-			throw new NullPointerException("nameMapping should not be null");
-		}
+		Objects.requireNonNull(values,"values should not be null");
+		Objects.requireNonNull(nameMapping,"nameMapping should not be null");
 		
 		final Object[] targetArray = new Object[nameMapping.length];
 		int i = 0;

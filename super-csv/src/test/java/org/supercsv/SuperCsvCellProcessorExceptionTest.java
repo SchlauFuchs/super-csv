@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.supercsv.exception;
+package org.supercsv;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -21,6 +21,7 @@ import static org.junit.Assert.fail;
 import static org.supercsv.SuperCsvTestUtils.ANONYMOUS_CSVCONTEXT;
 
 import org.junit.Test;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.mock.IdentityTransform;
 import org.supercsv.util.CsvContext;
@@ -32,7 +33,7 @@ import org.supercsv.util.CsvContext;
  */
 public class SuperCsvCellProcessorExceptionTest {
 	
-	private static final String CLASSNAME = "org.supercsv.exception.SuperCsvCellProcessorException";
+	private static final String CLASSNAME = "org.supercsv.SuperCsvCellProcessorException";
 	private static final String MSG = "Cell processing failed!";
 	private static final Throwable THROWABLE = new RuntimeException("I'm the cause of the problem");
 	private static final CellProcessor PROCESSOR = new IdentityTransform();
@@ -49,7 +50,7 @@ public class SuperCsvCellProcessorExceptionTest {
 		assertEquals(String.format("%s: %s%nprocessor=%s%ncontext=%s", CLASSNAME, MSG, PROCESSOR, ANONYMOUS_CSVCONTEXT), e.toString());
 		
 		// test with null values
-		e = new SuperCsvCellProcessorException(null, (CsvContext) null, (CellProcessor) null);
+		e = new SuperCsvCellProcessorException(null, null, null);
 		assertNull(e.getMessage());
 		assertNull(e.getCsvContext());
 		assertNull(e.getProcessor());
@@ -95,6 +96,7 @@ public class SuperCsvCellProcessorExceptionTest {
 		
 		// test with null values
 		try {
+			//noinspection ThrowableNotThrown
 			new SuperCsvCellProcessorException(null, null, null, (CellProcessor) null);
 			fail("should have thrown NullPointerException");
 		} catch (NullPointerException npe){

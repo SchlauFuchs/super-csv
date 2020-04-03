@@ -31,7 +31,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.time.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the ParseLocalDate cell processor.
@@ -46,7 +46,7 @@ public class ParseLocalDateTest {
 		new ParseLocalDate(DateTimeFormatter.ISO_LOCAL_DATE), new ParseLocalDate(new IdentityTransform()),
 		new ParseLocalDate(DateTimeFormatter.ISO_LOCAL_DATE, new IdentityTransform()) };
 
-	@Rule public ExpectedException exception = ExpectedException.none();
+	@Rule public final ExpectedException exception = ExpectedException.none();
 
 	@Theory
 	public void testValidLocalDate(final ParseLocalDate p, final LocalDate localDate) {

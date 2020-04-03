@@ -94,14 +94,12 @@ public class StandardCsvWritingBenchmarkTest extends AbstractCsvWritingBenchmark
 	 */
 	@BeforeClass
 	public static void setUpData() throws Exception {
-		BEAN_DATA = new ArrayList<Object>();
-		LIST_DATA = new ArrayList<List<Object>>();
-		MAP_DATA = new ArrayList<Map<String, Object>>();
+		BEAN_DATA = new ArrayList<>();
+		LIST_DATA = new ArrayList<>();
+		MAP_DATA = new ArrayList<>();
 
-		ICsvBeanReader beanReader = null;
-		try {
-			beanReader = new CsvBeanReader(new FileReader(CSV_FILE),
-					CsvPreference.STANDARD_PREFERENCE);
+		try (ICsvBeanReader beanReader = new CsvBeanReader(new FileReader(CSV_FILE),
+				CsvPreference.STANDARD_PREFERENCE)) {
 			HEADER = beanReader.getHeader(true);
 
 			for (int j = 0; j < ROWS; j++) {
@@ -117,13 +115,11 @@ public class StandardCsvWritingBenchmarkTest extends AbstractCsvWritingBenchmark
 				LIST_DATA.add(list);
 
 				// map data
-				Map<String, Object> map = new HashMap<String, Object>();
+				Map<String, Object> map = new HashMap<>();
 				Util.filterListToMap(map, HEADER, list);
 				MAP_DATA.add(map);
 			}
 
-		} finally {
-			beanReader.close();
 		}
 
 	}

@@ -231,7 +231,7 @@ public class CsvMapReaderTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testReadProcessorsWithNullNameMapping() throws IOException {
-		mapReader.read((String[]) null, READ_PROCESSORS);
+		mapReader.read(null, READ_PROCESSORS);
 	}
 	
 	/**

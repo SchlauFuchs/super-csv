@@ -30,7 +30,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.joda.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the ParseDateTime cell processor.
@@ -41,20 +41,16 @@ public class ParseDateTimeTest {
 	private static final DateTime DATE_TIME = new DateTime(2013, 10, 25, 1, 2,
 			3, 0, DateTimeZone.forOffsetHours(10));
 
-	private ParseDateTime processor1;
-	private ParseDateTime processor2;
-	private ParseDateTime processorChain1;
-	private ParseDateTime processorChain2;
 	private List<ParseDateTime> processors;
 	private DateTimeFormatter formatter;
 
 	@Before
 	public void setUp() {
 		formatter = ISODateTimeFormat.dateTime().withOffsetParsed();
-		processor1 = new ParseDateTime();
-		processor2 = new ParseDateTime(formatter);
-		processorChain1 = new ParseDateTime(new IdentityTransform());
-		processorChain2 = new ParseDateTime(formatter, new IdentityTransform());
+		ParseDateTime processor1 = new ParseDateTime();
+		ParseDateTime processor2 = new ParseDateTime(formatter);
+		ParseDateTime processorChain1 = new ParseDateTime(new IdentityTransform());
+		ParseDateTime processorChain2 = new ParseDateTime(formatter, new IdentityTransform());
 		processors = Arrays.asList(processor1, processor2, processorChain1,
 				processorChain2);
 	}
@@ -120,7 +116,7 @@ public class ParseDateTimeTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testConstructor4WithNullFormatter() {
-		new ParseDateTime((DateTimeFormatter) null, new IdentityTransform());
+		new ParseDateTime(null, new IdentityTransform());
 	}
 
 	@Test(expected = NullPointerException.class)

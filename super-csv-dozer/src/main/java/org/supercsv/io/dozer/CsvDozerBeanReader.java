@@ -22,6 +22,7 @@ import static org.dozer.loader.api.TypeMappingOptions.wildcard;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Objects;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.loader.api.BeanMappingBuilder;
@@ -94,9 +95,7 @@ public class CsvDozerBeanReader extends AbstractCsvReader implements ICsvDozerBe
 	public CsvDozerBeanReader(final Reader reader, final CsvPreference preferences,
 		final DozerBeanMapper dozerBeanMapper) {
 		super(reader, preferences);
-		if( dozerBeanMapper == null ) {
-			throw new NullPointerException("dozerBeanMapper should not be null");
-		}
+		Objects.requireNonNull(dozerBeanMapper,"dozerBeanMapper should not be null");
 		this.dozerBeanMapper = dozerBeanMapper;
 	}
 	
@@ -116,9 +115,7 @@ public class CsvDozerBeanReader extends AbstractCsvReader implements ICsvDozerBe
 	public CsvDozerBeanReader(final ITokenizer tokenizer, final CsvPreference preferences,
 		final DozerBeanMapper dozerBeanMapper) {
 		super(tokenizer, preferences);
-		if( dozerBeanMapper == null ) {
-			throw new NullPointerException("dozerBeanMapper should not be null");
-		}
+		Objects.requireNonNull(dozerBeanMapper,"dozerBeanMapper should not be null");
 		this.dozerBeanMapper = dozerBeanMapper;
 	}
 	
@@ -140,10 +137,7 @@ public class CsvDozerBeanReader extends AbstractCsvReader implements ICsvDozerBe
 	 * {@inheritDoc}
 	 */
 	public <T> T read(final Class<T> clazz) throws IOException {
-		if( clazz == null ) {
-			throw new NullPointerException("clazz should not be null");
-		}
-		
+		Objects.requireNonNull(clazz,"clazz should not be null");
 		return readIntoBean(null, clazz, null);
 	}
 	
@@ -151,12 +145,8 @@ public class CsvDozerBeanReader extends AbstractCsvReader implements ICsvDozerBe
 	 * {@inheritDoc}
 	 */
 	public <T> T read(final Class<T> clazz, final CellProcessor... processors) throws IOException {
-		if( clazz == null ) {
-			throw new NullPointerException("clazz should not be null");
-		} else if( processors == null ) {
-			throw new NullPointerException("processors should not be null");
-		}
-		
+		Objects.requireNonNull(clazz,"clazz should not be null");
+		Objects.requireNonNull(processors,"processors should not be null");
 		return readIntoBean(null, clazz, processors);
 	}
 	
@@ -164,10 +154,7 @@ public class CsvDozerBeanReader extends AbstractCsvReader implements ICsvDozerBe
 	 * {@inheritDoc}
 	 */
 	public <T> T read(final T bean) throws IOException {
-		if( bean == null ) {
-			throw new NullPointerException("bean should not be null");
-		}
-		
+		Objects.requireNonNull(bean,"bean should not be null");
 		return readIntoBean(bean, null, null);
 	}
 	
@@ -175,12 +162,8 @@ public class CsvDozerBeanReader extends AbstractCsvReader implements ICsvDozerBe
 	 * {@inheritDoc}
 	 */
 	public <T> T read(final T bean, final CellProcessor... processors) throws IOException {
-		if( bean == null ) {
-			throw new NullPointerException("bean should not be null");
-		} else if( processors == null ) {
-			throw new NullPointerException("processors should not be null");
-		}
-		
+		Objects.requireNonNull(bean,"bean should not be null");
+		Objects.requireNonNull(processors,"processors should not be null");
 		return readIntoBean(bean, null, processors);
 	}
 	
@@ -246,11 +229,8 @@ public class CsvDozerBeanReader extends AbstractCsvReader implements ICsvDozerBe
 		 *             if clazz or fieldMapping is null
 		 */
 		public MappingBuilder(final Class<?> clazz, final String[] fieldMapping) {
-			if( clazz == null ) {
-				throw new NullPointerException("clazz should not be null");
-			} else if( fieldMapping == null ) {
-				throw new NullPointerException("fieldMapping should not be null");
-			}
+			Objects.requireNonNull(clazz,"clazz should not be null");
+			Objects.requireNonNull(fieldMapping,"fieldMapping should not be null");
 			this.clazz = clazz;
 			this.fieldMapping = fieldMapping;
 			this.hintTypes = null;

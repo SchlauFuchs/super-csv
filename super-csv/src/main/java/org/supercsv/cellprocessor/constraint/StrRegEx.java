@@ -17,13 +17,14 @@ package org.supercsv.cellprocessor.constraint;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -38,7 +39,7 @@ public class StrRegEx extends CellProcessorAdaptor implements StringCellProcesso
 	private final String regex;
 	private final Pattern regexPattern;
 	
-	private static final Map<String, String> REGEX_MSGS = new HashMap<String, String>();
+	private static final Map<String, String> REGEX_MSGS = new HashMap<>();
 	
 	/**
 	 * Constructs a new <code>StrRegEx</code> processor, which ensures that the input data matches the given regular
@@ -93,9 +94,8 @@ public class StrRegEx extends CellProcessorAdaptor implements StringCellProcesso
 	 *             if regex is empty
 	 */
 	private static void checkPreconditions(final String regex) {
-		if( regex == null ) {
-			throw new NullPointerException("regex should not be null");
-		} else if( regex.length() == 0 ) {
+		Objects.requireNonNull(regex,"regex should not be null");
+		if( regex.length() == 0 ) {
 			throw new IllegalArgumentException("regex should not be empty");
 		}
 	}

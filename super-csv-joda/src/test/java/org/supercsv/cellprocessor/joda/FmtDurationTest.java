@@ -29,7 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.joda.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the FmtDuration cell processor.
@@ -43,14 +43,12 @@ public class FmtDurationTest {
 			DateTimeZone.UTC);
 	private static final Duration DURATION = new Duration(START, END);
 
-	private FmtDuration processor1;
-	private FmtDuration processorChain1;
 	private List<FmtDuration> processors;
 
 	@Before
 	public void setUp() {
-		processor1 = new FmtDuration();
-		processorChain1 = new FmtDuration(new IdentityTransform());
+		FmtDuration processor1 = new FmtDuration();
+		FmtDuration processorChain1 = new FmtDuration(new IdentityTransform());
 		processors = Arrays.asList(processor1, processorChain1);
 	}
 
@@ -93,7 +91,7 @@ public class FmtDurationTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testConstructor2WithNullNext() {
-		new FmtDuration((CellProcessor) null);
+		new FmtDuration(null);
 	}
 
 }

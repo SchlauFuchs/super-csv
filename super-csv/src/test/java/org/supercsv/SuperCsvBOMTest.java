@@ -1,5 +1,7 @@
 package org.supercsv;
 
+import static java.nio.charset.StandardCharsets.*;
+import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -22,30 +24,29 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.FileInputStream;
 
 /**
  * Test the super-csv read API processing with BOM file
  */
 public class SuperCsvBOMTest {
+
+	public static final String UTF8_FILE = "customers_utf8.csv";
 	
-	public static final String ROOT_PATH = SuperCsvBOMTest.class.getResource("/").getPath() + "/";
+	public static final String UTF8_NO_BOM_FILE = "customers_utf8_nobom.csv";
 	
-	public static final String UTF8_FILE = ROOT_PATH + "customers_utf8.csv";
+	public static final String UTF16BE_FILE = "customers_utf16be.csv";
 	
-	public static final String UTF8_NO_BOM_FILE = ROOT_PATH + "customers_utf8_nobom.csv";
-	
-	public static final String UTF16BE_FILE = ROOT_PATH + "customers_utf16be.csv";
-	
-	public static final String UTF16LE_FILE = ROOT_PATH + "customers_utf16le.csv";
-	
+	public static final String UTF16LE_FILE = "customers_utf16le.csv";
+
+	public static final ClassLoader classLoader = SuperCsvBOMTest.class.getClassLoader();
+
 	/**
 	 * Test the super-csv read API processing UTF8 with BOM file.
 	 */
 	@Test
 	public void testUTF8() throws IOException {
 		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(new FileInputStream(UTF8_FILE), "UTF-8")
+				new InputStreamReader(requireNonNull(classLoader.getResourceAsStream(UTF8_FILE)), UTF_8)
 		);
 		ReadTestCSVFile(reader);
 	}
@@ -56,7 +57,7 @@ public class SuperCsvBOMTest {
 	@Test
 	public void testUTF8WithoutBom() throws IOException {
 		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(new FileInputStream(UTF8_NO_BOM_FILE), "UTF-8")
+				new InputStreamReader(requireNonNull(classLoader.getResourceAsStream(UTF8_NO_BOM_FILE)), UTF_8)
 		);
 		ReadTestCSVFile(reader);
 	}
@@ -67,7 +68,7 @@ public class SuperCsvBOMTest {
 	@Test
 	public void testUTF16BE() throws IOException {
 		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(new FileInputStream(UTF16BE_FILE), "UTF-16be")
+				new InputStreamReader(requireNonNull(classLoader.getResourceAsStream(UTF16BE_FILE)), UTF_16BE)
 		);
 		ReadTestCSVFile(reader);
 	}
@@ -78,7 +79,7 @@ public class SuperCsvBOMTest {
 	@Test
 	public void testUTF16LE() throws IOException {
 		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(new FileInputStream(UTF16LE_FILE), "UTF-16le")
+				new InputStreamReader(requireNonNull(classLoader.getResourceAsStream(UTF16LE_FILE)), UTF_16LE)
 		);
 		ReadTestCSVFile(reader);
 	}
@@ -89,12 +90,12 @@ public class SuperCsvBOMTest {
 	@Test
 	public void testUTF16() throws IOException {
 		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(new FileInputStream(UTF16LE_FILE), "UTF-16")
+				new InputStreamReader(requireNonNull(classLoader.getResourceAsStream(UTF16LE_FILE)), UTF_16)
 		);
 		ReadTestCSVFile(reader);
 
 		BufferedReader reader1 = new BufferedReader(
-				new InputStreamReader(new FileInputStream(UTF16BE_FILE), "UTF-16")
+				new InputStreamReader(requireNonNull(classLoader.getResourceAsStream(UTF16BE_FILE)), UTF_16)
 		);
 		ReadTestCSVFile(reader1);
 	}
@@ -103,7 +104,7 @@ public class SuperCsvBOMTest {
 		ICsvBeanReader beanReader = new CsvBeanReader(reader, CsvPreference.STANDARD_PREFERENCE);
 		final String[] header = beanReader.getHeader(true);
 		assertEquals("customerNo", header[0]);
-		CustomerBean customer = null;
+		CustomerBean customer;
 		final String emailRegex = "[a-z0-9\\._]+@[a-z0-9\\.]+"; // just an example, not very robust!
 		StrRegEx.registerMessage(emailRegex, "must be a valid email address");
 		final CellProcessor[] processors = new CellProcessor[]{new UniqueHashCode(), // customerNo (must be unique)

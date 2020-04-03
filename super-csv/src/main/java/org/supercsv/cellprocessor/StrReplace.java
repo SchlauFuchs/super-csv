@@ -15,6 +15,7 @@
  */
 package org.supercsv.cellprocessor;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -23,7 +24,7 @@ import org.supercsv.cellprocessor.ift.DateCellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -99,15 +100,12 @@ public class StrReplace extends CellProcessorAdaptor implements BoolCellProcesso
 	 *             if regex or replacement is null
 	 */
 	private static void checkPreconditions(final String regex, final String replacement) {
-		if( regex == null ) {
-			throw new NullPointerException("regex should not be null");
-		} else if( regex.length() == 0 ) {
+		Objects.requireNonNull(regex,"regex should not be null");
+		if( regex.length() == 0 ) {
 			throw new IllegalArgumentException("regex should not be empty");
 		}
 		
-		if( replacement == null ) {
-			throw new NullPointerException("replacement should not be null");
-		}
+		Objects.requireNonNull(replacement,"replacement should not be null");
 	}
 	
 	/**

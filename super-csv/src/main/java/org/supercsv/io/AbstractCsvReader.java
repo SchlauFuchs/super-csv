@@ -19,10 +19,11 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
-import org.supercsv.exception.SuperCsvException;
+import org.supercsv.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvException;
 import org.supercsv.prefs.CsvPreference;
 import org.supercsv.util.Util;
 
@@ -39,7 +40,7 @@ public abstract class AbstractCsvReader implements ICsvReader {
 	private final CsvPreference preferences;
 	
 	// the current tokenized columns
-	private final List<String> columns = new ArrayList<String>();
+	private final List<String> columns = new ArrayList<>();
 	
 	// the number of CSV records read
 	private int rowNumber = 0;
@@ -55,12 +56,9 @@ public abstract class AbstractCsvReader implements ICsvReader {
 	 *             if reader or preferences are null
 	 */
 	public AbstractCsvReader(final Reader reader, final CsvPreference preferences) {
-		if( reader == null ) {
-			throw new NullPointerException("reader should not be null");
-		} else if( preferences == null ) {
-			throw new NullPointerException("preferences should not be null");
-		}
-		
+		Objects.requireNonNull(reader,"reader should not be null");
+		Objects.requireNonNull(preferences,"preferences should not be null");
+
 		this.preferences = preferences;
 		this.tokenizer = new Tokenizer(reader, preferences);
 	}
@@ -78,12 +76,9 @@ public abstract class AbstractCsvReader implements ICsvReader {
 	 *             if tokenizer or preferences are null
 	 */
 	public AbstractCsvReader(final ITokenizer tokenizer, final CsvPreference preferences) {
-		if( tokenizer == null ) {
-			throw new NullPointerException("tokenizer should not be null");
-		} else if( preferences == null ) {
-			throw new NullPointerException("preferences should not be null");
-		}
-		
+		Objects.requireNonNull(tokenizer,"tokenizer should not be null");
+		Objects.requireNonNull(preferences,"preferences should not be null");
+
 		this.preferences = preferences;
 		this.tokenizer = tokenizer;
 	}
@@ -114,7 +109,7 @@ public abstract class AbstractCsvReader implements ICsvReader {
 		}
 		
 		if( readRow() ) {
-			return columns.toArray(new String[columns.size()]);
+			return columns.toArray(new String[0]);
 		}
 		
 		return null;

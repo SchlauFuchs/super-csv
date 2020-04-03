@@ -26,8 +26,8 @@ import org.supercsv.cellprocessor.ift.DateCellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -41,7 +41,7 @@ import org.supercsv.util.CsvContext;
 public class IsIncludedIn extends CellProcessorAdaptor implements BoolCellProcessor, DateCellProcessor,
 	DoubleCellProcessor, LongCellProcessor, StringCellProcessor {
 	
-	private final Set<Object> possibleValues = new HashSet<Object>();
+	private final Set<Object> possibleValues = new HashSet<>();
 	
 	/**
 	 * Constructs a new <code>IsIncludedIn</code> processor, which ensures that the input value belongs to a specific set of

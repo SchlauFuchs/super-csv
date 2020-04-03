@@ -17,8 +17,10 @@ package org.supercsv.cellprocessor;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
+
+import java.util.Objects;
 
 /**
  * Converts a String to an Enum. Patch originally supplied by Adrian Ber.
@@ -120,9 +122,7 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
 	 *             if enumClass is null
 	 */
 	private static void checkPreconditions(final Class<?> enumClass) {
-		if( enumClass == null ) {
-			throw new NullPointerException("enumClass should not be null");
-		}
+		Objects.requireNonNull(enumClass,"enumClass should not be null");
 	}
 	
 	/**

@@ -22,11 +22,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
-import org.supercsv.exception.SuperCsvException;
-import org.supercsv.exception.SuperCsvReflectionException;
+import org.supercsv.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvException;
+import org.supercsv.SuperCsvReflectionException;
 import org.supercsv.prefs.CsvPreference;
 import org.supercsv.util.BeanInterfaceProxy;
 import org.supercsv.util.MethodCache;
@@ -44,7 +45,7 @@ import org.supercsv.util.MethodCache;
 public class CsvBeanReader extends AbstractCsvReader implements ICsvBeanReader {
 	
 	// temporary storage of processed columns to be mapped to the bean
-	private final List<Object> processedColumns = new ArrayList<Object>();
+	private final List<Object> processedColumns = new ArrayList<>();
 	
 	// cache of methods for mapping from columns to fields
 	private final MethodCache cache = new MethodCache();
@@ -95,22 +96,14 @@ public class CsvBeanReader extends AbstractCsvReader implements ICsvBeanReader {
 			bean = BeanInterfaceProxy.createProxy(clazz);
 		} else {
 			try {
-				Constructor<T> c = clazz.getDeclaredConstructor(new Class[0]);
+				Constructor<T> c = clazz.getDeclaredConstructor();
 				c.setAccessible(true);
-				bean = c.newInstance(new Object[0]);
+				bean = c.newInstance();
 			}
-			catch(InstantiationException e) {
+			catch(InstantiationException | NoSuchMethodException e) {
 				throw new SuperCsvReflectionException(String.format(
 					"error instantiating bean, check that %s has a default no-args constructor", clazz.getName()), e);
-			}
-			catch(NoSuchMethodException e) {
-				throw new SuperCsvReflectionException(String.format(
-					"error instantiating bean, check that %s has a default no-args constructor", clazz.getName()), e);
-			}
-			catch(IllegalAccessException e) {
-				throw new SuperCsvReflectionException("error instantiating bean", e);
-			}
-			catch(InvocationTargetException e) {
+			} catch(IllegalAccessException | InvocationTargetException e) {
 				throw new SuperCsvReflectionException("error instantiating bean", e);
 			}
 		}
@@ -132,7 +125,9 @@ public class CsvBeanReader extends AbstractCsvReader implements ICsvBeanReader {
 	 */
 	private static void invokeSetter(final Object bean, final Method setMethod, final Object fieldValue) {
 		try {
-			setMethod.setAccessible(true);
+			if(!setMethod.canAccess(bean)) {
+				setMethod.setAccessible(true);
+			}
 			setMethod.invoke(bean, fieldValue);
 		}
 		catch(final Exception e) {
@@ -177,11 +172,8 @@ public class CsvBeanReader extends AbstractCsvReader implements ICsvBeanReader {
 	 */
 	public <T> T read(final Class<T> clazz, final String... nameMapping) throws IOException {
 		
-		if( clazz == null ) {
-			throw new NullPointerException("clazz should not be null");
-		} else if( nameMapping == null ) {
-			throw new NullPointerException("nameMapping should not be null");
-		}
+		Objects.requireNonNull(clazz,"clazz should not be null");
+		Objects.requireNonNull(nameMapping,"nameMapping should not be null");
 		
 		return readIntoBean(instantiateBean(clazz), nameMapping, null);
 	}
@@ -192,13 +184,9 @@ public class CsvBeanReader extends AbstractCsvReader implements ICsvBeanReader {
 	public <T> T read(final Class<T> clazz, final String[] nameMapping, final CellProcessor... processors)
 		throws IOException {
 		
-		if( clazz == null ) {
-			throw new NullPointerException("clazz should not be null");
-		} else if( nameMapping == null ) {
-			throw new NullPointerException("nameMapping should not be null");
-		} else if( processors == null ) {
-			throw new NullPointerException("processors should not be null");
-		}
+		Objects.requireNonNull(clazz,"clazz should not be null");
+		Objects.requireNonNull(nameMapping,"nameMapping should not be null");
+		Objects.requireNonNull(processors,"processors should not be null");
 		
 		return readIntoBean(instantiateBean(clazz), nameMapping, processors);
 	}
@@ -208,11 +196,8 @@ public class CsvBeanReader extends AbstractCsvReader implements ICsvBeanReader {
 	 */
 	public <T> T read(final T bean, final String... nameMapping) throws IOException {
 		
-		if( bean == null ) {
-			throw new NullPointerException("bean should not be null");
-		} else if( nameMapping == null ) {
-			throw new NullPointerException("nameMapping should not be null");
-		}
+		Objects.requireNonNull(bean,"bean should not be null");
+		Objects.requireNonNull(nameMapping,"nameMapping should not be null");
 		
 		return readIntoBean(bean, nameMapping, null);
 	}
@@ -221,13 +206,9 @@ public class CsvBeanReader extends AbstractCsvReader implements ICsvBeanReader {
 	 * {@inheritDoc}
 	 */
 	public <T> T read(final T bean, final String[] nameMapping, final CellProcessor... processors) throws IOException {
-		if( bean == null ) {
-			throw new NullPointerException("bean should not be null");
-		} else if( nameMapping == null ) {
-			throw new NullPointerException("nameMapping should not be null");
-		} else if( processors == null ) {
-			throw new NullPointerException("processors should not be null");
-		}
+		Objects.requireNonNull(bean,"bean should not be null");
+		Objects.requireNonNull(nameMapping,"nameMapping should not be null");
+		Objects.requireNonNull(processors,"processors should not be null");
 		
 		return readIntoBean(bean, nameMapping, processors);
 	}

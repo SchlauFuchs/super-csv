@@ -40,18 +40,6 @@ public class CustomerBean extends PersonBean implements Customer {
 	
 	/**
 	 * Constructs a CustomerBean.
-	 * 
-	 * @param customerNo
-	 * @param firstName
-	 * @param lastName
-	 * @param birthDate
-	 * @param birthTime
-	 * @param mailingAddress
-	 * @param married
-	 * @param numberOfKids
-	 * @param favouriteQuote
-	 * @param email
-	 * @param loyaltyPoints
 	 */
 	public CustomerBean(final String customerNo, final String firstName, final String lastName, final Date birthDate,
 		final Time birthTime, final String mailingAddress, final Boolean married, final Integer numberOfKids,
@@ -140,13 +128,8 @@ public class CustomerBean extends PersonBean implements Customer {
 			return false;
 		}
 		if( mailingAddress == null ) {
-			if( other.mailingAddress != null ) {
-				return false;
-			}
-		} else if( !mailingAddress.equals(other.mailingAddress) ) {
-			return false;
-		}
-		return true;
+			return other.mailingAddress == null;
+		} else return mailingAddress.equals(other.mailingAddress);
 	}
 	
 	@Override

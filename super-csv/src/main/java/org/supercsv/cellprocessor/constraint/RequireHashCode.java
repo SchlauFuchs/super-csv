@@ -16,6 +16,7 @@
 package org.supercsv.cellprocessor.constraint;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
@@ -25,8 +26,8 @@ import org.supercsv.cellprocessor.ift.DateCellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -45,7 +46,7 @@ import org.supercsv.util.CsvContext;
 public class RequireHashCode extends CellProcessorAdaptor implements BoolCellProcessor, DateCellProcessor,
 	DoubleCellProcessor, LongCellProcessor, StringCellProcessor {
 	
-	private final Set<Integer> requiredHashCodes = new HashSet<Integer>();
+	private final Set<Integer> requiredHashCodes = new HashSet<>();
 	
 	/**
 	 * Constructs a new <code>RequireHashCode</code> processor, which converts the input to a String, and ensures that the
@@ -113,9 +114,8 @@ public class RequireHashCode extends CellProcessorAdaptor implements BoolCellPro
 	 *             if requiredHashcodes is empty
 	 */
 	private static void checkPreconditions(final int... requiredHashcodes) {
-		if( requiredHashcodes == null ) {
-			throw new NullPointerException("requiredHashcodes should not be null");
-		} else if( requiredHashcodes.length == 0 ) {
+		Objects.requireNonNull(requiredHashcodes,"requiredHashcodes should not be null");
+		if( requiredHashcodes.length == 0 ) {
 			throw new IllegalArgumentException("requiredHashcodes should not be empty");
 		}
 	}

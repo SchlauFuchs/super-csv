@@ -30,7 +30,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.time.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the ParseLocalDateTime cell processor.
@@ -38,7 +38,7 @@ import org.supercsv.exception.SuperCsvCellProcessorException;
 @RunWith(Theories.class)
 public class ParseLocalDateTimeTest {
 
-	@Rule public ExpectedException exception = ExpectedException.none();
+	@Rule public final ExpectedException exception = ExpectedException.none();
 
 	@DataPoints public static final LocalDateTime[] localDateTimes = { LocalDateTime.of(2013, 10, 25, 1, 2, 3) };
 

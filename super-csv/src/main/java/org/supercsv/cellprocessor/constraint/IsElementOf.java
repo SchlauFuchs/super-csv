@@ -16,6 +16,7 @@
 package org.supercsv.cellprocessor.constraint;
 
 import java.util.Collection;
+import java.util.Objects;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.BoolCellProcessor;
@@ -24,7 +25,7 @@ import org.supercsv.cellprocessor.ift.DateCellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -80,9 +81,7 @@ public class IsElementOf extends CellProcessorAdaptor implements BoolCellProcess
 	 *             if collection is null
 	 */
 	private static void checkPreconditions(final Collection<Object> collection) {
-		if( collection == null ) {
-			throw new NullPointerException("collection should not be null");
-		}
+		Objects.requireNonNull(collection,"collection should not be null");
 	}
 	
 	/**

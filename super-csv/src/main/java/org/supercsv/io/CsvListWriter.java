@@ -33,7 +33,7 @@ import org.supercsv.util.Util;
 public class CsvListWriter extends AbstractCsvWriter implements ICsvListWriter {
 	
 	// temporary storage of processed columns to be written
-	private final List<Object> processedColumns = new ArrayList<Object>();
+	private final List<Object> processedColumns = new ArrayList<>();
 	
 	/**
 	 * Constructs a new <code>CsvListWriter</code> with the supplied Writer and CSV preferences. Note that the

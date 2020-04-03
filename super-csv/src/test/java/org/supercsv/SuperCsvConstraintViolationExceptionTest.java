@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.supercsv.exception;
+package org.supercsv;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.supercsv.SuperCsvTestUtils.ANONYMOUS_CSVCONTEXT;
 
 import org.junit.Test;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.mock.IdentityTransform;
-import org.supercsv.util.CsvContext;
 
 /**
  * Tests the SuperCsvConstraintViolationException class.
@@ -31,7 +31,7 @@ import org.supercsv.util.CsvContext;
  */
 public class SuperCsvConstraintViolationExceptionTest {
 	
-	private static final String CLASSNAME = "org.supercsv.exception.SuperCsvConstraintViolationException";
+	private static final String CLASSNAME = "org.supercsv.SuperCsvConstraintViolationException";
 	private static final String MSG = "You violated the rules!";
 	private static final Throwable THROWABLE = new RuntimeException("I'm the cause of the problem");
 	private static final CellProcessor PROCESSOR = new IdentityTransform();
@@ -48,7 +48,7 @@ public class SuperCsvConstraintViolationExceptionTest {
 		assertEquals(String.format("%s: %s%nprocessor=%s%ncontext=%s", CLASSNAME, MSG, PROCESSOR, ANONYMOUS_CSVCONTEXT), e.toString());
 		
 		// test with null values
-		e = new SuperCsvConstraintViolationException(null, (CsvContext) null, (CellProcessor) null);
+		e = new SuperCsvConstraintViolationException(null, null, null);
 		assertNull(e.getMessage());
 		assertNull(e.getCsvContext());
 		assertNull(e.getProcessor());
@@ -67,7 +67,7 @@ public class SuperCsvConstraintViolationExceptionTest {
 		assertEquals(String.format("%s: %s%nprocessor=%s%ncontext=%s", CLASSNAME, MSG, PROCESSOR, ANONYMOUS_CSVCONTEXT), e.toString());
 		
 		// test with null values
-		e = new SuperCsvConstraintViolationException(null, null, null, (Throwable) null);
+		e = new SuperCsvConstraintViolationException(null, null, null, null);
 		assertNull(e.getMessage());
 		assertNull(e.getCsvContext());
 		assertNull(e.getProcessor());

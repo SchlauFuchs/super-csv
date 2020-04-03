@@ -21,8 +21,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
-import org.supercsv.exception.SuperCsvException;
+import org.supercsv.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvException;
 
 /**
  * Interface for CSV writers writing JDBC {@code ResultSet}

@@ -134,21 +134,23 @@ public class BeanInterfaceProxyTest {
 	 */
 	private interface TestInterface {
 		
-		public TestInterface setValue(String value); // proxy allows setters that returned the modified object
+		TestInterface setValue(String value); // proxy allows setters that returned the modified object
 		
-		public void setValue2(String value);
+		void setValue2(String value);
 		
-		public String getValue();
+		String getValue();
 		
-		public String getValue2();
+		String getValue2();
 		
-		public String getWithParam(String value1); // getters with params not allowed
+		@SuppressWarnings("UnusedReturnValue")
+		String getWithParam(String value1); // getters with params not allowed
 		
-		public void setManyValues(String value1, String value2); // multi param setters not allowed
+		void setManyValues(String value1, String value2); // multi param setters not allowed
 		
-		public void setNothing(); // setters should have 1 param
+		void setNothing(); // setters should have 1 param
 		
-		public boolean isValueSet(); // methods not starting with get/set are not allowed (yes, even boolean getters!)
+		@SuppressWarnings("UnusedReturnValue")
+		boolean isValueSet(); // methods not starting with get/set are not allowed (yes, even boolean getters!)
 		
 	}
 	

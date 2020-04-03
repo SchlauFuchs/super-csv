@@ -28,7 +28,7 @@ import org.junit.experimental.theories.Theory;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.supercsv.cellprocessor.time.mock.IdentityTransform;
-import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvCellProcessorException;
 
 /**
  * Tests the ParsePeriod cell processor.
@@ -40,7 +40,7 @@ public class ParsePeriodTest {
 		new ParsePeriod(new IdentityTransform()) };
 
 	@DataPoints public static Period[] periods = { Period.of(1, 2, 3), Period.of(3, 0, 23) };
-	@Rule public ExpectedException exception = ExpectedException.none();
+	@Rule public final ExpectedException exception = ExpectedException.none();
 
 	@Theory
 	public void testValidPeriod(final ParsePeriod processor, final Period period) {

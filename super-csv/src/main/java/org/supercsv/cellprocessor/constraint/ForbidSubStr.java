@@ -22,8 +22,8 @@ import java.util.List;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.SuperCsvCellProcessorException;
+import org.supercsv.SuperCsvConstraintViolationException;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -36,7 +36,7 @@ import org.supercsv.util.CsvContext;
  */
 public class ForbidSubStr extends CellProcessorAdaptor implements StringCellProcessor {
 	
-	private final List<String> forbiddenSubStrings = new ArrayList<String>();
+	private final List<String> forbiddenSubStrings = new ArrayList<>();
 	
 	/**
 	 * Constructs a new <code>ForbidSubStr</code> processor which ensures the input doesn't contain any of the supplied
